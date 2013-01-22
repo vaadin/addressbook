@@ -41,6 +41,13 @@ public class AddressbookUI extends UI {
 	private Button addNewContactButton = new Button("New");
 	private Button removeContactButton = new Button("Remove this contact");
 
+	private static String FNAME = "First Name";
+	private static String LNAME = "Last Name";
+	private static String COMPANY = "Company";
+	private static String[] fieldNames = new String[] { FNAME, LNAME, COMPANY,
+			"Mobile Phone", "Work Phone", "Home Phone", "Work Email",
+			"Home Email", "Street", "City", "Zip", "State", "Country" };
+
 	// Any component can be bound to an external data source. This example uses
 	// just a dummy in-memory list, but there are many more practical
 	// implementations.
@@ -81,8 +88,7 @@ public class AddressbookUI extends UI {
 	private void initEditor() {
 
 		// User interface can be created dynamically to reflect underlying data.
-		for (String fieldName : (Collection<String>) contactList
-				.getContainerPropertyIds()) {
+		for (String fieldName : fieldNames) {
 			TextField field = new TextField(fieldName);
 			editorLayout.addComponent(field);
 			field.setWidth("100%");
@@ -190,19 +196,13 @@ public class AddressbookUI extends UI {
 		});
 	}
 
-	private static String FNAME = "First Name";
-	private static String LNAME = "Last Name";
-	private static String COMPANY = "Company";
-
 	// Generate some in-memory example data to play with. In a real application
 	// we could be using SQLContainer, JPAContainer or some other to persist
 	// the data.
 	private static IndexedContainer createDummyData() {
 		IndexedContainer ic = new IndexedContainer();
 
-		for (String p : new String[] { FNAME, LNAME, COMPANY, "Mobile Phone",
-				"Work Phone", "Home Phone", "Work Email", "Home Email",
-				"Street", "City", "Zip", "State", "Country" }) {
+		for (String p : fieldNames) {
 			ic.addContainerProperty(p, String.class, "");
 		}
 

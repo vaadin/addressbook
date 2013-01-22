@@ -104,7 +104,7 @@ public class AddressbookUI extends UI {
 	private void initAddRemoveButtons() {
 		addNewContactButton.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				Object contactId = contactList.addItemAfter(null);
+				Object contactId = dummyDataSource.addItemAt(0);
 				contactList.select(contactId);
 				contactList.getContainerProperty(contactId, FNAME).setValue(
 						"New");

@@ -30,6 +30,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.vaadin.integration.eclipse.widgetsetBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
@@ -39,5 +44,6 @@
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>org.apache.ivyde.eclipse.ivynature</nature>
 		<nature>org.zeroturnaround.eclipse.jrebelNature</nature>
+		<nature>com.vaadin.integration.eclipse.widgetsetNature</nature>
 	</natures>
 </projectDescription>

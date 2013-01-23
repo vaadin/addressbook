@@ -10,7 +10,6 @@ import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -34,7 +33,7 @@ public class AddressbookUI extends UI {
 
     /* User interface components are stored in session. */
     private final Table contactList = new Table();
-    private final TextField searchField = new TextField();
+    private final TextField searchField = new SearchField();
     private final Button addNewContactButton = new Button("New");
     private final Button removeContactButton = new Button("Remove this contact");
 
@@ -53,7 +52,6 @@ public class AddressbookUI extends UI {
         initLayout();
         initContactList();
         initEditor();
-        initSearch();
         initAddRemoveButtons();
     }
 
@@ -121,56 +119,6 @@ public class AddressbookUI extends UI {
          * without calling commit()
          */
         editorFields.setBuffered(false);
-    }
-
-    private void initSearch() {
-
-        /*
-         * We want to show a subtle prompt in the search field. We could also set a
-         * caption that would be shown above the field or description to be shown in a
-         * tooltip.
-         */
-        searchField.setInputPrompt("Search contacts");
-
-        /*
-         * Granularity for sending events over the wire can be controlled. By default
-         * simple changes like writing a text in TextField are sent to server with the
-         * next Ajax call. You can set your component to be immediate to send the changes
-         * to server immediately after focus leaves the field. Here we choose to send the
-         * text over the wire as soon as user stops writing for a moment.
-         */
-        searchField.setTextChangeEventMode(TextChangeEventMode.LAZY);
-
-        /*
-         * When the event happens, we handle it in the anonymous inner class. You may
-         * choose to use separate controllers (in MVC) or presenters (in MVP) instead. In
-         * the end, the preferred application architecture is up to you.
-         */
-        searchField.addTextChangeListener(new TextChangeListener() {
-            @Override
-            public void textChange(final TextChangeEvent event) {
-                dummyDataSource.removeAllContainerFilters();
-
-                /*
-                 * We may add filters directly to the data source to show only contacts
-                 * that match to our search string.
-                 */
-                dummyDataSource.addContainerFilter(new Filter() {
-                    @Override
-                    public boolean passesFilter(Object itemId, Item item) {
-                        String needle = event.getText().toLowerCase();
-                        String haystack = ("" + item.getItemProperty(FIRST_NAME).getValue() + item.getItemProperty(
-                                LAST_NAME).getValue() + item.getItemProperty(COMPANY).getValue()).toLowerCase();
-                        return haystack.contains(needle);
-                    }
-
-                    @Override
-                    public boolean appliesToProperty(Object id) {
-                        return true;
-                    }
-                });
-            }
-        });
     }
 
     private void initAddRemoveButtons() {
@@ -255,5 +203,56 @@ public class AddressbookUI extends UI {
         }
 
         return container;
+    }
+
+    private class SearchField extends TextField {
+        public SearchField() {
+            /*
+             * We want to show a subtle prompt in the search field. We could also set a
+             * caption that would be shown above the field or description to be shown in a
+             * tooltip.
+             */
+            setInputPrompt("Search contacts");
+
+            /*
+             * Granularity for sending events over the wire can be controlled. By default
+             * simple changes like writing a text in TextField are sent to server with the
+             * next Ajax call. You can set your component to be immediate to send the
+             * changes to server immediately after focus leaves the field. Here we choose
+             * to send the text over the wire as soon as user stops writing for a moment.
+             */
+            setTextChangeEventMode(TextChangeEventMode.LAZY);
+
+            /*
+             * When the event happens, we handle it in the anonymous inner class. You may
+             * choose to use separate controllers (in MVC) or presenters (in MVP) instead.
+             * In the end, the preferred application architecture is up to you.
+             */
+            addTextChangeListener(new TextChangeListener() {
+                @Override
+                public void textChange(final TextChangeEvent event) {
+                    dummyDataSource.removeAllContainerFilters();
+
+                    /*
+                     * We may add filters directly to the data source to show only
+                     * contacts that match to our search string.
+                     */
+                    dummyDataSource.addContainerFilter(new Filter() {
+                        @Override
+                        public boolean passesFilter(Object itemId, Item item) {
+                            String needle = event.getText().toLowerCase();
+                            String haystack = ("" + item.getItemProperty(FIRST_NAME).getValue() + item.getItemProperty(
+                                    LAST_NAME).getValue() + item.getItemProperty(COMPANY).getValue()).toLowerCase();
+                            return haystack.contains(needle);
+                        }
+
+                        @Override
+                        public boolean appliesToProperty(Object id) {
+                            return true;
+                        }
+                    });
+                }
+            });
+        }
     }
 }

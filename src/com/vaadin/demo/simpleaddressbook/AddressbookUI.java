@@ -25,20 +25,20 @@ public class AddressbookUI extends UI {
             COMPANY, "Mobile Phone", "Work Phone", "Home Phone", "Work Email",
             "Home Email", "Street", "City", "Zip", "State", "Country"};
 
-    private final FormLayout editorLayout = new FormLayout();
-    private final FieldGroup editorFields = new FieldGroup();
-
-    /* User interface components are stored in session. */
-    private final Table contactList = new ContactListTable();
-    private final TextField searchField = new SearchField();
-    private final Button addNewContactButton = new AddNewContactButton();
-    private final Button removeContactButton = new RemoveContactButton();
-
     /**
      * Any component can be bound to an external data source. This example uses just a
      * dummy in-memory list, but there are many more practical implementations.
      */
     private final IndexedContainer dummyDataSource = createDummyData();
+
+    private final FormLayout editorLayout = new FormLayout();
+    private final FieldGroup editorFields = new FieldGroup();
+
+    /* User interface components are stored in session. */
+    private final Table contactList = new ContactListTable(dummyDataSource);
+    private final TextField searchField = new SearchField();
+    private final Button addNewContactButton = new AddNewContactButton();
+    private final Button removeContactButton = new RemoveContactButton();
 
     /**
      * After UI class is created, init() is executed. You should build and wire up your
@@ -146,16 +146,16 @@ public class AddressbookUI extends UI {
     }
 
     private class ContactListTable extends Table {
-        public ContactListTable() {
-            contactList.setContainerDataSource(dummyDataSource);
-            contactList.setVisibleColumns(new String[] {FIRST_NAME, LAST_NAME, COMPANY});
-            contactList.setSelectable(true);
-            contactList.setImmediate(true);
+        public ContactListTable(IndexedContainer dataSource) {
+            setContainerDataSource(dataSource);
+            setVisibleColumns(new String[] {FIRST_NAME, LAST_NAME, COMPANY});
+            setSelectable(true);
+            setImmediate(true);
 
-            contactList.addValueChangeListener(new Property.ValueChangeListener() {
+            addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
-                    Object contactId = contactList.getValue();
+                    Object contactId = getValue();
 
                     /*
                      * When a contact is selected from the list, we want to show that in
@@ -164,7 +164,7 @@ public class AddressbookUI extends UI {
                      * at once.
                      */
                     editorFields.setItemDataSource(contactId == null
-                            ? null : contactList.getItem(contactId));
+                            ? null : getItem(contactId));
                     removeContactButton.setVisible(contactId != null);
                 }
             });
@@ -225,7 +225,7 @@ public class AddressbookUI extends UI {
     private class AddNewContactButton extends Button {
         public AddNewContactButton() {
             super("New");
-            addNewContactButton.addClickListener(new ClickListener() {
+            addClickListener(new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
 
@@ -254,7 +254,7 @@ public class AddressbookUI extends UI {
     private class RemoveContactButton extends Button {
         public RemoveContactButton() {
             super("Remove this contact");
-            removeContactButton.addClickListener(new ClickListener() {
+            addClickListener(new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
                     Object contactId = contactList.getValue();

@@ -63,25 +63,37 @@ public class AddressbookUI extends UI {
 		initAddRemoveButtons();
 	}
 
+	// In this example layouts are programmed in Java. You may choose use a
+	// visual editor, CSS or HTML templates for layout instead.
 	private void initLayout() {
+
 		// Root of the user interface component tree is set
 		setContent(splitPanel);
 
-		// In this example layouts are programmed in Java. You may choose use a
-		// visual editor, CSS or HTML templates for layout instead.
+		// Build the component tree
 		splitPanel.addComponent(leftLayout);
-		leftLayout.setSizeFull();
+		splitPanel.addComponent(editorLayout);
 		leftLayout.addComponent(contactList);
-		contactList.setSizeFull();
-		leftLayout.setExpandRatio(contactList, 1);
-		bottomLeftLayout.setWidth("100%");
 		leftLayout.addComponent(bottomLeftLayout);
 		bottomLeftLayout.addComponent(searchField);
-		searchField.setWidth("100%");
-		bottomLeftLayout.setExpandRatio(searchField, 1);
 		bottomLeftLayout.addComponent(addNewContactButton);
 
-		splitPanel.addComponent(editorLayout);
+		// Set the contents in the left of the split panel to use all the space
+		leftLayout.setSizeFull();
+
+		// On the left side, expand the size of the contactList so that it uses
+		// all the space left after from bottomLeftLayout
+		leftLayout.setExpandRatio(contactList, 1);
+		contactList.setSizeFull();
+
+		// In the bottomLeftLayout, searchField takes all the width there is
+		// after adding addNewContactButton. The height of the layout is defined
+		// by the tallest component
+		bottomLeftLayout.setWidth("100%");
+		searchField.setWidth("100%");
+		bottomLeftLayout.setExpandRatio(searchField, 1);
+
+		// Put a little margin around the fields in the right side editor
 		editorLayout.setMargin(true);
 	}
 

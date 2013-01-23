@@ -32,12 +32,9 @@ public class AddressbookUI extends UI {
     private final DummyDataContainer dummyDataSource = new DummyDataContainer();
 
     private final FieldGroup editorFields = new FieldGroup();
-    private final FormLayout editorLayout = new EditorLayout(editorFields);
 
     /* User interface components are stored in session. */
     private final ContactList contactList = new ContactList(dummyDataSource);
-    private final TextField searchField = new SearchField();
-    private final Button addNewContactButton = new AddNewContactButton();
     private final Button removeContactButton = new RemoveContactButton();
 
     /**
@@ -65,13 +62,15 @@ public class AddressbookUI extends UI {
              */
             VerticalLayout leftLayout = new VerticalLayout();
             HorizontalLayout bottomLeftLayout = new HorizontalLayout();
+            FormLayout editorLayout = new EditorLayout(editorFields);
+            TextField searchField = new SearchField();
 
             /* Build the component tree */
             addComponent(leftLayout);
             leftLayout.addComponent(contactList);
             leftLayout.addComponent(bottomLeftLayout);
             bottomLeftLayout.addComponent(searchField);
-            bottomLeftLayout.addComponent(addNewContactButton);
+            bottomLeftLayout.addComponent(new AddNewContactButton());
             addComponent(editorLayout);
             editorLayout.addComponent(removeContactButton);
 

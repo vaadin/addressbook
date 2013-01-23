@@ -29,13 +29,13 @@ public class AddressbookUI extends UI {
      * Any component can be bound to an external data source. This example uses just a
      * dummy in-memory list, but there are many more practical implementations.
      */
-    private final IndexedContainer dummyDataSource = createDummyData();
+    private final DummyDataContainer dummyDataSource = new DummyDataContainer();
 
     private final FormLayout editorLayout = new FormLayout();
     private final FieldGroup editorFields = new FieldGroup();
 
     /* User interface components are stored in session. */
-    private final Table contactList = new ContactListTable(dummyDataSource);
+    private final ContactList contactList = new ContactList(dummyDataSource);
     private final TextField searchField = new SearchField();
     private final Button addNewContactButton = new AddNewContactButton();
     private final Button removeContactButton = new RemoveContactButton();
@@ -120,33 +120,32 @@ public class AddressbookUI extends UI {
      * Generate some in-memory example data to play with. In a real application we could
      * be using SQLContainer, JPAContainer or some other to persist the data.
      */
-    private static IndexedContainer createDummyData() {
-        IndexedContainer container = new IndexedContainer();
-        Random random = new Random();
+    private class DummyDataContainer extends IndexedContainer {
+        public DummyDataContainer() {
+            for (String fieldName : fieldNames) {
+                addContainerProperty(fieldName, String.class, "");
+            }
 
-        for (String fieldName : fieldNames) {
-            container.addContainerProperty(fieldName, String.class, "");
+            /* Create dummy data by randomly combining first and last names */
+            String[] firstNames = {"Peter", "Alice", "Joshua", "Mike", "Olivia", "Nina",
+                    "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene", "Lisa", "Marge"};
+            String[] lastNames = {"Smith", "Gordon", "Simpson", "Brown", "Clavel",
+                    "Simons", "Verne", "Scott", "Allison", "Gates", "Rowling", "Barks",
+                    "Ross", "Schneider", "Tate"};
+            Random random = new Random();
+
+            for (int i = 0; i < 1000; i++) {
+                Object id = addItem();
+                getContainerProperty(id, FIRST_NAME).setValue(
+                        firstNames[random.nextInt(firstNames.length)]);
+                getContainerProperty(id, LAST_NAME).setValue(
+                        lastNames[random.nextInt(firstNames.length)]);
+            }
         }
-
-        /* Create dummy data by randomly combining first and last names */
-        String[] firstNames = {"Peter", "Alice", "Joshua", "Mike", "Olivia", "Nina",
-                "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene", "Lisa", "Marge"};
-        String[] lastNames = {"Smith", "Gordon", "Simpson", "Brown", "Clavel", "Simons",
-                "Verne", "Scott", "Allison", "Gates", "Rowling", "Barks", "Ross",
-                "Schneider", "Tate"};
-        for (int i = 0; i < 1000; i++) {
-            Object id = container.addItem();
-            container.getContainerProperty(id, FIRST_NAME).setValue(
-                    firstNames[random.nextInt(firstNames.length)]);
-            container.getContainerProperty(id, LAST_NAME).setValue(
-                    lastNames[random.nextInt(firstNames.length)]);
-        }
-
-        return container;
     }
 
-    private class ContactListTable extends Table {
-        public ContactListTable(IndexedContainer dataSource) {
+    private class ContactList extends Table {
+        public ContactList(DummyDataContainer dataSource) {
             setContainerDataSource(dataSource);
             setVisibleColumns(new String[] {FIRST_NAME, LAST_NAME, COMPANY});
             setSelectable(true);

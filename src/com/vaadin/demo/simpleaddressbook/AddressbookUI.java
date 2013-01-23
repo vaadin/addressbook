@@ -31,7 +31,7 @@ public class AddressbookUI extends UI {
      */
     private final DummyDataContainer dummyDataSource = new DummyDataContainer();
 
-    private final FormLayout editorLayout = new FormLayout();
+    private final FormLayout editorLayout = new EditorLayout();
     private final FieldGroup editorFields = new FieldGroup();
 
     /* User interface components are stored in session. */
@@ -46,15 +46,10 @@ public class AddressbookUI extends UI {
      */
     @Override
     protected void init(VaadinRequest request) {
-        initLayout();
-        initEditor();
-    }
-
-    /*
-     * In this example layouts are programmed in Java. You may choose use a visual editor,
-     * CSS or HTML templates for layout instead.
-     */
-    private void initLayout() {
+        /*
+         * In this example layouts are programmed in Java. You may choose use a visual
+         * editor, CSS or HTML templates for layout instead.
+         */
         HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
         VerticalLayout leftLayout = new VerticalLayout();
         HorizontalLayout bottomLeftLayout = new HorizontalLayout();
@@ -93,27 +88,28 @@ public class AddressbookUI extends UI {
         editorLayout.setMargin(true);
     }
 
-    private void initEditor() {
-        /* User interface can be created dynamically to reflect underlying data. */
-        for (String fieldName : fieldNames) {
-            TextField field = new TextField(fieldName);
-            editorLayout.addComponent(field);
-            field.setWidth("100%");
+    private class EditorLayout extends FormLayout {
+        public EditorLayout() {
+            for (String fieldName : fieldNames) {
+                TextField field = new TextField(fieldName);
+                addComponent(field);
+                field.setWidth("100%");
+
+                /*
+                 * We use a FieldGroup to connect multiple components to a data source at
+                 * once.
+                 */
+                editorFields.bind(field, fieldName);
+            }
+            addComponent(removeContactButton);
 
             /*
-             * We use a FieldGroup to connect multiple components to a data source at
-             * once.
+             * Data can be buffered in the user interface. When doing so, commit() writes
+             * the changes to the data source. Here we choose to write the changes
+             * automatically without calling commit()
              */
-            editorFields.bind(field, fieldName);
+            editorFields.setBuffered(false);
         }
-        editorLayout.addComponent(removeContactButton);
-
-        /*
-         * Data can be buffered in the user interface. When doing so, commit() writes the
-         * changes to the data source. Here we choose to write the changes automatically
-         * without calling commit()
-         */
-        editorFields.setBuffered(false);
     }
 
     /*

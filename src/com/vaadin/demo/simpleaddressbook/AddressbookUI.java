@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.*;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -30,7 +29,7 @@ public class AddressbookUI extends UI {
     private final FieldGroup editorFields = new FieldGroup();
 
     /* User interface components are stored in session. */
-    private final Table contactList = new Table();
+    private final Table contactList = new ContactListTable();
     private final TextField searchField = new SearchField();
     private final Button addNewContactButton = new AddNewContactButton();
     private final Button removeContactButton = new RemoveContactButton();
@@ -48,7 +47,6 @@ public class AddressbookUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         initLayout();
-        initContactList();
         initEditor();
     }
 
@@ -118,29 +116,6 @@ public class AddressbookUI extends UI {
         editorFields.setBuffered(false);
     }
 
-    private void initContactList() {
-        contactList.setContainerDataSource(dummyDataSource);
-        contactList.setVisibleColumns(new String[] {FIRST_NAME, LAST_NAME, COMPANY});
-        contactList.setSelectable(true);
-        contactList.setImmediate(true);
-
-        contactList.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(ValueChangeEvent event) {
-                Object contactId = contactList.getValue();
-
-                /*
-                 * When a contact is selected from the list, we want to show that in our
-                 * editor on the right. This is nicely done by the FieldGroup that binds
-                 * all the fields to the correcponding Properties in our contact at once.
-                 */
-                editorFields.setItemDataSource(contactId == null
-                        ? null : contactList.getItem(contactId));
-                removeContactButton.setVisible(contactId != null);
-            }
-        });
-    }
-
     /*
      * Generate some in-memory example data to play with. In a real application we could
      * be using SQLContainer, JPAContainer or some other to persist the data.
@@ -170,43 +145,27 @@ public class AddressbookUI extends UI {
         return container;
     }
 
-    private class AddNewContactButton extends Button {
-        public AddNewContactButton() {
-            super("New");
-            addNewContactButton.addClickListener(new ClickListener() {
+    private class ContactListTable extends Table {
+        public ContactListTable() {
+            contactList.setContainerDataSource(dummyDataSource);
+            contactList.setVisibleColumns(new String[] {FIRST_NAME, LAST_NAME, COMPANY});
+            contactList.setSelectable(true);
+            contactList.setImmediate(true);
+
+            contactList.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
-                public void buttonClick(ClickEvent event) {
-
-                    /*
-                     * Rows in the Container data model are called Item. Here we add a new
-                     * row in the beginning of the list.
-                     */
-                    Object contactId = dummyDataSource.addItemAt(0);
-
-                    /*
-                     * Each Item has a set of Properties that hold values. Here we set a
-                     * couple of those.
-                     */
-                    contactList.getContainerProperty(contactId, FIRST_NAME).setValue(
-                            "New");
-                    contactList.getContainerProperty(contactId, LAST_NAME).setValue(
-                            "Contact");
-
-                    /* Lets choose the newly created contact to edit it. */
-                    contactList.select(contactId);
-                }
-            });
-        }
-    }
-
-    private class RemoveContactButton extends Button {
-        public RemoveContactButton() {
-            super("Remove this contact");
-            removeContactButton.addClickListener(new ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
+                public void valueChange(Property.ValueChangeEvent event) {
                     Object contactId = contactList.getValue();
-                    contactList.removeItem(contactId);
+
+                    /*
+                     * When a contact is selected from the list, we want to show that in
+                     * our editor on the right. This is nicely done by the FieldGroup that
+                     * binds all the fields to the correcponding Properties in our contact
+                     * at once.
+                     */
+                    editorFields.setItemDataSource(contactId == null
+                            ? null : contactList.getItem(contactId));
+                    removeContactButton.setVisible(contactId != null);
                 }
             });
         }
@@ -258,6 +217,48 @@ public class AddressbookUI extends UI {
                             return true;
                         }
                     });
+                }
+            });
+        }
+    }
+
+    private class AddNewContactButton extends Button {
+        public AddNewContactButton() {
+            super("New");
+            addNewContactButton.addClickListener(new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+
+                    /*
+                     * Rows in the Container data model are called Item. Here we add a new
+                     * row in the beginning of the list.
+                     */
+                    Object contactId = dummyDataSource.addItemAt(0);
+
+                    /*
+                     * Each Item has a set of Properties that hold values. Here we set a
+                     * couple of those.
+                     */
+                    contactList.getContainerProperty(contactId, FIRST_NAME).setValue(
+                            "New");
+                    contactList.getContainerProperty(contactId, LAST_NAME).setValue(
+                            "Contact");
+
+                    /* Lets choose the newly created contact to edit it. */
+                    contactList.select(contactId);
+                }
+            });
+        }
+    }
+
+    private class RemoveContactButton extends Button {
+        public RemoveContactButton() {
+            super("Remove this contact");
+            removeContactButton.addClickListener(new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    Object contactId = contactList.getValue();
+                    contactList.removeItem(contactId);
                 }
             });
         }

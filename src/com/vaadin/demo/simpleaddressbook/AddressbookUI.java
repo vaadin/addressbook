@@ -132,11 +132,13 @@ public class AddressbookUI extends UI {
 				// contacts that match to our search string.
 				dummyDataSource.addContainerFilter(new Filter() {
 					public boolean passesFilter(Object itemId, Item item) {
-						return ("" + item.getItemProperty(FNAME).getValue()
+						String needle = event.getText().toLowerCase();
+						String haystack = (""
+								+ item.getItemProperty(FNAME).getValue()
 								+ item.getItemProperty(LNAME).getValue() + item
 								.getItemProperty(COMPANY).getValue())
-								.toLowerCase().contains(
-										event.getText().toLowerCase());
+								.toLowerCase();
+						return haystack.contains(needle);
 					}
 
 					public boolean appliesToProperty(Object id) {

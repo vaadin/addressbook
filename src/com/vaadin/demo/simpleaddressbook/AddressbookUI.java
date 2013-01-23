@@ -20,27 +20,27 @@ import com.vaadin.ui.Button.ClickListener;
  * to an existing web page.
  */
 public class AddressbookUI extends UI {
-    FormLayout editorLayout = new FormLayout();
-    FieldGroup editorFields = new FieldGroup();
-
-    /* User interface components are stored in session. */
-    Table contactList = new Table();
-    TextField searchField = new TextField();
-    Button addNewContactButton = new Button("New");
-    Button removeContactButton = new Button("Remove this contact");
-
-    static final String FNAME = "First Name";
-    static final String LNAME = "Last Name";
-    static final String COMPANY = "Company";
-    static final String[] fieldNames = new String[] {FNAME, LNAME, COMPANY,
+    private static final String FNAME = "First Name";
+    private static final String LNAME = "Last Name";
+    private static final String COMPANY = "Company";
+    private static final String[] fieldNames = new String[] {FNAME, LNAME, COMPANY,
             "Mobile Phone", "Work Phone", "Home Phone", "Work Email", "Home Email",
             "Street", "City", "Zip", "State", "Country"};
+
+    private final FormLayout editorLayout = new FormLayout();
+    private final FieldGroup editorFields = new FieldGroup();
+
+    /* User interface components are stored in session. */
+    private final Table contactList = new Table();
+    private final TextField searchField = new TextField();
+    private final Button addNewContactButton = new Button("New");
+    private final Button removeContactButton = new Button("Remove this contact");
 
     /**
      * Any component can be bound to an external data source. This example uses just a
      * dummy in-memory list, but there are many more practical implementations.
      */
-    IndexedContainer dummyDataSource = createDummyData();
+    private final IndexedContainer dummyDataSource = createDummyData();
 
     /**
      * After UI class is created, init() is executed. You should build and wire up your

@@ -1,7 +1,5 @@
 package com.vaadin.demo.simpleaddressbook;
 
-import java.util.Collection;
-
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;

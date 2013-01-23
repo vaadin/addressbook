@@ -1,6 +1,5 @@
-package com.vaadin.demo.simpleaddressbook;
+package com.vaadin.tutorial.addressbook;
 
-import com.sun.xml.internal.bind.v2.model.annotation.FieldLocatable;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -14,7 +13,6 @@ import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;

@@ -31,8 +31,8 @@ public class AddressbookUI extends UI {
      */
     private final DummyDataContainer dummyDataSource = new DummyDataContainer();
 
-    private final FormLayout editorLayout = new EditorLayout();
     private final FieldGroup editorFields = new FieldGroup();
+    private final FormLayout editorLayout = new EditorLayout(editorFields);
 
     /* User interface components are stored in session. */
     private final ContactList contactList = new ContactList(dummyDataSource);
@@ -46,50 +46,61 @@ public class AddressbookUI extends UI {
      */
     @Override
     protected void init(VaadinRequest request) {
-        /*
-         * In this example layouts are programmed in Java. You may choose use a visual
-         * editor, CSS or HTML templates for layout instead.
-         */
-        HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
-        VerticalLayout leftLayout = new VerticalLayout();
-        HorizontalLayout bottomLeftLayout = new HorizontalLayout();
-
         /* Root of the user interface component tree is set */
-        setContent(splitPanel);
-
-        /* Build the component tree */
-        splitPanel.addComponent(leftLayout);
-        splitPanel.addComponent(editorLayout);
-        leftLayout.addComponent(contactList);
-        leftLayout.addComponent(bottomLeftLayout);
-        bottomLeftLayout.addComponent(searchField);
-        bottomLeftLayout.addComponent(addNewContactButton);
-
-        /* Set the contents in the left of the split panel to use all the space */
-        leftLayout.setSizeFull();
+        setContent(new ContentPanel());
 
         /*
-         * On the left side, expand the size of the contactList so that it uses all the
-         * space left after from bottomLeftLayout
+         * Data can be buffered in the user interface. When doing so, commit() writes the
+         * changes to the data source. Here we choose to write the changes automatically
+         * without calling commit()
          */
-        leftLayout.setExpandRatio(contactList, 1);
-        contactList.setSizeFull();
+        editorFields.setBuffered(false);
+    }
 
-        /*
-         * In the bottomLeftLayout, searchField takes all the width there is after adding
-         * addNewContactButton. The height of the layout is defined by the tallest
-         * component
-         */
-        bottomLeftLayout.setWidth("100%");
-        searchField.setWidth("100%");
-        bottomLeftLayout.setExpandRatio(searchField, 1);
+    private class ContentPanel extends HorizontalSplitPanel {
+        public ContentPanel() {
+            /*
+             * In this example layouts are programmed in Java. You may choose use a visual
+             * editor, CSS or HTML templates for layout instead.
+             */
+            VerticalLayout leftLayout = new VerticalLayout();
+            HorizontalLayout bottomLeftLayout = new HorizontalLayout();
 
-        /* Put a little margin around the fields in the right side editor */
-        editorLayout.setMargin(true);
+            /* Build the component tree */
+            addComponent(leftLayout);
+            leftLayout.addComponent(contactList);
+            leftLayout.addComponent(bottomLeftLayout);
+            bottomLeftLayout.addComponent(searchField);
+            bottomLeftLayout.addComponent(addNewContactButton);
+            addComponent(editorLayout);
+            editorLayout.addComponent(removeContactButton);
+
+            /* Set the contents in the left of the split panel to use all the space */
+            leftLayout.setSizeFull();
+
+            /*
+             * On the left side, expand the size of the contactList so that it uses all
+             * the space left after from bottomLeftLayout
+             */
+            leftLayout.setExpandRatio(contactList, 1);
+            contactList.setSizeFull();
+
+            /*
+             * In the bottomLeftLayout, searchField takes all the width there is after
+             * adding addNewContactButton. The height of the layout is defined by the
+             * tallest component
+             */
+            bottomLeftLayout.setWidth("100%");
+            searchField.setWidth("100%");
+            bottomLeftLayout.setExpandRatio(searchField, 1);
+
+            /* Put a little margin around the fields in the right side editor */
+            editorLayout.setMargin(true);
+        }
     }
 
     private class EditorLayout extends FormLayout {
-        public EditorLayout() {
+        public EditorLayout(FieldGroup fieldGroup) {
             for (String fieldName : fieldNames) {
                 TextField field = new TextField(fieldName);
                 addComponent(field);
@@ -99,16 +110,8 @@ public class AddressbookUI extends UI {
                  * We use a FieldGroup to connect multiple components to a data source at
                  * once.
                  */
-                editorFields.bind(field, fieldName);
+                fieldGroup.bind(field, fieldName);
             }
-            addComponent(removeContactButton);
-
-            /*
-             * Data can be buffered in the user interface. When doing so, commit() writes
-             * the changes to the data source. Here we choose to write the changes
-             * automatically without calling commit()
-             */
-            editorFields.setBuffered(false);
         }
     }
 
@@ -234,9 +237,9 @@ public class AddressbookUI extends UI {
                      * Each Item has a set of Properties that hold values. Here we set a
                      * couple of those.
                      */
-                    contactList.getContainerProperty(contactId, FIRST_NAME).setValue(
+                    dummyDataSource.getContainerProperty(contactId, FIRST_NAME).setValue(
                             "New");
-                    contactList.getContainerProperty(contactId, LAST_NAME).setValue(
+                    dummyDataSource.getContainerProperty(contactId, LAST_NAME).setValue(
                             "Contact");
 
                     /* Lets choose the newly created contact to edit it. */
@@ -252,8 +255,7 @@ public class AddressbookUI extends UI {
             addClickListener(new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    Object contactId = contactList.getValue();
-                    contactList.removeItem(contactId);
+                    contactList.removeItem(contactList.getValue());
                 }
             });
         }

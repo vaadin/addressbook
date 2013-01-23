@@ -1,5 +1,7 @@
 package com.vaadin.demo.simpleaddressbook;
 
+import java.util.Random;
+
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.*;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -20,12 +22,12 @@ import com.vaadin.ui.Button.ClickListener;
  * to an existing web page.
  */
 public class AddressbookUI extends UI {
-    private static final String FNAME = "First Name";
-    private static final String LNAME = "Last Name";
+    private static final String FIRST_NAME = "First Name";
+    private static final String LAST_NAME = "Last Name";
     private static final String COMPANY = "Company";
-    private static final String[] fieldNames = new String[] {FNAME, LNAME, COMPANY,
-            "Mobile Phone", "Work Phone", "Home Phone", "Work Email", "Home Email",
-            "Street", "City", "Zip", "State", "Country"};
+    private static final String[] fieldNames = new String[] {FIRST_NAME, LAST_NAME,
+            COMPANY, "Mobile Phone", "Work Phone", "Home Phone", "Work Email",
+            "Home Email", "Street", "City", "Zip", "State", "Country"};
 
     private final FormLayout editorLayout = new FormLayout();
     private final FieldGroup editorFields = new FieldGroup();
@@ -157,8 +159,8 @@ public class AddressbookUI extends UI {
                     @Override
                     public boolean passesFilter(Object itemId, Item item) {
                         String needle = event.getText().toLowerCase();
-                        String haystack = ("" + item.getItemProperty(FNAME).getValue() + item.getItemProperty(
-                                LNAME).getValue() + item.getItemProperty(COMPANY).getValue()).toLowerCase();
+                        String haystack = ("" + item.getItemProperty(FIRST_NAME).getValue() + item.getItemProperty(
+                                LAST_NAME).getValue() + item.getItemProperty(COMPANY).getValue()).toLowerCase();
                         return haystack.contains(needle);
                     }
 
@@ -186,8 +188,8 @@ public class AddressbookUI extends UI {
                  * Each Item has a set of Properties that hold values. Here we set a
                  * couple of those.
                  */
-                contactList.getContainerProperty(contactId, FNAME).setValue("New");
-                contactList.getContainerProperty(contactId, LNAME).setValue("Contact");
+                contactList.getContainerProperty(contactId, FIRST_NAME).setValue("New");
+                contactList.getContainerProperty(contactId, LAST_NAME).setValue("Contact");
 
                 /* Lets choose the newly created contact to edit it. */
                 contactList.select(contactId);
@@ -205,7 +207,7 @@ public class AddressbookUI extends UI {
 
     private void initContactList() {
         contactList.setContainerDataSource(dummyDataSource);
-        contactList.setVisibleColumns(new String[] {FNAME, LNAME, COMPANY});
+        contactList.setVisibleColumns(new String[] {FIRST_NAME, LAST_NAME, COMPANY});
         contactList.setSelectable(true);
         contactList.setImmediate(true);
 
@@ -231,26 +233,27 @@ public class AddressbookUI extends UI {
      * be using SQLContainer, JPAContainer or some other to persist the data.
      */
     private static IndexedContainer createDummyData() {
-        IndexedContainer ic = new IndexedContainer();
+        IndexedContainer container = new IndexedContainer();
+        Random random = new Random();
 
-        for (String p : fieldNames) {
-            ic.addContainerProperty(p, String.class, "");
+        for (String fieldName : fieldNames) {
+            container.addContainerProperty(fieldName, String.class, "");
         }
 
         /* Create dummy data by randomly combining first and last names */
-        String[] fnames = {"Peter", "Alice", "Joshua", "Mike", "Olivia", "Nina", "Alex",
-                "Rita", "Dan", "Umberto", "Henrik", "Rene", "Lisa", "Marge"};
-        String[] lnames = {"Smith", "Gordon", "Simpson", "Brown", "Clavel", "Simons",
+        String[] firstNames = {"Peter", "Alice", "Joshua", "Mike", "Olivia", "Nina",
+                "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene", "Lisa", "Marge"};
+        String[] lastNames = {"Smith", "Gordon", "Simpson", "Brown", "Clavel", "Simons",
                 "Verne", "Scott", "Allison", "Gates", "Rowling", "Barks", "Ross",
                 "Schneider", "Tate"};
         for (int i = 0; i < 1000; i++) {
-            Object id = ic.addItem();
-            ic.getContainerProperty(id, FNAME).setValue(
-                    fnames[(int) (fnames.length * Math.random())]);
-            ic.getContainerProperty(id, LNAME).setValue(
-                    lnames[(int) (lnames.length * Math.random())]);
+            Object id = container.addItem();
+            container.getContainerProperty(id, FIRST_NAME).setValue(
+                    firstNames[random.nextInt(firstNames.length)]);
+            container.getContainerProperty(id, LAST_NAME).setValue(
+                    lastNames[random.nextInt(firstNames.length)]);
         }
 
-        return ic;
+        return container;
     }
 }

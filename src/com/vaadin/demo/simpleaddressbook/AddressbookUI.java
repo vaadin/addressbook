@@ -20,10 +20,6 @@ import com.vaadin.ui.Button.ClickListener;
  * to an existing web page.
  */
 public class AddressbookUI extends UI {
-
-    HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
-    VerticalLayout leftLayout = new VerticalLayout();
-    HorizontalLayout bottomLeftLayout = new HorizontalLayout();
     FormLayout editorLayout = new FormLayout();
     FieldGroup editorFields = new FieldGroup();
 
@@ -64,6 +60,9 @@ public class AddressbookUI extends UI {
      * CSS or HTML templates for layout instead.
      */
     private void initLayout() {
+        HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
+        VerticalLayout leftLayout = new VerticalLayout();
+        HorizontalLayout bottomLeftLayout = new HorizontalLayout();
 
         /* Root of the user interface component tree is set */
         setContent(splitPanel);
@@ -100,7 +99,6 @@ public class AddressbookUI extends UI {
     }
 
     private void initEditor() {
-
         /* User interface can be created dynamically to reflect underlying data. */
         for (String fieldName : fieldNames) {
             TextField field = new TextField(fieldName);

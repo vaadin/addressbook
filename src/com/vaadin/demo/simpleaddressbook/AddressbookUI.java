@@ -29,29 +29,29 @@ import com.vaadin.ui.VerticalLayout;
 // embed your UI to an existing web page. 
 public class AddressbookUI extends UI {
 
-	private HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
+	HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 	VerticalLayout leftLayout = new VerticalLayout();
-	private HorizontalLayout bottomLeftLayout = new HorizontalLayout();
+	HorizontalLayout bottomLeftLayout = new HorizontalLayout();
 	FormLayout editorLayout = new FormLayout();
 	FieldGroup editorFields = new FieldGroup();
 
 	// User interface components are stored in session.
-	private Table contactList = new Table();
-	private TextField searchField = new TextField();
-	private Button addNewContactButton = new Button("New");
-	private Button removeContactButton = new Button("Remove this contact");
+	Table contactList = new Table();
+	TextField searchField = new TextField();
+	Button addNewContactButton = new Button("New");
+	Button removeContactButton = new Button("Remove this contact");
 
-	private static String FNAME = "First Name";
-	private static String LNAME = "Last Name";
-	private static String COMPANY = "Company";
-	private static String[] fieldNames = new String[] { FNAME, LNAME, COMPANY,
+	static final String FNAME = "First Name";
+	static final String LNAME = "Last Name";
+	static final String COMPANY = "Company";
+	static final String[] fieldNames = new String[] { FNAME, LNAME, COMPANY,
 			"Mobile Phone", "Work Phone", "Home Phone", "Work Email",
 			"Home Email", "Street", "City", "Zip", "State", "Country" };
 
 	// Any component can be bound to an external data source. This example uses
 	// just a dummy in-memory list, but there are many more practical
 	// implementations.
-	private IndexedContainer dummyDataSource = createDummyData();
+	IndexedContainer dummyDataSource = createDummyData();
 
 	// After UI class is created, init() is executed. You should build and wire
 	// up your user interface here.

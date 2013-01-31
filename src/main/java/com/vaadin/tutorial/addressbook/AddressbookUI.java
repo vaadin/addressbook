@@ -10,9 +10,11 @@ import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
@@ -109,6 +111,8 @@ public class AddressbookUI extends UI {
 
 	private void initEditor() {
 
+		editorLayout.addComponent(removeContactButton);
+
 		/* User interface can be created dynamically to reflect underlying data. */
 		for (String fieldName : fieldNames) {
 			TextField field = new TextField(fieldName);
@@ -121,7 +125,6 @@ public class AddressbookUI extends UI {
 			 */
 			editorFields.bind(field, fieldName);
 		}
-		editorLayout.addComponent(removeContactButton);
 
 		/*
 		 * Data can be buffered in the user interface. When doing so, commit()

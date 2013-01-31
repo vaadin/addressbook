@@ -5,12 +5,12 @@
 	<groupId>com.vaadin.tutorial</groupId>
 	<artifactId>addressbook</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>Vaadin Web Application</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>7.0.0.rc1</vaadin.version>
+		<vaadin.version>7.0.0.rc2</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 	</properties>
 	<repositories>

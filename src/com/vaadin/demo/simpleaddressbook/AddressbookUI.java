@@ -54,48 +54,54 @@ public class AddressbookUI extends UI {
         editorFields.setBuffered(false);
     }
 
+    /**
+     * In this example layouts are programmed in Java. You may choose use a visual editor,
+     * CSS or HTML templates for layout instead.
+     */
     private class ContentPanel extends HorizontalSplitPanel {
         public ContentPanel() {
-            /*
-             * In this example layouts are programmed in Java. You may choose use a visual
-             * editor, CSS or HTML templates for layout instead.
-             */
-            VerticalLayout leftLayout = new VerticalLayout();
-            HorizontalLayout bottomLeftLayout = new HorizontalLayout();
-            FormLayout editorLayout = new EditorLayout(editorFields);
-            TextField searchField = new SearchField();
-
             /* Build the component tree */
-            addComponent(leftLayout);
-            leftLayout.addComponent(contactList);
-            leftLayout.addComponent(bottomLeftLayout);
-            bottomLeftLayout.addComponent(searchField);
-            bottomLeftLayout.addComponent(new AddNewContactButton());
-            addComponent(editorLayout);
-            editorLayout.addComponent(removeContactButton);
+            addComponent(new VerticalLayout() {
+                {
+                    /*
+                     * On the left side, expand the size of the contactList so that it
+                     * uses all the space left after from bottomLeftLayout
+                     */
+                    addExpanding(contactList, this);
+                    addComponent(new HorizontalLayout() {
+                        {
+                            /*
+                             * In the bottomLeftLayout, searchField takes all the width
+                             * there is after adding addNewContactButton. The height of
+                             * the layout is defined by the tallest component
+                             */
+                            addExpanding(new SearchField(), this);
+                            addComponent(new AddNewContactButton());
 
-            /* Set the contents in the left of the split panel to use all the space */
-            leftLayout.setSizeFull();
+                            setWidth("100%");
+                        }
+                    });
 
-            /*
-             * On the left side, expand the size of the contactList so that it uses all
-             * the space left after from bottomLeftLayout
-             */
-            leftLayout.setExpandRatio(contactList, 1);
-            contactList.setSizeFull();
+                    /*
+                     * Set the contents in the left of the split panel to use all the
+                     * space
+                     */
+                    setSizeFull();
 
-            /*
-             * In the bottomLeftLayout, searchField takes all the width there is after
-             * adding addNewContactButton. The height of the layout is defined by the
-             * tallest component
-             */
-            bottomLeftLayout.setWidth("100%");
-            searchField.setWidth("100%");
-            bottomLeftLayout.setExpandRatio(searchField, 1);
-
-            /* Put a little margin around the fields in the right side editor */
-            editorLayout.setMargin(true);
+                }
+            });
+            addComponent(new EditorLayout(editorFields) {
+                {
+                    addComponent(removeContactButton);
+                }
+            });
         }
+    }
+
+    public static void addExpanding(Component component, AbstractOrderedLayout layout) {
+        layout.addComponent(component);
+        layout.setExpandRatio(component, 1);
+        component.setSizeFull();
     }
 
     private class EditorLayout extends FormLayout {
@@ -111,6 +117,9 @@ public class AddressbookUI extends UI {
                  */
                 fieldGroup.bind(field, fieldName);
             }
+
+            /* Put a little margin around the fields in the right side editor */
+            setMargin(true);
         }
     }
 

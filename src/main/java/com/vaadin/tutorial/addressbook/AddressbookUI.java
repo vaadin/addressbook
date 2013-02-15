@@ -159,14 +159,11 @@ public class AddressbookUI extends UI {
 		 * MVP) instead. In the end, the preferred application architecture is
 		 * up to you.
 		 */
-		searchField.addTextChangeListener(new TextChangeListener() {
-			public void textChange(final TextChangeEvent event) {
+		searchField.addTextChangeListener(e -> {
 
 				/* Reset the filter for the contactContainer. */
 				contactContainer.removeAllContainerFilters();
-				contactContainer.addContainerFilter(new ContactFilter(event
-						.getText()));
-			}
+				contactContainer.addContainerFilter(new ContactFilter(e.getText()));
 		});
 	}
 
@@ -194,36 +191,27 @@ public class AddressbookUI extends UI {
 	}
 
 	private void initAddRemoveButtons() {
-		addNewContactButton.addClickListener(new ClickListener() {
-			public void buttonClick(ClickEvent event) {
+		addNewContactButton.addClickListener(e -> {
 
-				/*
-				 * Rows in the Container data model are called Item. Here we add
-				 * a new row in the beginning of the list.
-				 */
-				contactContainer.removeAllContainerFilters();
-				Object contactId = contactContainer.addItemAt(0);
+			/*
+			 * Rows in the Container data model are called Item. Here we add
+			 * a new row in the beginning of the list.
+			 */
+			contactContainer.removeAllContainerFilters();
+			Object contactId = contactContainer.addItemAt(0);
 
-				/*
-				 * Each Item has a set of Properties that hold values. Here we
-				 * set a couple of those.
-				 */
-				contactList.getContainerProperty(contactId, FNAME).setValue(
-						"New");
-				contactList.getContainerProperty(contactId, LNAME).setValue(
-						"Contact");
+			/*
+			 * Each Item has a set of Properties that hold values. Here we
+			 * set a couple of those.
+			 */
+			contactList.getContainerProperty(contactId, FNAME).setValue("New");
+			contactList.getContainerProperty(contactId, LNAME).setValue("Contact");
 
-				/* Lets choose the newly created contact to edit it. */
-				contactList.select(contactId);
-			}
+			/* Lets choose the newly created contact to edit it. */
+			contactList.select(contactId);
 		});
 
-		removeContactButton.addClickListener(new ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				Object contactId = contactList.getValue();
-				contactList.removeItem(contactId);
-			}
-		});
+		removeContactButton.addClickListener(e -> contactList.removeItem(contactList.getValue()));
 	}
 
 	private void initContactList() {
@@ -232,22 +220,20 @@ public class AddressbookUI extends UI {
 		contactList.setSelectable(true);
 		contactList.setImmediate(true);
 
-		contactList.addValueChangeListener(new Property.ValueChangeListener() {
-			public void valueChange(ValueChangeEvent event) {
-				Object contactId = contactList.getValue();
+		contactList.addValueChangeListener(e -> {
+			Object contactId = contactList.getValue();
 
-				/*
-				 * When a contact is selected from the list, we want to show
-				 * that in our editor on the right. This is nicely done by the
-				 * FieldGroup that binds all the fields to the corresponding
-				 * Properties in our contact at once.
-				 */
-				if (contactId != null)
-					editorFields.setItemDataSource(contactList
-							.getItem(contactId));
-				
-				editorLayout.setVisible(contactId != null);
-			}
+			/*
+			 * When a contact is selected from the list, we want to show
+			 * that in our editor on the right. This is nicely done by the
+			 * FieldGroup that binds all the fields to the corresponding
+			 * Properties in our contact at once.
+			 */
+			if (contactId != null)
+				editorFields.setItemDataSource(contactList
+						.getItem(contactId));
+			
+			editorLayout.setVisible(contactId != null);
 		});
 	}
 

@@ -10,6 +10,12 @@ Running the example
 -------------------
 mvn jetty:run
 
+Jetty scans the classpath every three seconds for updates and redeploys if it finds changes on classes.
+
+mvn jetty:stop
+
+Stops Jetty.
+
 
 Importing in Eclipse
 --------------------

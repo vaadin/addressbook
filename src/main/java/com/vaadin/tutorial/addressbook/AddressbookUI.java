@@ -1,5 +1,6 @@
 package com.vaadin.tutorial.addressbook;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Item;
@@ -29,6 +30,7 @@ import com.vaadin.ui.VerticalLayout;
  * embed your UI to an existing web page. 
  */
 @Title("Addressbook")
+@Theme("valo")
 public class AddressbookUI extends UI {
 
 	/* User interface components are stored in session. */

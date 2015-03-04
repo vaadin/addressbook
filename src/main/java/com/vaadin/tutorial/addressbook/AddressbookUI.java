@@ -7,7 +7,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.data.util.BeanContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.VaadinRequest;
@@ -23,6 +23,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+
 /* 
  * UI class is the starting point for your app. You may deploy it with VaadinServlet
  * or VaadinPortlet by giving your UI class name a parameter. When you browse to your
@@ -34,31 +35,24 @@ import com.vaadin.ui.VerticalLayout;
 public class AddressbookUI extends UI {
 
 	/* User interface components are stored in session. */
-	private Table contactList = new Table();
-	private TextField searchField = new TextField();
-	private Button addNewContactButton = new Button("New");
-	private Button removeContactButton = new Button("Remove this contact");
-	private FormLayout editorLayout = new FormLayout();
-	private FieldGroup editorFields = new FieldGroup();
+	private final Table contactTable = new Table();
+	private final TextField searchField = new TextField();
+	private final Button addNewContactButton = new Button("New");
+	private final Button removeContactButton = new Button("Remove this contact");
+	private final FormLayout editorLayout = new FormLayout();
+	private final FieldGroup editorFields = new FieldGroup();
 
-	private static final String FNAME = "First Name";
-	private static final String LNAME = "Last Name";
-	private static final String COMPANY = "Company";
-	private static final String[] fieldNames = new String[] { FNAME, LNAME,
-			COMPANY, "Mobile Phone", "Work Phone", "Home Phone", "Work Email",
-			"Home Email", "Street", "City", "Zip", "State", "Country" };
-
-	/*
-	 * Any component can be bound to an external data source. This example uses
-	 * just a dummy in-memory list, but there are many more practical
-	 * implementations.
+	/* We use an in-memory datasource of POJOs, but this could be even
+	 * an injected EJB, JDBC SQL datasource, or a JAX-RS datasource.
 	 */
-	IndexedContainer contactContainer = createDummyDatasource();
+        private BeanContainer contactContainer;
+        
 
 	/*
 	 * After UI class is created, init() is executed. You should build and wire
 	 * up your user interface here.
 	 */
+        @Override
 	protected void init(VaadinRequest request) {
 		initLayout();
 		initContactList();
@@ -81,7 +75,7 @@ public class AddressbookUI extends UI {
 		VerticalLayout leftLayout = new VerticalLayout();
 		splitPanel.addComponent(leftLayout);
 		splitPanel.addComponent(editorLayout);
-		leftLayout.addComponent(contactList);
+		leftLayout.addComponent(contactTable);
 		HorizontalLayout bottomLeftLayout = new HorizontalLayout();
 		leftLayout.addComponent(bottomLeftLayout);
 		bottomLeftLayout.addComponent(searchField);
@@ -94,8 +88,8 @@ public class AddressbookUI extends UI {
 		 * On the left side, expand the size of the contactList so that it uses
 		 * all the space left after from bottomLeftLayout
 		 */
-		leftLayout.setExpandRatio(contactList, 1);
-		contactList.setSizeFull();
+		leftLayout.setExpandRatio(contactTable, 1);
+		contactTable.setSizeFull();
 
 		/*
 		 * In the bottomLeftLayout, searchField takes all the width there is
@@ -116,7 +110,7 @@ public class AddressbookUI extends UI {
 		editorLayout.addComponent(removeContactButton);
 
 		/* User interface can be created dynamically to reflect underlying data. */
-		for (String fieldName : fieldNames) {
+		for (String fieldName : Addressbook.getEditableFields()) {
 			TextField field = new TextField(fieldName);
 			editorLayout.addComponent(field);
 			field.setWidth("100%");
@@ -177,19 +171,22 @@ public class AddressbookUI extends UI {
 	 * contactContainer.
 	 */
 	private class ContactFilter implements Filter {
-		private String needle;
+		private final String needle;
 
 		public ContactFilter(String needle) {
 			this.needle = needle.toLowerCase();
 		}
 
-		public boolean passesFilter(Object itemId, Item item) {
-			String haystack = ("" + item.getItemProperty(FNAME).getValue()
-					+ item.getItemProperty(LNAME).getValue() + item
-					.getItemProperty(COMPANY).getValue()).toLowerCase();
+                @Override
+		public boolean passesFilter(Object itemId, Item item) {                        
+                        Person person =  (Person) contactContainer.getItem(itemId).getBean();
+			String haystack = ("" + person.getFirstName()+
+                                " "+ person.getLastName() +
+                                " "+ person.getCompany()).toLowerCase();
 			return haystack.contains(needle);
 		}
 
+                @Override
 		public boolean appliesToProperty(Object id) {
 			return true;
 		}
@@ -197,46 +194,47 @@ public class AddressbookUI extends UI {
 
 	private void initAddRemoveButtons() {
 		addNewContactButton.addClickListener(new ClickListener() {
+                    private Person currentPerson;
+                    
+                        @Override
 			public void buttonClick(ClickEvent event) {
 
-				/*
-				 * Rows in the Container data model are called Item. Here we add
-				 * a new row in the beginning of the list.
-				 */
-				contactContainer.removeAllContainerFilters();
-				Object contactId = contactContainer.addItemAt(0);
-
-				/*
-				 * Each Item has a set of Properties that hold values. Here we
-				 * set a couple of those.
-				 */
-				contactList.getContainerProperty(contactId, FNAME).setValue(
-						"New");
-				contactList.getContainerProperty(contactId, LNAME).setValue(
-						"Contact");
-
-				/* Lets choose the newly created contact to edit it. */
-				contactList.select(contactId);
+                                // Create a new person and select that
+                                Person person = new Person();
+				person.setFirstName("New");
+				person.setFirstName("Contact");
+                                contactContainer.addBean(person);
+                                
+                                /* Lets choose the newly created contact to edit it. */
+				contactTable.select(person);
 			}
 		});
 
 		removeContactButton.addClickListener(new ClickListener() {
+                        @Override
 			public void buttonClick(ClickEvent event) {
-				Object contactId = contactList.getValue();
-				contactList.removeItem(contactId);
+				Person person = (Person)contactTable.getValue();
+				contactContainer.removeItem(person);
 			}
 		});
 	}
 
 	private void initContactList() {
-		contactList.setContainerDataSource(contactContainer);
-		contactList.setVisibleColumns(new String[] { FNAME, LNAME, COMPANY });
-		contactList.setSelectable(true);
-		contactList.setImmediate(true);
+		
+                // Bind the data to the list
+                contactContainer = new BeanContainer(Person.class);
+                contactContainer.setBeanIdProperty(Person.ID_PROPERTY);
+                contactContainer.addAll(Addressbook.getAllContacts());                
+                contactTable.setContainerDataSource(contactContainer);
+                
+		contactTable.setVisibleColumns(Addressbook.getListFields());
+		contactTable.setSelectable(true);
+		contactTable.setImmediate(true);
 
-		contactList.addValueChangeListener(new Property.ValueChangeListener() {
+		contactTable.addValueChangeListener(new Property.ValueChangeListener() {
+                        @Override
 			public void valueChange(ValueChangeEvent event) {
-				Object contactId = contactList.getValue();
+				Object contactId = contactTable.getValue();
 
 				/*
 				 * When a contact is selected from the list, we want to show
@@ -245,42 +243,12 @@ public class AddressbookUI extends UI {
 				 * Properties in our contact at once.
 				 */
 				if (contactId != null)
-					editorFields.setItemDataSource(contactList
+					editorFields.setItemDataSource(contactTable
 							.getItem(contactId));
 				
 				editorLayout.setVisible(contactId != null);
 			}
 		});
-	}
-
-	/*
-	 * Generate some in-memory example data to play with. In a real application
-	 * we could be using SQLContainer, JPAContainer or some other to persist the
-	 * data.
-	 */
-	private static IndexedContainer createDummyDatasource() {
-		IndexedContainer ic = new IndexedContainer();
-
-		for (String p : fieldNames) {
-			ic.addContainerProperty(p, String.class, "");
-		}
-
-		/* Create dummy data by randomly combining first and last names */
-		String[] fnames = { "Peter", "Alice", "Joshua", "Mike", "Olivia",
-				"Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene",
-				"Lisa", "Marge" };
-		String[] lnames = { "Smith", "Gordon", "Simpson", "Brown", "Clavel",
-				"Simons", "Verne", "Scott", "Allison", "Gates", "Rowling",
-				"Barks", "Ross", "Schneider", "Tate" };
-		for (int i = 0; i < 1000; i++) {
-			Object id = ic.addItem();
-			ic.getContainerProperty(id, FNAME).setValue(
-					fnames[(int) (fnames.length * Math.random())]);
-			ic.getContainerProperty(id, LNAME).setValue(
-					lnames[(int) (lnames.length * Math.random())]);
-		}
-
-		return ic;
 	}
 
 }

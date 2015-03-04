@@ -16,31 +16,43 @@ public class Addressbook {
     private static final int NUMBER_OF_ENTRIES = 1000;
 
     private static final List<Person> allContacts;
+    private static int idSequence = 0;
 
-    private static final String FIRST_NAME = "firstName";
-    private static final String LAST_NAME = "lastName";
-    private static final String COMPANY = "company";
+    private static final String[] listFields = new String[]{"firstName", "lastName", "company"};
+    private static final String[] listFieldCaptions = new String[]{"First name", "Last name", "Company"};
 
-    private static final String[] listFields = new String[]{FIRST_NAME, LAST_NAME};
-    private static final String[] editableFields = new String[]{FIRST_NAME, LAST_NAME,
-        COMPANY, "phone", "email", "street", "city", "zip", "state", "country"};
+    private static final String[] editableFields = new String[]{"firstName", "lastName",
+        "company", "phone", "email", "street", "city", "zip", "state", "country"};
+    private static final String[] editableFieldCaptions = new String[]{"First name", "Last name",
+        "Company", "Phone", "Email", "Street", "City", "Zip code", "State", "Country"};
 
     static {
 
         /* Create dummy data by randomly combining first and last names */
-        String[] fnames = {"Peter", "Alice", "Joshua", "Mike", "Olivia",
+        String[] fnames = {"Peter", "Alice", "John", "Mike", "Olivia",
             "Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene",
-            "Lisa", "Marge"};
-        String[] lnames = {"Smith", "Gordon", "Simpson", "Brown", "Clavel",
-            "Simons", "Verne", "Scott", "Allison", "Gates", "Rowling",
-            "Barks", "Ross", "Schneider", "Tate"};
+            "Lisa", "Linda", "Timothy", "Daniel", "Brian", "George", "Scott",
+            "Jennifer"};
+        String[] lnames = {"Smith",
+            "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller",
+            "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson",
+            "White", "Harris", "Martin", "Thompson", "Young",
+            "King", "Robinson"};
+        String[] companies = {"Sinopec Group", "Wal-Mart Stores, Inc",
+            "China National Petroleum Corporation", "", "Royal Dutch Shell",
+            "ExxonMobil", "BP", "Saudi Aramco", "State Grid Corporation of China",
+            "Vitol", "Volkswagen Group",
+            "Total", "Toyota", "Glencore Xstrata", "Chevron",
+            "Samsung Electronics", "Apple", "Berkshire Hathaway",
+            "China Railway Corporation", "Phillips 66", "E.ON"};
 
         allContacts = new ArrayList<Person>(NUMBER_OF_ENTRIES);
         for (int i = 0; i < NUMBER_OF_ENTRIES; i++) {
             Person person = new Person();
-            person.setId(i);
+            person.setId(generateNewId());
             person.setFirstName(fnames[(int) (fnames.length * Math.random())]);
             person.setLastName(lnames[(int) (lnames.length * Math.random())]);
+            person.setCompany(companies[(int) (companies.length * Math.random())]);
             allContacts.add(person);
         }
 
@@ -72,4 +84,17 @@ public class Addressbook {
     public static String[] getListFields() {
         return listFields;
     }
+
+    public static String[] getListFieldCaptions() {
+        return listFieldCaptions;
+    }
+
+    public static String[] getEditableFieldCaptions() {
+        return editableFieldCaptions;
+    }
+
+    static Integer generateNewId() {
+        return idSequence++;
+    }
+
 }

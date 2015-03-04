@@ -18,10 +18,12 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 
 /* 
@@ -37,7 +39,7 @@ public class AddressbookUI extends UI {
 	/* User interface components are stored in session. */
 	private final Table contactTable = new Table();
 	private final TextField searchField = new TextField();
-	private final Button addNewContactButton = new Button("New");
+	private final Button addNewContactButton = new Button("New contact...");
 	private final Button removeContactButton = new Button("Remove this contact");
 	private final FormLayout editorLayout = new FormLayout();
 	private final FieldGroup editorFields = new FieldGroup();
@@ -75,11 +77,11 @@ public class AddressbookUI extends UI {
 		VerticalLayout leftLayout = new VerticalLayout();
 		splitPanel.addComponent(leftLayout);
 		splitPanel.addComponent(editorLayout);
+		HorizontalLayout topLeftLayout = new HorizontalLayout();
+		leftLayout.addComponent(topLeftLayout);
+		topLeftLayout.addComponent(searchField);
+		topLeftLayout.addComponent(addNewContactButton);
 		leftLayout.addComponent(contactTable);
-		HorizontalLayout bottomLeftLayout = new HorizontalLayout();
-		leftLayout.addComponent(bottomLeftLayout);
-		bottomLeftLayout.addComponent(searchField);
-		bottomLeftLayout.addComponent(addNewContactButton);
 
 		/* Set the contents in the left of the split panel to use all the space */
 		leftLayout.setSizeFull();
@@ -96,9 +98,11 @@ public class AddressbookUI extends UI {
 		 * after adding addNewContactButton. The height of the layout is defined
 		 * by the tallest component.
 		 */
-		bottomLeftLayout.setWidth("100%");
-		searchField.setWidth("100%");
-		bottomLeftLayout.setExpandRatio(searchField, 1);
+		topLeftLayout.setWidth("100%");
+                topLeftLayout.setMargin(true);
+                topLeftLayout.setSpacing(true);
+		searchField.setWidth("100%");                
+		topLeftLayout.setExpandRatio(searchField, 1);
 
 		/* Put a little margin around the fields in the right side editor */
 		editorLayout.setMargin(true);
@@ -107,19 +111,25 @@ public class AddressbookUI extends UI {
 
 	private void initEditor() {
 
+                removeContactButton.setStyleName(ValoTheme.BUTTON_DANGER);
 		editorLayout.addComponent(removeContactButton);
 
 		/* User interface can be created dynamically to reflect underlying data. */
-		for (String fieldName : Addressbook.getEditableFields()) {
-			TextField field = new TextField(fieldName);
+                String[] fieldIds= Addressbook.getEditableFields();
+                String[] fieldCaptions = Addressbook.getEditableFieldCaptions();
+		for (int i= 0; i <fieldIds.length ; i++) {
+			final TextField field = new TextField(fieldCaptions[i]);
+                        field.setNullRepresentation("");
+                        field.setTextChangeEventMode(TextChangeEventMode.LAZY);
+                        field.addTextChangeListener(new TextChangeListener() {
+                            @Override
+                            public void textChange(TextChangeEvent event) {
+                                field.setValue(event.getText());
+                            }
+                        });
 			editorLayout.addComponent(field);
 			field.setWidth("100%");
-
-			/*
-			 * We use a FieldGroup to connect multiple components to a data
-			 * source at once.
-			 */
-			editorFields.bind(field, fieldName);
+ 			editorFields.bind(field, fieldIds[i]);
 		}
 
 		/*
@@ -156,6 +166,7 @@ public class AddressbookUI extends UI {
 		 * up to you.
 		 */
 		searchField.addTextChangeListener(new TextChangeListener() {
+                        @Override
 			public void textChange(final TextChangeEvent event) {
 
 				/* Reset the filter for the contactContainer. */
@@ -201,36 +212,43 @@ public class AddressbookUI extends UI {
 
                                 // Create a new person and select that
                                 Person person = new Person();
+                                person.setId(Addressbook.generateNewId());
 				person.setFirstName("New");
-				person.setFirstName("Contact");
+				person.setLastName("Contact");
                                 contactContainer.addBean(person);
-                                
-                                /* Lets choose the newly created contact to edit it. */
-				contactTable.select(person);
+  				contactTable.select(person.getId());
+                                contactTable.setCurrentPageFirstItemId(person.getId());
 			}
 		});
 
 		removeContactButton.addClickListener(new ClickListener() {
                         @Override
 			public void buttonClick(ClickEvent event) {
-				Person person = (Person)contactTable.getValue();
-				contactContainer.removeItem(person);
+				contactContainer.removeItem(contactTable.getValue());
 			}
 		});
 	}
-
+        
 	private void initContactList() {
 		
-                // Bind the data to the list
+                /* Bind the data to the list using simple BeanContainer.
+                 * Containers are used for databinding and you have plenty of 
+                 * different implementations to choose from. This is an
+                 * easy one for reasonable amount of data but check the
+                 * vaadin.com/directory for lazy loading options.            
+                 */
                 contactContainer = new BeanContainer(Person.class);
                 contactContainer.setBeanIdProperty(Person.ID_PROPERTY);
                 contactContainer.addAll(Addressbook.getAllContacts());                
                 contactTable.setContainerDataSource(contactContainer);
                 
-		contactTable.setVisibleColumns(Addressbook.getListFields());
+                // Configure visible fields and their captions
+		contactTable.setVisibleColumns((Object[])Addressbook.getListFields());
+		contactTable.setColumnHeaders(Addressbook.getListFieldCaptions());
+                
+                // Make the list selectable
 		contactTable.setSelectable(true);
 		contactTable.setImmediate(true);
-
 		contactTable.addValueChangeListener(new Property.ValueChangeListener() {
                         @Override
 			public void valueChange(ValueChangeEvent event) {

@@ -11,10 +11,10 @@ public class Contact implements Serializable, Cloneable {
 
     private Long id;
 
-    private String firstName;
-    private String lastName;
-    private String phone;
-    private String email;
+    private String firstName = "";
+    private String lastName = "";
+    private String phone = "";
+    private String email = "";
     private Date birthDate;
 
     public Long getId() {

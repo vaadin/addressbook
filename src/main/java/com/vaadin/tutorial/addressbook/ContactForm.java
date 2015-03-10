@@ -34,25 +34,20 @@ public class ContactForm extends VerticalLayout implements Button.ClickListener 
 
     public ContactForm(AddressbookUI mainUI) {
         this.mainUI = mainUI;
-        final HorizontalLayout horizontalLayout = new HorizontalLayout(save,
-                cancel);
-        horizontalLayout.setSpacing(true);
-        
-        addComponent(new FormLayout(horizontalLayout, firstName, lastName, phone, email, birthDate));
-        setMargin(new MarginInfo(false,true,false,true));
-        
-        firstName.setNullRepresentation("");
-        lastName.setNullRepresentation("");
-        phone.setNullRepresentation("");
-        email.setNullRepresentation("");
-        
+        final HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        actions.setSpacing(true);
+
+        addComponent(new FormLayout(actions, firstName, lastName, phone, email,
+                birthDate));
+        setMargin(new MarginInfo(false, true, false, true));
+
         save.setStyleName(ValoTheme.BUTTON_PRIMARY);
         save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
     }
 
     @Override
     public void buttonClick(Button.ClickEvent event) {
-        if(event.getButton() == save) {
+        if (event.getButton() == save) {
             mainUI.save(contact);
         } else {
             mainUI.deselect();

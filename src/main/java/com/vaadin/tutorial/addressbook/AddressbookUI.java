@@ -33,7 +33,8 @@ public class AddressbookUI extends UI {
 
     /**
      * Vaadin applications are basically just Serlvlets, so lets define one with
-     * Servlet 3.0 style. Naturally you can use the plain old web.xml file as well.
+     * Servlet 3.0 style. Naturally you can use the plain old web.xml file as
+     * well.
      */
     @WebServlet(urlPatterns = "/*")
     @VaadinServletConfiguration(ui = AddressbookUI.class, productionMode = false)
@@ -58,9 +59,7 @@ public class AddressbookUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        HorizontalLayout actions = new HorizontalLayout(filter, newContact);
-        actions.setWidth("100%");
-        filter.setWidth("100%");
+        // Configure components
         filter.setInputPrompt("Filter contacts...");
         filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
 
@@ -70,17 +69,8 @@ public class AddressbookUI extends UI {
             }
 
         });
-        actions.setExpandRatio(filter, 1);
-
-        VerticalLayout left = new VerticalLayout(actions, contactList);
-        left.setSizeFull();
-        contactList.setSizeFull();
-        left.setExpandRatio(contactList, 1);
-
-        setContent(new HorizontalSplitPanel(left, contactForm));
 
         contactForm.setVisible(false);
-        listContacts();
 
         contactList.setSelectable(true);
         contactList.addValueChangeListener(new Property.ValueChangeListener() {
@@ -95,7 +85,22 @@ public class AddressbookUI extends UI {
                 }
             }
         });
+        
+        // Build main layout
+        HorizontalLayout actions = new HorizontalLayout(filter, newContact);
+        actions.setWidth("100%");
+        filter.setWidth("100%");
+        actions.setExpandRatio(filter, 1);
 
+        VerticalLayout left = new VerticalLayout(actions, contactList);
+        left.setSizeFull();
+        contactList.setSizeFull();
+        left.setExpandRatio(contactList, 1);
+
+        setContent(new HorizontalSplitPanel(left, contactForm));
+
+        // List initial content from the "backend"
+        listContacts();
     }
 
     private void listContacts() {

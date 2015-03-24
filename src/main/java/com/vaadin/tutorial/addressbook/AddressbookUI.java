@@ -12,10 +12,6 @@ import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.tutorial.addressbook.backend.ContactService;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Arrays;
@@ -47,12 +43,9 @@ public class AddressbookUI extends UI {
 	 */
 	private ContactService service = ContactService.createDemoService();
 
-	private TextField filter = new TextField();
-	private Button newContact = new Button("New contact");
-
-	private Table contactList = new Table();
-
 	private ContactForm contactForm = new ContactForm(this);
+
+	private MainLayout mainLayout;
 
 	/**
 	 * The UI.init is the "public static void main(String... args)" for your
@@ -65,56 +58,52 @@ public class AddressbookUI extends UI {
 	 */
 	@Override
 	protected void init(VaadinRequest request) {
+		mainLayout = new MainLayout();
+		setContent(mainLayout);
+
+		// Add the form but hide it from the user until a row is selected in the
+		// contact list
+		mainLayout.setSecondComponent(contactForm);
+		contactForm.setVisible(false);
+
 		// Configure components and wire logic to them
-		newContact.addClickListener(new Button.ClickListener() {
+		mainLayout.newContact.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				editContact(new Contact());
 			}
 		});
 
-		filter.setInputPrompt("Filter contacts...");
-		filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
+		mainLayout.filter
+		.addTextChangeListener(new FieldEvents.TextChangeListener() {
 			@Override
 			public void textChange(FieldEvents.TextChangeEvent event) {
 				listContacts(event.getText());
 			}
 		});
 
-		contactList.setSelectable(true);
-		contactList.addValueChangeListener(new Property.ValueChangeListener() {
+		mainLayout.contactList
+		.addValueChangeListener(new Property.ValueChangeListener() {
 			@Override
 			public void valueChange(Property.ValueChangeEvent event) {
 				editContact((Contact) event.getProperty().getValue());
 			}
 		});
 
-		// Build main layout
-		HorizontalLayout actions = new HorizontalLayout(filter, newContact);
-		actions.setWidth("100%");
-		filter.setWidth("100%");
-		actions.setExpandRatio(filter, 1);
-
-		VerticalLayout left = new VerticalLayout(actions, contactList);
-		left.setSizeFull();
-		contactList.setSizeFull();
-		left.setExpandRatio(contactList, 1);
-
-		setContent(new HorizontalSplitPanel(left, contactForm));
-
 		// List initial content from the "backend"
 		listContacts();
 	}
 
 	private void listContacts() {
-		listContacts(filter.getValue());
+		listContacts(mainLayout.filter.getValue());
 	}
 
 	private void listContacts(String text) {
-		contactList.setContainerDataSource(new BeanItemContainer<>(
+		mainLayout.contactList.setContainerDataSource(new BeanItemContainer<>(
 				Contact.class, service.findAll(text)), Arrays.asList(
 				"firstName", "lastName", "email"));
-		contactList.setColumnHeaders("First name", "Last name", "email");
+		mainLayout.contactList.setColumnHeaders("First name", "Last name",
+				"email");
 		contactForm.setVisible(false);
 	}
 
@@ -136,7 +125,7 @@ public class AddressbookUI extends UI {
 	}
 
 	public void deselect() {
-		contactList.setValue(null);
+		mainLayout.contactList.setValue(null);
 	}
 
 }

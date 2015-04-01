@@ -247,7 +247,7 @@ public class AddressbookUI extends UI {
 				if (contactId != null)
 					editorFields.setItemDataSource(contactList
 							.getItem(contactId));
-				
+
 				editorLayout.setVisible(contactId != null);
 			}
 		});

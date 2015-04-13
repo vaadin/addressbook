@@ -1,180 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.vaadin.tutorial</groupId>
-    <artifactId>addressbook</artifactId>
-    <packaging>war</packaging>
-    <version>2.0</version>
-    <name>Vaadin Web Application</name>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.vaadin.tutorial</groupId>
+	<artifactId>addressbook</artifactId>
+	<packaging>war</packaging>
+	<version>1.0</version>
+	<name>Vaadin Addressbook example</name>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.4.0</vaadin.version>
-        <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
-    </properties>
-    <repositories>
-        <!-- This is the repository for Vaadin addons -->
-        <repository>
-            <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
-        </repository>
-        <!-- Uncomment this one if you wish to use daily Vaadin snapshot versions. -->
-        <!--
-        <repository>
-                <id>vaadin-snapshots</id>
-                <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-                <releases>
-                        <enabled>false</enabled>
-                </releases>
-                <snapshots>
-                        <enabled>true</enabled>
-                </snapshots>
-        </repository>
-        -->
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>vaadin-snapshots</id>
-            <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-    <dependencies>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server</artifactId>
-            <version>${vaadin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiled</artifactId>
-            <version>${vaadin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client</artifactId>
-            <version>${vaadin.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-themes</artifactId>
-            <version>${vaadin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+		<vaadin.version>7.4.1</vaadin.version>
+		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+	</properties>
+	<repositories>
+		<!-- Essential Vaadin artifacts are in maven central, but maven.vaadin.com 
+			contains a huge set of additional libraries. See vaadin.com/directory -->
+		<repository>
+			<id>vaadin-addons</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-server</artifactId>
+			<version>${vaadin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client-compiled</artifactId>
+			<version>${vaadin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-themes</artifactId>
+			<version>${vaadin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- The huge set of awesome Java libraries are available as such for Vaadin 
+			developers, you should take the advantage of those. In this app we just use 
+			the commons-beanutils to help implementing the fake backend. -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.2</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <!-- As we are doing "inplace" GWT compilation, ensure the widgetset -->
-            <!-- directory is cleaned properly -->
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>src/main/webapp/VAADIN/widgetsets</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadin.plugin.version}</version>
-                <configuration>
-                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                    <!-- <runTarget>mobilemail</runTarget> -->
-                    <!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This 
-                    way compatible with Vaadin eclipse plugin. -->
-                    <webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
-                    </webappDirectory>
-                    <hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
-                    </hostedWebapp>
-                    <noServer>true</noServer>
-                    <!-- Remove draftCompile when project is ready -->
-                    <draftCompile>false</draftCompile>
-                    <compileReport>true</compileReport>
-                    <style>OBF</style>
-                    <strict>true</strict>
-                    <runTarget>http://localhost:8080/</runTarget>
-                </configuration>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <!-- if you don't specify any modules, the plugin will find them -->
-                            <!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module> 
-                            </modules> -->
-                        </configuration>
-                        <goals>
-                            <goal>resources</goal>
-                            <goal>update-widgetset</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.3.v20140905</version>
-            </plugin>
-        </plugins>
-        <pluginManagement>
-            <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>com.vaadin</groupId>
-                                        <artifactId>
-                                            vaadin-maven-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [7.3.1,)
-                                        </versionRange>
-                                        <goals>
-                                            <goal>resources</goal>
-                                            <goal>update-widgetset</goal>
-                                            <goal>compile</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.3.v20140905</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -16,30 +16,30 @@ import com.vaadin.ui.Button.ClickEvent;
 import javax.servlet.annotation.WebServlet;
 import java.util.Arrays;
 
-/* 
- * UI class is the starting point for your app. You may deploy it with VaadinServlet
- * or VaadinPortlet by giving your UI class name a parameter. When you browse to your
- * app a web page showing your UI is automatically generated. Or you may choose to 
- * embed your UI to an existing web page. 
+/*
+ * One UI instance per user.
+ * The UI class is the starting point for your app. When a user browse to your
+ * application URL, new instance of this class is created for.
+ *
  */
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {
 
-	/**
-	 * Vaadin applications are basically just Serlvlets, so lets define one with
-	 * Servlet 3.0 style. Naturally you can use the plain old web.xml file as
-	 * well.
+	/** Define the the URI.
+     *
+	 *  Vaadin applications are basically just Serlvlets, and you can specify here
+     *  additional parameters like the URI and UI class anme and turn on production mode.
+     *
 	 */
 	@WebServlet(urlPatterns = "/*")
 	@VaadinServletConfiguration(ui = AddressbookUI.class, productionMode = false)
 	public static class MyUIServlet extends VaadinServlet {
 	}
 
-	/*
-	 * ContactService mimics a real world DAO, that you'd typically implement as
-	 * EJB or Spring Data based service.
-	 */
+	/* ContactService mimics a real world DAO, that you'd typically implement as
+     * EJB or Spring Data based service.
+     */
 	private ContactService service = ContactService.createDemoService();
 
 	private TextField filter = new TextField();
@@ -49,14 +49,11 @@ public class AddressbookUI extends UI {
 
 	private ContactForm contactForm = new ContactForm(this);
 
-	/**
-	 * The UI.init is the "public static void main(String... args)" for your
-	 * Vaadin application. It is the entry point method executed for each user
-	 * who enters your application.
+	/** Initialize the user interface.
+	 * The UI.init is the "main method" for you Vaadin application.
+     * It is the entry point method executed for a newly created
+     * instance to initialize the visible user interface.
 	 *
-	 * @param request
-	 *            the request object contains some low level web request data
-	 *            that you can typically ignore.
 	 */
 	@Override
 	protected void init(VaadinRequest request) {

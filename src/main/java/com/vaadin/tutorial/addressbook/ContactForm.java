@@ -13,9 +13,11 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
- * The part of the UI modifying a Contact instance.
+ * Your own reusable UI components.
  *
- * Vaadin contains an efficient data binding mechanism. BeanFieldGroup can bind
+ * You can create your own Vaadin components by inheritance and composition.
+ * Here a reusable form component is inherited from VerticalLayout and using
+ * BeanFieldGroup to bind
  * DTO fields to similarly named UI fields by naming convention or using using
  * PropertyId annotation. Naturally you could do data binding manually as well.
  * You could also auto-generate the fields at runtime using bean introspection,

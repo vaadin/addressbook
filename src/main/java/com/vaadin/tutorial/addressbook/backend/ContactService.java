@@ -1,20 +1,15 @@
 package com.vaadin.tutorial.addressbook.backend;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.beanutils.BeanUtils;
 
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * Dummy backend implementation for the demo, with "detached entities"
- * simulating real world DAO. Typically you'd use e.g. Spring Data based backend
- * or similar EJB facade for your persistency layers.
+ * Backend implementation for the demo, with "detached entities"
+ * simulating real world DAO. This is not Vaadin related, but something
+ * that your Java EE or Spring backend will provide.
  */
 public class ContactService {
 

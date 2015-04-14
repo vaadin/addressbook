@@ -100,7 +100,6 @@ public class AddressbookUI extends UI {
 		listContacts();
 	}
 
-
 	/* Embrace clean code.
 	 * It is good practice to have separate data access methods that
 	 * handle the back-end access and/or the user interface updates.
@@ -110,7 +109,6 @@ public class AddressbookUI extends UI {
 	private void listContacts() {
 		listContacts(filter.getValue());
 	}
-
 
 	private void listContacts(String text) {
 		contactList.setContainerDataSource(new BeanItemContainer<>(

@@ -23,8 +23,9 @@ import java.util.Arrays;
 
 
 
-// HTML title and CSS/Sass theme for the application
+// HTML title for the application
 @Title("Addressbook")
+// Use the vaadin.com/valo theme
 @Theme("valo")
 public class AddressbookUI extends UI {
 
@@ -36,7 +37,9 @@ public class AddressbookUI extends UI {
 	 * Note that the class variables are user session scoped.
 	 */
 	private TextField filter = new TextField();
+
 	private Button newContact = new Button("New contact");
+
 	private Table contactList = new Table();
 
 	// ContactForm is an example of a custom component class
@@ -57,6 +60,7 @@ public class AddressbookUI extends UI {
 		// If you need to configure the components, the init
 		// method is a good place to do that.
 		filter.setInputPrompt("Filter contacts...");
+
 		contactList.setSelectable(true);
 
 
@@ -71,7 +75,6 @@ public class AddressbookUI extends UI {
 
 		contactList.addValueChangeListener((Property.ValueChangeEvent e)
 						-> 	editContact((Contact) e.getProperty().getValue()));
-	
 
 
 
@@ -141,9 +144,9 @@ public class AddressbookUI extends UI {
 		contactList.setValue(null);
 	}
 
-	/* Simple servlet configuration.
+	/*  Simple servlet configuration.
 	 *
-	 *  You can specify here additional servlet parameters like the URI and UI
+	 *  You can specify additional servlet parameters like the URI and UI
 	 *  class name and turn on production mode when you have finished developing the application.
 	 *
 	 */

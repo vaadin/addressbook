@@ -72,8 +72,8 @@ public class AddressbookUI extends UI {
 
 		/* Building the layout.
 		 * Layouts are components that contain other components.
-		 * Nest HorizontalLayout for filter and wrap them together
-		 * contactList to VerticalLayout on the left side of the screen.
+		 * HorizontalLayout contains TextField and Button. It is wrapped
+		 * with a Grid into VerticalLayout for the left side of the screen.
 		 * Allow user to resize the components with a SplitPanel.
 		 *
 		 * In addition to Java, you may also choose Vaadin Designer,

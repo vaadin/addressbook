@@ -22,13 +22,11 @@ import java.util.Arrays;
  */
 
 
-
-// HTML title for the application
+// HTML title and theme for the application
+// can be specified with annotations.
 @Title("Addressbook")
-// Use the vaadin.com/valo theme
 @Theme("valo")
 public class AddressbookUI extends UI {
-
 
 
 	/* Hundreds of widgets and components.
@@ -57,11 +55,11 @@ public class AddressbookUI extends UI {
 	protected void init(VaadinRequest request) {
 
 
-
 		// If you need to configure the components, the init
 		// method is a good place to do that.
 		filter.setInputPrompt("Filter contacts...");
 		contactList.setSelectable(true);
+
 
 		/* Event-based programming.
 		 * Receive user interaction events and send your own events as needed.
@@ -73,7 +71,6 @@ public class AddressbookUI extends UI {
 				-> listContacts(e.getText()));
 		contactList.addValueChangeListener((Property.ValueChangeEvent e)
 				-> 	editContact((Contact) e.getProperty().getValue()));
-
 
 
 		/* Building the layout.
@@ -91,17 +88,20 @@ public class AddressbookUI extends UI {
 		filter.setWidth("100%");
 		actions.setExpandRatio(filter, 1);
 
+
 		VerticalLayout left = new VerticalLayout(actions, contactList);
 		left.setSizeFull();
 		contactList.setSizeFull();
 		left.setExpandRatio(contactList, 1);
 
-		// Split to allow resizing
+
+		// Split and allow resizing
 		setContent(new HorizontalSplitPanel(left, contactForm));
 
 		// List initial content from the back-end data source
 		listContacts();
 	}
+
 
 	/* Embrace clean code.
 	 * It is good practice to have separate data access methods that
@@ -112,6 +112,7 @@ public class AddressbookUI extends UI {
 	private void listContacts() {
 		listContacts(filter.getValue());
 	}
+
 
 	private void listContacts(String text) {
 		contactList.setContainerDataSource(new BeanItemContainer<>(
@@ -129,6 +130,7 @@ public class AddressbookUI extends UI {
 		}
 	}
 
+
 	/*
 	 * The save() and deselect() methods are called by custom ContactForm when user wants to
 	 * persist or reset changes to the edited contact.
@@ -138,9 +140,11 @@ public class AddressbookUI extends UI {
 		listContacts();
 	}
 
+
 	public void deselect() {
 		contactList.setValue(null);
 	}
+
 
 	/*  Simple servlet configuration.
 	 *

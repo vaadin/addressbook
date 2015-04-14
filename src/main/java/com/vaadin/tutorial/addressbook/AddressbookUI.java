@@ -5,18 +5,17 @@ import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.FieldEvents;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.tutorial.addressbook.backend.ContactService;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.Arrays;
 
-/** The user interface class.
+/* The user interface class.
  * This is the user interface that is displayed in the browser.
  * New instance of this class is created for every user that browses
  * to the application URL.
@@ -41,39 +40,39 @@ public class AddressbookUI extends UI {
 
 	private ContactForm contactForm = new ContactForm(this);
 
-	/** Initialize the visible content.
+	/* Initialize the visible content.
 	 * The UI.init is the "main method" for you Vaadin application.
-     * It is the entry point method executed to initialize the visible user interface.
-	 * Use built-in Vaadin components, build your own, or import add-ons form vaadin.com/directory.
+     * It is the entry point method executed to initialize and configure
+	 * the visible user interface.
+	 *
+	 * Use built-in Vaadin components, build your own, or import add-ons
+	 * form vaadin.com/directory.
 	 *
 	 */
 	@Override
 	protected void init(VaadinRequest request) {
-		// Configure components and wire logic to them
-		newContact.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				editContact(new Contact());
-			}
-		});
 
 		filter.setInputPrompt("Filter contacts...");
-		filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
-			@Override
-			public void textChange(FieldEvents.TextChangeEvent event) {
-				listContacts(event.getText());
-			}
-		});
-
 		contactList.setSelectable(true);
-		contactList.addValueChangeListener(new Property.ValueChangeListener() {
-			@Override
-			public void valueChange(Property.ValueChangeEvent event) {
-				editContact((Contact) event.getProperty().getValue());
-			}
-		});
 
-		// Build main layout
+		/* Receive user events.
+		 * With Vaadin you program completely in event-driven way.
+		 * Receive user interaction events and emitting your own.
+		 */
+		newContact.addClickListener((Button.ClickEvent e) -> editContact(new Contact()));
+
+		filter.addTextChangeListener((TextChangeEvent e) -> listContacts(e.getText()));
+
+		contactList.addValueChangeListener((Property.ValueChangeEvent e)
+						-> 	editContact((Contact) e.getProperty().getValue()));
+
+
+		/* Build the main layout.
+		 * Layouts are components that you can put other components in.
+		 * Here we use  HorizontalLayout for filter and new actions
+		 * and wrap them and contactList to VerticalLayout.
+		 * With a SplitPanel you can allow user to resize the components.
+		 */
 		HorizontalLayout actions = new HorizontalLayout(filter, newContact);
 		actions.setWidth("100%");
 		filter.setWidth("100%");
@@ -123,7 +122,7 @@ public class AddressbookUI extends UI {
 		contactList.setValue(null);
 	}
 
-	/** Define the application URI.
+	/* Define the application URI.
 	 *
 	 *  Vaadin applications are basically just Serlvlets, and you can specify here
 	 *  additional parameters like the URI and UI class name and turn on production mode.

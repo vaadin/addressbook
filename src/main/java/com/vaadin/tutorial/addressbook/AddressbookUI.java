@@ -128,7 +128,6 @@ public class AddressbookUI extends UI {
 		}
 	}
 
-
 	/*
 	 * The save() and deselect() methods are called by custom ContactForm when user wants to
 	 * persist or reset changes to the edited contact.
@@ -138,11 +137,9 @@ public class AddressbookUI extends UI {
 		listContacts();
 	}
 
-
 	public void deselect() {
 		contactList.setValue(null);
 	}
-
 
 	/*  Simple servlet configuration.
 	 *

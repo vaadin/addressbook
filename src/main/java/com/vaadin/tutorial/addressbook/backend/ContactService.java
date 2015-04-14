@@ -9,10 +9,10 @@ import java.util.logging.Logger;
 /** Separate Java service class.
  * Backend implementation for the address book application, with "detached entities"
  * simulating real world DAO. Typically these something that the Java EE
- * or Spring back-end services provide.
+ * or Spring backend services provide.
  */
-// This is just a typical Java back-end implementation class
-// and nothing Vaadin specific
+// This is just a typical Java backend implementation
+// class and nothing Vaadin specific.
 public class ContactService {
 
 	// Create dummy data by randomly combining first and last names

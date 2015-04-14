@@ -8,12 +8,11 @@ import java.util.Date;
 /**
  * A simple DTO for the address book example.
  *
- * Serializable and cloneable Java Object that can are very typically passed
- * to and from backend Java and database systems and can be easily persisted and also
- * converted also to different formats like JSON.
+ * Serializable and cloneable Java Object that are typically persisted
+ * in the database and can also be easily converted to different formats like JSON.
  */
-// This is just a typical Java back-end implementation class
-// and nothing Vaadin specific
+// This is just a typical Java backend implementation
+// class and nothing Vaadin specific.
 public class Contact implements Serializable, Cloneable {
 
 	private Long id;

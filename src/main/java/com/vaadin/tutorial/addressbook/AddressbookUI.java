@@ -31,8 +31,6 @@ public class AddressbookUI extends UI {
 
 
 
-
-
 	/* Use built-in and custom components.
 	 * Import the default Vaadin components from in com.vaadin.ui package and
 	 * find over 500 more at vaadin.com/directory.
@@ -46,6 +44,7 @@ public class AddressbookUI extends UI {
 	private Table contactList = new Table();
 
 	private ContactForm contactForm = new ContactForm(this);
+
 
 
 

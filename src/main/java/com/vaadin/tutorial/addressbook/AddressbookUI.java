@@ -30,9 +30,10 @@ public class AddressbookUI extends UI {
 	// EJB or Spring Data based service.
 	private ContactService service = ContactService.createDemoService();
 
-	/* Built-in and custom components.
-	 * Import the default Vaadin components from in com.vaadin.ui package.
-	 * ContactForm is our own reusable component.
+	/* Use built-in and custom components.
+	 * Import the default Vaadin components from in com.vaadin.ui package and
+	 * find over 500 more at vaadin.com/directory.
+	 * ContactForm is our own component for this application.
 	 */
 	private TextField filter = new TextField();
 
@@ -42,13 +43,11 @@ public class AddressbookUI extends UI {
 
 	private ContactForm contactForm = new ContactForm(this);
 
-	/* The "main method" for Vaadin
+
+
+	/* The "main method" for Vaadin.
 	 * This is the entry point method executed to initialize and configure
-	 * the visible user interface.
-	 *
-	 * Use built-in Vaadin components, build your own, or import add-ons
-	 * form vaadin.com/directory.
-	 *
+	 * the visible user interface. Executed on every browser reload.
 	 */
 	@Override
 	protected void init(VaadinRequest request) {
@@ -56,6 +55,7 @@ public class AddressbookUI extends UI {
 		filter.setInputPrompt("Filter contacts...");
 
 		contactList.setSelectable(true);
+
 
 		/* Receive user events.
 		 * With Vaadin you program completely in event-driven way.
@@ -68,6 +68,7 @@ public class AddressbookUI extends UI {
 		contactList.addValueChangeListener((Property.ValueChangeEvent e)
 						-> 	editContact((Contact) e.getProperty().getValue()));
 
+		
 
 		/* Build the main layout.
 		 * Layouts are components that you can put other components in.

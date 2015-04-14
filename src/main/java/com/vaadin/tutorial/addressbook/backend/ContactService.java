@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 /** Separate data access.
  * Backend implementation for the address book application, with "detached entities"
  * simulating real world DAO. Typically these are not Vaadin related, but something
- * that your Java EE or Spring backend will provide.
+ * that the Java EE or Spring backend services provide.
  */
 public class ContactService {
 
-	/* Create dummy data by randomly combining first and last names */
+	// Create dummy data by randomly combining first and last names
 	static String[] fnames = { "Peter", "Alice", "John", "Mike", "Olivia",
 			"Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene", "Lisa",
 			"Linda", "Timothy", "Daniel", "Brian", "George", "Scott",

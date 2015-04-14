@@ -13,16 +13,13 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 /*
- * Your own reusable ui component.
+ * Reusable custom ui component.
  *
- * You can create your own Vaadin components by inheritance and composition.
- * Here a reusable form component is inherited from VerticalLayout and using
- * BeanFieldGroup to bind DTO fields to similarly named UI fields by naming
- * convention or using using PropertyId annotation. Naturally you could do
- * data binding manually as well.
- *
- * You could also auto-generate the fields at runtime using bean introspection,
- * but typically this is not as flexible as defining then in your UI code.
+ * Create your own Vaadin components by inheritance and composition.
+ * This is a form component inherited from VerticalLayout. Use
+ * Use BeanFieldGroup to bind data fields from DTO to UI fields.
+ * Similarly named field by naming convention or customized
+ * with @PropertyId annotation.
  */
 public class ContactForm extends VerticalLayout {
 
@@ -49,28 +46,27 @@ public class ContactForm extends VerticalLayout {
 				birthDate));
 		setMargin(new MarginInfo(false, true, false, true));
 
-		/*
-		 * The core theme has lots of handy styles for components, here we make
-		 * the save button stand out from other buttons and give it a keyboard
-		 * shortcut to give a better UX
+		/* Highligh primary actions.
+		 * With Vaadin built-in styles you can highlight the primary save button
+		 * and give it a keyboard shortcut for a better UX.
 		 */
 		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 	}
 
 	/*
-	 * Instead of using lambdas for event listeners like we did in
-	 * AddressbookUI, you can implement listeners in your
-	 * compositions or in separate controller classes.
-	 *
-	 * Clicking save or cancel in this application just passes
-	 * the control back to the main view.
+	 * Instead of using inline lambdas for event listeners like in
+	 * AddressbookUI, you can implement listener methods in your
+	 * compositions or in separate controller classes and receive
+	 * to various Vaadin component events, like button clicks.
 	 */
 	public void saveClick(Button.ClickEvent event) {
+		// just pass the control back to the main view.
 		mainUI.save(contact);
 	}
 
 	public void cancelClicked(Button.ClickEvent event) {
+		// just pass the control back to the main view.
 		mainUI.deselect();
 	}
 

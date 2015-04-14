@@ -4,12 +4,7 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.tutorial.addressbook.backend.Contact;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 /*
@@ -39,6 +34,14 @@ public class ContactForm extends VerticalLayout {
 		this.mainUI = mainUI;
 		setVisible(false);
 
+		/* Highlight primary actions.
+		 * With Vaadin built-in styles you can highlight the primary save button
+		 * and give it a keyboard shortcut for a better UX.
+		 */
+		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+
+
 		final HorizontalLayout actions = new HorizontalLayout(save, cancel);
 		actions.setSpacing(true);
 
@@ -46,12 +49,6 @@ public class ContactForm extends VerticalLayout {
 				birthDate));
 		setMargin(new MarginInfo(false, true, false, true));
 
-		/* Highligh primary actions.
-		 * With Vaadin built-in styles you can highlight the primary save button
-		 * and give it a keyboard shortcut for a better UX.
-		 */
-		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 	}
 
 

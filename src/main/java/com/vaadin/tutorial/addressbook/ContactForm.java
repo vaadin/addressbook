@@ -51,7 +51,6 @@ public class ContactForm extends VerticalLayout {
 
 	}
 
-
 	/*
 	 * Instead of using inline lambdas for event listeners like in
 	 * AddressbookUI, you can implement listener methods in your
@@ -63,12 +62,10 @@ public class ContactForm extends VerticalLayout {
 		mainUI.save(contact);
 	}
 
-
 	public void cancelClicked(Button.ClickEvent event) {
 		// just pass the control back to the main view.
 		mainUI.deselect();
 	}
-
 
 	public void edit(Contact contact) {
 		this.contact = contact;

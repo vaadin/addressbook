@@ -18,15 +18,12 @@ import java.util.Arrays;
 /* The user interface class.
  * This class defines the visible user interface as displayed in the web browser.
  * Think it like a user session: New instance of this class is created for every user that browses
- * to the application URL. Note that this makes class variables are user scoped.
+ * to the application URL.
  *
  */
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {
-
-
-
 
 	// ContactService mimics a real world DAO, that you'd typically implement as
 	// EJB or Spring Data based service.
@@ -35,10 +32,12 @@ public class AddressbookUI extends UI {
 
 
 
+
 	/* Use built-in and custom components.
 	 * Import the default Vaadin components from in com.vaadin.ui package and
 	 * find over 500 more at vaadin.com/directory.
 	 * ContactForm is our own component for this application.
+	 * Note that class variable are user session scoped.
 	 */
 	private TextField filter = new TextField();
 
@@ -65,8 +64,8 @@ public class AddressbookUI extends UI {
 
 
 		/* Receive user events.
-		 * With Vaadin you program completely in event-driven way.
-		 * Receive user interaction events and emitting your own.
+		 * With Vaadin you program in an event-driven way.
+		 * Receive user interaction events and send your own events as needed.
 		 */
 		newContact.addClickListener((Button.ClickEvent e) -> editContact(new Contact()));
 

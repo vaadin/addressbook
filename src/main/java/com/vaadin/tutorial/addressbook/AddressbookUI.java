@@ -86,12 +86,10 @@ public class AddressbookUI extends UI {
 		filter.setWidth("100%");
 		actions.setExpandRatio(filter, 1);
 
-
 		VerticalLayout left = new VerticalLayout(actions, contactList);
 		left.setSizeFull();
 		contactList.setSizeFull();
 		left.setExpandRatio(contactList, 1);
-
 
 		// Split and allow resizing
 		setContent(new HorizontalSplitPanel(left, contactForm));

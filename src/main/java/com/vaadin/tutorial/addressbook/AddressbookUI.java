@@ -46,14 +46,12 @@ public class AddressbookUI extends UI {
 	private ContactService service = ContactService.createDemoService();
 
 
-
 	/* The "main method".
 	 * This is the entry point method executed to initialize and configure
 	 * the visible user interface. Executed on every browser reload.
 	 */
 	@Override
 	protected void init(VaadinRequest request) {
-
 
 		// If you need to configure the components, the init
 		// method is a good place to do that.

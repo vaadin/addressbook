@@ -78,8 +78,8 @@ public class AddressbookUI extends UI {
 
 		/* Build the main layout.
 		 * Layouts are components that you can put other components in.
-		 * Here we use  HorizontalLayout for filter and new actions
-		 * and wrap them and contactList to VerticalLayout.
+		 * Here we use  HorizontalLayout for filter and wrap them together
+		 * contactList to VerticalLayout on the left side.
 		 * With a SplitPanel you can allow user to resize the components.
 		 * Here split is between the ContactForm and left side content.
 		 */

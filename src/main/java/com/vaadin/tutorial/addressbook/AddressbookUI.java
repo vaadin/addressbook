@@ -37,9 +37,7 @@ public class AddressbookUI extends UI {
 	 * Note that the class variables are user session scoped.
 	 */
 	private TextField filter = new TextField();
-
 	private Button newContact = new Button("New contact");
-
 	private Table contactList = new Table();
 
 	// ContactForm is an example of a custom component class
@@ -50,6 +48,7 @@ public class AddressbookUI extends UI {
 	private ContactService service = ContactService.createDemoService();
 
 
+
 	/* The "main method".
 	 * This is the entry point method executed to initialize and configure
 	 * the visible user interface. Executed on every browser reload.
@@ -57,24 +56,23 @@ public class AddressbookUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 
+
+
 		// If you need to configure the components, the init
 		// method is a good place to do that.
 		filter.setInputPrompt("Filter contacts...");
-
 		contactList.setSelectable(true);
 
-
-
 		/* Event-based programming.
-		 * With Vaadin you receive user interaction events and send your own events as needed.
+		 * Receive user interaction events and send your own events as needed.
 		 * Here we attach listeners for components for click event, selection and filtering.
 		 */
-		newContact.addClickListener((Button.ClickEvent e) -> editContact(new Contact()));
-
-		filter.addTextChangeListener((TextChangeEvent e) -> listContacts(e.getText()));
-
+		newContact.addClickListener((Button.ClickEvent e)
+				-> editContact(new Contact()));
+		filter.addTextChangeListener((TextChangeEvent e)
+				-> listContacts(e.getText()));
 		contactList.addValueChangeListener((Property.ValueChangeEvent e)
-						-> 	editContact((Contact) e.getProperty().getValue()));
+				-> 	editContact((Contact) e.getProperty().getValue()));
 
 
 

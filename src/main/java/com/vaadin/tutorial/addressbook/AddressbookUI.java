@@ -20,12 +20,13 @@ import java.util.Arrays;
  * is automatically created for every user accessing the application. This can also be a managed bean (CDI or Spring).
  *
  */
+
+
+
 // HTML title and CSS/Sass theme for the application
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {
-
-
 
 
 
@@ -46,7 +47,7 @@ public class AddressbookUI extends UI {
 	private ContactService service = ContactService.createDemoService();
 
 
-	/* The Vaadin "main method".
+	/* The "main method".
 	 * This is the entry point method executed to initialize and configure
 	 * the visible user interface. Executed on every browser reload.
 	 */
@@ -65,10 +66,12 @@ public class AddressbookUI extends UI {
 		 * Here we attach listeners for components for click event, selection and filtering.
 		 */
 		newContact.addClickListener((Button.ClickEvent e) -> editContact(new Contact()));
+
 		filter.addTextChangeListener((TextChangeEvent e) -> listContacts(e.getText()));
+
 		contactList.addValueChangeListener((Property.ValueChangeEvent e)
 						-> 	editContact((Contact) e.getProperty().getValue()));
-
+	
 
 
 

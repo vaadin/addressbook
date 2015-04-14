@@ -52,13 +52,13 @@ public class ContactService {
 	private HashMap<Long, Contact> contacts = new HashMap<>();
 	private long nextId = 0;
 
-	public synchronized List<Contact> findAll(String filter) {
+	public synchronized List<Contact> findAll(String filterString) {
 		ArrayList arrayList = new ArrayList();
 		for (Contact contact : contacts.values()) {
 			try {
-				boolean passesFilter = (filter == null || filter.isEmpty())
+				boolean passesFilter = (filterString == null || filterString.isEmpty())
 						|| contact.toString().toLowerCase()
-								.contains(filter.toLowerCase());
+								.contains(filterString.toLowerCase());
 				if (passesFilter) {
 					arrayList.add(contact.clone());
 				}

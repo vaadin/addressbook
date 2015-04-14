@@ -18,7 +18,7 @@ import java.util.Arrays;
 /* The user interface class.
  * This is the user interface that is displayed in the browser.
  * New instance of this class is created for every user that browses
- * to the application URL.
+ * to the application URL. Note that class variables are session scoped.
  *
  */
 @Title("Addressbook")
@@ -42,9 +42,8 @@ public class AddressbookUI extends UI {
 
 	private ContactForm contactForm = new ContactForm(this);
 
-	/* Initialize the visible content.
-	 * The UI.init is the "main method" for you Vaadin application.
-     * It is the entry point method executed to initialize and configure
+	/* The "main method" for Vaadin
+	 * This is the entry point method executed to initialize and configure
 	 * the visible user interface.
 	 *
 	 * Use built-in Vaadin components, build your own, or import add-ons

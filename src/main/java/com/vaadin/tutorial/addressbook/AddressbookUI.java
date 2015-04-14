@@ -126,7 +126,7 @@ public class AddressbookUI extends UI {
 	}
 
 	/*
-	 * These methods are called by custom ContactForm when user wants to
+	 * The save() and deselect() methods are called by custom ContactForm when user wants to
 	 * persist or reset changes to the edited contact.
 	 */
 	public void save(Contact contact) {
@@ -138,10 +138,11 @@ public class AddressbookUI extends UI {
 		contactList.setValue(null);
 	}
 
-	/* Define the application URI.
+	/* Simple servlet configuration.
 	 *
-	 *  Vaadin applications are basically just Serlvlets, and you can specify here
-	 *  additional parameters like the URI and UI class name and turn on production mode.
+	 *  Vaadin applications are basically just Servlets, and you can specify here
+	 *  additional parameters like the URI and UI class name and turn on production mode
+	 *  when you have finished developing the application.
 	 *
 	 */
 	@WebServlet(urlPatterns = "/*")

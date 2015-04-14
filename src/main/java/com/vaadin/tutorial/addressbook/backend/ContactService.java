@@ -6,11 +6,13 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** Separate data access.
+/** Separate Java service class.
  * Backend implementation for the address book application, with "detached entities"
- * simulating real world DAO. Typically these are not Vaadin related, but something
- * that the Java EE or Spring backend services provide.
+ * simulating real world DAO. Typically these something that the Java EE
+ * or Spring back-end services provide.
  */
+// This is just a typical Java back-end implementation class
+// and nothing Vaadin specific
 public class ContactService {
 
 	// Create dummy data by randomly combining first and last names
@@ -52,13 +54,13 @@ public class ContactService {
 	private HashMap<Long, Contact> contacts = new HashMap<>();
 	private long nextId = 0;
 
-	public synchronized List<Contact> findAll(String filterString) {
+	public synchronized List<Contact> findAll(String stringFilter) {
 		ArrayList arrayList = new ArrayList();
 		for (Contact contact : contacts.values()) {
 			try {
-				boolean passesFilter = (filterString == null || filterString.isEmpty())
+				boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
 						|| contact.toString().toLowerCase()
-								.contains(filterString.toLowerCase());
+								.contains(stringFilter.toLowerCase());
 				if (passesFilter) {
 					arrayList.add(contact.clone());
 				}

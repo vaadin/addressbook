@@ -108,9 +108,9 @@ public class AddressbookUI extends UI {
 		listContacts(filter.getValue());
 	}
 
-	private void listContacts(String text) {
+	private void listContacts(String stringFilter) {
 		contactList.setContainerDataSource(new BeanItemContainer<>(
-				Contact.class, service.findAll(text)), Arrays.asList(
+				Contact.class, service.findAll(stringFilter)), Arrays.asList(
 				"firstName", "lastName", "email"));
 		contactList.setColumnHeaders("First name", "Last name", "email");
 		contactForm.setVisible(false);

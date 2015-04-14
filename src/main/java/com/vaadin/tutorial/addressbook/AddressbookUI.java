@@ -30,10 +30,12 @@ public class AddressbookUI extends UI {
 	// EJB or Spring Data based service.
 	private ContactService service = ContactService.createDemoService();
 
-	/** Plenty of built-in components.
+	/* Built-in and custom components.
 	 * Import the default Vaadin components from in com.vaadin.ui package.
+	 * ContactForm is our own reusable component.
 	 */
 	private TextField filter = new TextField();
+
 	private Button newContact = new Button("New contact");
 
 	private Table contactList = new Table();
@@ -53,6 +55,7 @@ public class AddressbookUI extends UI {
 	protected void init(VaadinRequest request) {
 
 		filter.setInputPrompt("Filter contacts...");
+
 		contactList.setSelectable(true);
 
 		/* Receive user events.
@@ -72,6 +75,7 @@ public class AddressbookUI extends UI {
 		 * Here we use  HorizontalLayout for filter and new actions
 		 * and wrap them and contactList to VerticalLayout.
 		 * With a SplitPanel you can allow user to resize the components.
+		 * Here split is between the ContactForm and left side content.
 		 */
 		HorizontalLayout actions = new HorizontalLayout(filter, newContact);
 		actions.setWidth("100%");
@@ -83,12 +87,18 @@ public class AddressbookUI extends UI {
 		contactList.setSizeFull();
 		left.setExpandRatio(contactList, 1);
 
+		// Split to allow resizing
 		setContent(new HorizontalSplitPanel(left, contactForm));
 
-		// List initial content from the "backend"
+		// List initial content from the back-end data source
 		listContacts();
 	}
 
+	/* Embrace clean code.
+	 * It is good practice to have separate data access methods that
+	 * handle the
+	 *
+	 */
 	private void listContacts() {
 		listContacts(filter.getValue());
 	}
@@ -110,7 +120,7 @@ public class AddressbookUI extends UI {
 	}
 
 	/*
-	 * These methods are public and are called by ContactForm when user wants to
+	 * These methods are called by ContactForm when user wants to
 	 * persist or reset changes to the edited contact.
 	 */
 	public void save(Contact contact) {

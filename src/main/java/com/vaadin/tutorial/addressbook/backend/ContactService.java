@@ -6,9 +6,9 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Backend implementation for the demo, with "detached entities"
- * simulating real world DAO. This is not Vaadin related, but something
+/** Separate data access.
+ * Backend implementation for the address book application, with "detached entities"
+ * simulating real world DAO. Typically these are not Vaadin related, but something
  * that your Java EE or Spring backend will provide.
  */
 public class ContactService {

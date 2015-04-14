@@ -1,11 +1,16 @@
 package com.vaadin.tutorial.addressbook.backend;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import java.io.Serializable;
 import java.util.Date;
-import org.apache.commons.beanutils.BeanUtils;
 
 /**
  * A simple DTO for the address book example.
+ *
+ * Just an serializable and cloneable Java Object that can are very typically passed
+ * to and from backend Java and database systems and can be easily persisted and also
+ * converted also to different formats like JSON.
  */
 public class Contact implements Serializable, Cloneable {
 

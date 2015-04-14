@@ -16,9 +16,9 @@ import javax.servlet.annotation.WebServlet;
 import java.util.Arrays;
 
 /* The user interface class.
- * This is the user interface that is displayed in the browser.
- * New instance of this class is created for every user that browses
- * to the application URL. Note that class variables are session scoped.
+ * This class defines the visible user interface as displayed in the web browser.
+ * Think it like a user session: New instance of this class is created for every user that browses
+ * to the application URL. Note that this makes class variables are user scoped.
  *
  */
 @Title("Addressbook")
@@ -26,9 +26,14 @@ import java.util.Arrays;
 public class AddressbookUI extends UI {
 
 
+
+
 	// ContactService mimics a real world DAO, that you'd typically implement as
 	// EJB or Spring Data based service.
 	private ContactService service = ContactService.createDemoService();
+
+
+
 
 	/* Use built-in and custom components.
 	 * Import the default Vaadin components from in com.vaadin.ui package and
@@ -45,7 +50,8 @@ public class AddressbookUI extends UI {
 
 
 
-	/* The "main method" for Vaadin.
+
+	/* The Vaadin "main method".
 	 * This is the entry point method executed to initialize and configure
 	 * the visible user interface. Executed on every browser reload.
 	 */
@@ -55,6 +61,7 @@ public class AddressbookUI extends UI {
 		filter.setInputPrompt("Filter contacts...");
 
 		contactList.setSelectable(true);
+
 
 
 		/* Receive user events.
@@ -68,7 +75,8 @@ public class AddressbookUI extends UI {
 		contactList.addValueChangeListener((Property.ValueChangeEvent e)
 						-> 	editContact((Contact) e.getProperty().getValue()));
 
-		
+
+
 
 		/* Build the main layout.
 		 * Layouts are components that you can put other components in.
@@ -96,7 +104,7 @@ public class AddressbookUI extends UI {
 
 	/* Embrace clean code.
 	 * It is good practice to have separate data access methods that
-	 * handle the
+	 * handle the back-end access and/or the user interface updates.
 	 *
 	 */
 	private void listContacts() {
@@ -120,7 +128,7 @@ public class AddressbookUI extends UI {
 	}
 
 	/*
-	 * These methods are called by ContactForm when user wants to
+	 * These methods are called by custom ContactForm when user wants to
 	 * persist or reset changes to the edited contact.
 	 */
 	public void save(Contact contact) {

@@ -12,21 +12,22 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-/**
- * Your own reusable UI components.
+/*
+ * Your own reusable ui component.
  *
  * You can create your own Vaadin components by inheritance and composition.
  * Here a reusable form component is inherited from VerticalLayout and using
- * BeanFieldGroup to bind
- * DTO fields to similarly named UI fields by naming convention or using using
- * PropertyId annotation. Naturally you could do data binding manually as well.
+ * BeanFieldGroup to bind DTO fields to similarly named UI fields by naming
+ * convention or using using PropertyId annotation. Naturally you could do
+ * data binding manually as well.
+ *
  * You could also auto-generate the fields at runtime using bean introspection,
  * but typically this is not as flexible as defining then in your UI code.
  */
-public class ContactForm extends VerticalLayout implements Button.ClickListener {
+public class ContactForm extends VerticalLayout {
 
-	private Button save = new Button("Save", this);
-	private Button cancel = new Button("Cancel", this);
+	private Button save = new Button("Save", this::saveClick);
+	private Button cancel = new Button("Cancel", this::cancelClicked);
 
 	private TextField firstName = new TextField("First name");
 	private TextField lastName = new TextField("Last name");
@@ -57,21 +58,20 @@ public class ContactForm extends VerticalLayout implements Button.ClickListener 
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 	}
 
-	/**
-	 * Instead of using inner class for event listeners like we did in
-	 * AddressBookUI, a common practice is to implement listeners in your
-	 * compositions or in separate controller classes. Clicking save or cancel
-	 * in this application just passes the control back to the main view.
+	/*
+	 * Instead of using lambdas for event listeners like we did in
+	 * AddressbookUI, you can implement listeners in your
+	 * compositions or in separate controller classes.
 	 *
-	 * @param event
+	 * Clicking save or cancel in this application just passes
+	 * the control back to the main view.
 	 */
-	@Override
-	public void buttonClick(Button.ClickEvent event) {
-		if (event.getButton() == save) {
-			mainUI.save(contact);
-		} else if (event.getButton() == cancel) {
-			mainUI.deselect();
-		}
+	public void saveClick(Button.ClickEvent event) {
+		mainUI.save(contact);
+	}
+
+	public void cancelClicked(Button.ClickEvent event) {
+		mainUI.deselect();
 	}
 
 	public void edit(Contact contact) {

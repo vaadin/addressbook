@@ -3,9 +3,9 @@ package com.vaadin.tutorial.addressbook;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.SelectionEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.tutorial.addressbook.backend.Contact;
@@ -13,7 +13,6 @@ import com.vaadin.tutorial.addressbook.backend.ContactService;
 import com.vaadin.ui.*;
 
 import javax.servlet.annotation.WebServlet;
-import java.util.Arrays;
 
 /* The web user interface.
  * Define the user interface by extending the UI class.  New instance of this class
@@ -36,7 +35,7 @@ public class AddressbookUI extends UI {
 	 */
 	private TextField filter = new TextField();
 	private Button newContact = new Button("New contact");
-	private Table contactList = new Table();
+	private Grid contactList = new Grid();
 
 	// ContactForm is an example of a custom component class
 	private ContactForm contactForm = new ContactForm(this);
@@ -56,7 +55,7 @@ public class AddressbookUI extends UI {
 		// If you need to configure the components, the init
 		// method is a good place to do that.
 		filter.setInputPrompt("Filter contacts...");
-		contactList.setSelectable(true);
+		contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
 
 
 		/* Event-based programming.
@@ -67,8 +66,8 @@ public class AddressbookUI extends UI {
 				-> editContact(new Contact()));
 		filter.addTextChangeListener((TextChangeEvent e)
 				-> listContacts(e.getText()));
-		contactList.addValueChangeListener((Property.ValueChangeEvent e)
-				-> 	editContact((Contact) e.getProperty().getValue()));
+		contactList.addSelectionListener((SelectionEvent e)
+				-> editContact((Contact) contactList.getSelectedRow()));
 
 
 		/* Building the layout.
@@ -110,9 +109,11 @@ public class AddressbookUI extends UI {
 
 	private void listContacts(String stringFilter) {
 		contactList.setContainerDataSource(new BeanItemContainer<>(
-				Contact.class, service.findAll(stringFilter)), Arrays.asList(
-				"firstName", "lastName", "email"));
-		contactList.setColumnHeaders("First name", "Last name", "email");
+				Contact.class, service.findAll(stringFilter)));
+		contactList.setColumnOrder("firstName", "lastName", "email");
+		contactList.removeColumn("id");
+		contactList.removeColumn("birthDate");
+		contactList.removeColumn("phone");
 		contactForm.setVisible(false);
 	}
 
@@ -134,7 +135,7 @@ public class AddressbookUI extends UI {
 	}
 
 	public void deselect() {
-		contactList.setValue(null);
+		contactList.select(null);
 	}
 
 	/*  Simple servlet configuration.

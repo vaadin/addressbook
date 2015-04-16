@@ -60,12 +60,17 @@ public class ContactForm extends VerticalLayout {
      */
 	public void save(Button.ClickEvent event) {
         try {
+            // Commit the fields from UI to DAO
             formFieldBindings.commit();
-            // Place to call business logic.
-            getUI().save(contact);
+
+            // Save DAO to backend with direct synchronous service API
+            getUI().service.save(contact);
+
             Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
                     Type.TRAY_NOTIFICATION);
+            getUI().updateContactList();
         } catch (FieldGroup.CommitException e) {
+            // Validation exceptions could be shown here
         }
 	}
 
@@ -80,12 +85,14 @@ public class ContactForm extends VerticalLayout {
         return (AddressbookUI) super.getUI();
     }
 
-    public void edit(Contact contact) {
+    void edit(Contact contact) {
 		this.contact = contact;
-		// Bind the properties of the contact POJO to fiels in this form
-		formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);
-		setVisible(true);
-		firstName.focus();
+        if(contact != null) {
+            // Bind the properties of the contact POJO to fiels in this form
+            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);
+            firstName.focus();
+        }
+        setVisible(contact != null);
 	}
 
 }

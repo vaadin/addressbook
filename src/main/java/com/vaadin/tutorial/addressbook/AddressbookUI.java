@@ -24,7 +24,7 @@ public class AddressbookUI extends UI {
 
     Button newContact = new Button("New contact") {{
         // Receive user interaction events and send your own events as needed.
-        addClickListener(e -> editContact(new Contact()));
+        addClickListener(e -> contactForm.edit(new Contact()));
     }};
 
     TextField filter = new TextField() {{
@@ -35,7 +35,7 @@ public class AddressbookUI extends UI {
 	Grid contactList = new Grid() {{
         setSelectionMode(Grid.SelectionMode.SINGLE);
         addSelectionListener(e
-                -> editContact((Contact) contactList.getSelectedRow()));
+                -> contactForm.edit((Contact) contactList.getSelectedRow()));
     }};
 
 	// ContactForm is an example of a custom component class
@@ -98,7 +98,7 @@ public class AddressbookUI extends UI {
      * handle the back-end access and/or the user interface updates.
      * Further split your code into classes to easier maintenance.
      */
-	private void updateContactList() {
+	void updateContactList() {
 		updateContactList(filter.getValue());
 	}
 
@@ -106,30 +106,6 @@ public class AddressbookUI extends UI {
 		contactList.setContainerDataSource(new BeanItemContainer<>(
 				Contact.class, service.findAll(stringFilter)));
 		contactForm.setVisible(false);
-	}
-
-	private void editContact(Contact contact) {
-		if (contact != null) {
-			// let the ContactForm decide how contact is edited
-			contactForm.edit(contact);
-		} else {
-			/* Server-side code security.
-			 * Components hidden in server-side code do not
-			 * accept the input/updates from browser.
-			 */
-			// Hide the form from user
-			contactForm.setVisible(false);
-		}
-	}
-
-
-	/*
-	 * The save() and deselect() methods are called by custom ContactForm when user wants to
-	 * persist or reset changes to the edited contact.
-	 */
-	public void save(Contact contact) {
-		service.save(contact);
-		updateContactList();
 	}
 
 	/*  Vaadin application is deployed as a Servlet

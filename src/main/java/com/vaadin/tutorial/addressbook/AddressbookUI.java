@@ -23,10 +23,8 @@ import javax.servlet.annotation.WebServlet;
 public class AddressbookUI extends UI {
 
 
-	/* Hundreds of widgets and components.
-	 * The default Vaadin components are in com.vaadin.ui package and
-	 * there are over 500 more at vaadin.com/directory.
-	 * Note that the class variables are user session scoped.
+	/* The built-in user interface components are in com.vaadin.ui package.
+	 * In addition, you can find over 500 add-ons at vaadin.com/directory
 	 */
 	private TextField filter = new TextField();
 	private Button newContact = new Button("New contact");

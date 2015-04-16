@@ -93,10 +93,9 @@ public class AddressbookUI extends UI {
         updateContactList();
     }
 
-    /* Embrace clean code.
-     * It is good practice to have separate data access methods that
+    /* It is good practice to have separate data access methods that
      * handle the back-end access and/or the user interface updates.
-     * Further split your code into classes to easier maintenance.
+     * You can further split your code into classes to easier maintenance.
      */
 	void updateContactList() {
 		updateContactList(filter.getValue());

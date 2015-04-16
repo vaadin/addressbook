@@ -93,6 +93,13 @@ public class AddressbookUI extends UI {
 		// Split and allow resizing
 		setContent(new HorizontalSplitPanel(left, contactForm));
 
+		// Setup grid
+		contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
+		contactList.setColumnOrder("firstName", "lastName", "email");
+		contactList.removeColumn("id");
+		contactList.removeColumn("birthDate");
+		contactList.removeColumn("phone");
+
 		// List initial content from the back-end data source
 		listContacts();
 	}
@@ -110,10 +117,6 @@ public class AddressbookUI extends UI {
 	private void listContacts(String stringFilter) {
 		contactList.setContainerDataSource(new BeanItemContainer<>(
 				Contact.class, service.findAll(stringFilter)));
-		contactList.setColumnOrder("firstName", "lastName", "email");
-		contactList.removeColumn("id");
-		contactList.removeColumn("birthDate");
-		contactList.removeColumn("phone");
 		contactForm.setVisible(false);
 	}
 

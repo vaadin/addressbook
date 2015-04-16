@@ -22,29 +22,29 @@ public class AddressbookUI extends UI {
 
     // Configure components to be used in this user interface
 
-    private Button newContact = new Button("New contact") {{
+    Button newContact = new Button("New contact") {{
         // Receive user interaction events and send your own events as needed.
         addClickListener(e -> editContact(new Contact()));
     }};
 
-    private TextField filter = new TextField() {{
+    TextField filter = new TextField() {{
         setInputPrompt("Filter contacts...");
         addTextChangeListener(e -> listContacts(e.getText()));
     }};
 
-	private Grid contactList = new Grid() {{
+	Grid contactList = new Grid() {{
         setSelectionMode(Grid.SelectionMode.SINGLE);
         addSelectionListener(e
                 -> editContact((Contact) contactList.getSelectedRow()));
     }};
 
 	// ContactForm is an example of a custom component class
-	private ContactForm contactForm = new ContactForm();
+	ContactForm contactForm = new ContactForm();
 
 	/* ContactService is an in-memory mock for this example. For a real
 	 * application you'd typically implement service as EJB or with Spring.
 	 */
-	private ContactService service = ContactService.createDemoService();
+	ContactService service = ContactService.createDemoService();
 
 
 	/* This is the entry point method executed to initialize and configure
@@ -130,11 +130,6 @@ public class AddressbookUI extends UI {
 	public void save(Contact contact) {
 		service.save(contact);
 		listContacts();
-	}
-
-	public void deselect() {
-		listContacts();
-		contactList.select(null);
 	}
 
 	/*  Vaadin application is deployed as a Servlet

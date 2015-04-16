@@ -17,7 +17,7 @@ import com.vaadin.ui.Notification.Type;
  */
 public class ContactForm extends VerticalLayout {
 
-	private Button save = new Button("Save", this::save) {{
+	Button save = new Button("Save", this::save) {{
         /* Highlight primary actions.
 		 * With Vaadin built-in styles you can highlight the primary save button
 		 * and give it a keyboard shortcut for a better UX.
@@ -25,18 +25,18 @@ public class ContactForm extends VerticalLayout {
         setStyleName(ValoTheme.BUTTON_PRIMARY);
         setClickShortcut(ShortcutAction.KeyCode.ENTER);
     }};
-	private Button cancel = new Button("Cancel", this::cancel);
+	Button cancel = new Button("Cancel", this::cancel);
 
-	private TextField firstName = new TextField("First name");
-	private TextField lastName = new TextField("Last name");
-	private TextField phone = new TextField("Phone");
-	private TextField email = new TextField("Email");
-	private DateField birthDate = new DateField("Birth date");
+	TextField firstName = new TextField("First name");
+	TextField lastName = new TextField("Last name");
+	TextField phone = new TextField("Phone");
+	TextField email = new TextField("Email");
+	DateField birthDate = new DateField("Birth date");
 
-	private Contact contact;
+	Contact contact;
 
     // Easily bind forms to beans and manage validation and buffering
-    private BeanFieldGroup<Contact> formFieldBindings;
+    BeanFieldGroup<Contact> formFieldBindings;
 
     public ContactForm() {
         buildLayout();
@@ -72,8 +72,8 @@ public class ContactForm extends VerticalLayout {
 	public void cancel(Button.ClickEvent event) {
 		// Place to call business logic.
 		Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
-        getUI().deselect();
-	}
+        getUI().contactList.select(null);
+    }
 
     @Override
     public AddressbookUI getUI() {

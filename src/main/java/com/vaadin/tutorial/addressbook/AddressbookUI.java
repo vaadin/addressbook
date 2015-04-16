@@ -33,14 +33,15 @@ public class AddressbookUI extends UI {
 	// ContactForm is an example of a custom component class
 	private ContactForm contactForm = new ContactForm(this);
 
-	// ContactService mimics a real world DAO, that you'd typically implement as
-	// EJB or Spring Data based service.
+	/* ContactService is an in-memory mock for this example. For a real
+	 * application you'd typically implement service as EJB or with Spring.
+	 */
 	private ContactService service = ContactService.createDemoService();
 
 
-	/* The "main method".
-	 * This is the entry point method executed to initialize and configure
-	 * the visible user interface. Executed on every browser reload.
+	/* This is the entry point method executed to initialize and configure
+	 * the visible user interface. Executed on every browser reload because
+	 * a new instance is created for each web page loaded.
 	 */
 	@Override
 	protected void init(VaadinRequest request) {

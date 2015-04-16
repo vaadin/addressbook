@@ -29,7 +29,7 @@ public class AddressbookUI extends UI {
 
     TextField filter = new TextField() {{
         setInputPrompt("Filter contacts...");
-        addTextChangeListener(e -> listContacts(e.getText()));
+        addTextChangeListener(e -> updateContactList(e.getText()));
     }};
 
 	Grid contactList = new Grid() {{
@@ -90,7 +90,7 @@ public class AddressbookUI extends UI {
         contactList.removeColumn("phone");
 
         // List initial content from the back-end data source
-        listContacts();
+        updateContactList();
     }
 
     /* Embrace clean code.
@@ -98,11 +98,11 @@ public class AddressbookUI extends UI {
      * handle the back-end access and/or the user interface updates.
      * Further split your code into classes to easier maintenance.
      */
-	private void listContacts() {
-		listContacts(filter.getValue());
+	private void updateContactList() {
+		updateContactList(filter.getValue());
 	}
 
-	private void listContacts(String stringFilter) {
+	private void updateContactList(String stringFilter) {
 		contactList.setContainerDataSource(new BeanItemContainer<>(
 				Contact.class, service.findAll(stringFilter)));
 		contactForm.setVisible(false);
@@ -129,7 +129,7 @@ public class AddressbookUI extends UI {
 	 */
 	public void save(Contact contact) {
 		service.save(contact);
-		listContacts();
+		updateContactList();
 	}
 
 	/*  Vaadin application is deployed as a Servlet

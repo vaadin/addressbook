@@ -3,13 +3,10 @@ package com.vaadin.tutorial.addressbook;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.SizeWithUnit;
-import com.vaadin.server.Sizeable;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.themes.ValoTheme;
 
 /* Create your own Vaadin components by inheritance and composition.
  * This is a form component inherited from VerticalLayout. Use
@@ -83,11 +80,6 @@ public class ContactForm extends FormLayout {
         getUI().contactList.select(null);
     }
 
-    @Override
-    public AddressbookUI getUI() {
-        return (AddressbookUI) super.getUI();
-    }
-
     void edit(Contact contact) {
 		this.contact = contact;
         if(contact != null) {
@@ -97,5 +89,10 @@ public class ContactForm extends FormLayout {
         }
         setVisible(contact != null);
 	}
+
+    @Override
+    public AddressbookUI getUI() {
+        return (AddressbookUI) super.getUI();
+    }
 
 }

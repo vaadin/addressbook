@@ -20,9 +20,6 @@ import javax.servlet.annotation.WebServlet;
  *
  */
 
-
-// HTML title and theme for the application
-// can be specified with annotations.
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {

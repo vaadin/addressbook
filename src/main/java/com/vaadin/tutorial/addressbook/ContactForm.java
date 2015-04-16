@@ -19,8 +19,15 @@ import com.vaadin.ui.Notification.Type;
  */
 public class ContactForm extends VerticalLayout {
 
-	private Button save = new Button("Save", this::saveClick);
-	private Button cancel = new Button("Cancel", this::cancelClicked);
+	private Button save = new Button("Save", this::save) {{
+        /* Highlight primary actions.
+		 * With Vaadin built-in styles you can highlight the primary save button
+		 * and give it a keyboard shortcut for a better UX.
+		 */
+        setStyleName(ValoTheme.BUTTON_PRIMARY);
+        setClickShortcut(ShortcutAction.KeyCode.ENTER);
+    }};
+	private Button cancel = new Button("Cancel", this::cancel);
 
 	private TextField firstName = new TextField("First name");
 	private TextField lastName = new TextField("Last name");
@@ -31,41 +38,35 @@ public class ContactForm extends VerticalLayout {
 	private final AddressbookUI mainUI;
 	private Contact contact;
 
-	public ContactForm(AddressbookUI mainUI) {
-		this.mainUI = mainUI;
-		setVisible(false);
+    public ContactForm(AddressbookUI mainUI) {
+        this.mainUI = mainUI;
+        buildLayout();
+        setVisible(false);
+    }
 
-		/* Highlight primary actions.
-		 * With Vaadin built-in styles you can highlight the primary save button
-		 * and give it a keyboard shortcut for a better UX.
-		 */
-		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+    private void buildLayout() {
+        final HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        actions.setSpacing(true);
 
+        addComponent(new FormLayout(actions, firstName, lastName, phone, email,
+                birthDate));
+        setMargin(new MarginInfo(false, true, false, true));
+    }
 
-		final HorizontalLayout actions = new HorizontalLayout(save, cancel);
-		actions.setSpacing(true);
-
-		addComponent(new FormLayout(actions, firstName, lastName, phone, email,
-				birthDate));
-		setMargin(new MarginInfo(false, true, false, true));
-
-	}
-
-	/*
-	 * Instead of using inline lambdas for event listeners like in
-	 * AddressbookUI, you can implement listener methods in your
-	 * compositions or in separate controller classes and receive
-	 * to various Vaadin component events, like button clicks.
-	 */
-	public void saveClick(Button.ClickEvent event) {
+    /*
+     * Instead of using inline lambdas for event listeners like in
+     * AddressbookUI, you can also implement listener methods in your
+     * compositions or in separate controller classes and receive
+     * to various Vaadin component events, like button clicks.
+     */
+	public void save(Button.ClickEvent event) {
 		// Place to call business logic.
 		mainUI.save(contact);
 		Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
 				Type.TRAY_NOTIFICATION);
 	}
 
-	public void cancelClicked(Button.ClickEvent event) {
+	public void cancel(Button.ClickEvent event) {
 		// Place to call business logic.
 		Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
 		mainUI.deselect();

@@ -122,8 +122,14 @@ public class AddressbookUI extends UI {
 
 	private void editContact(Contact contact) {
 		if (contact != null) {
+			// let the ContactForm decide how contact is edited
 			contactForm.edit(contact);
 		} else {
+			/* Server code security.
+			 * Components hidden in server-side code do not
+			 * even accept the updates from client.
+			 */
+			// Hide the form from user
 			contactForm.setVisible(false);
 		}
 	}
@@ -138,6 +144,7 @@ public class AddressbookUI extends UI {
 	}
 
 	public void deselect() {
+		listContacts();
 		contactList.select(null);
 	}
 

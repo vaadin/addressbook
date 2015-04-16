@@ -1,6 +1,7 @@
 package com.vaadin.tutorial.addressbook;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.tutorial.addressbook.backend.Contact;
@@ -38,6 +39,9 @@ public class ContactForm extends VerticalLayout {
 	private final AddressbookUI mainUI;
 	private Contact contact;
 
+    // Easily bind forms to beans and manage validation and buffering
+    private BeanFieldGroup<Contact> formFieldBindings;
+
     public ContactForm(AddressbookUI mainUI) {
         this.mainUI = mainUI;
         buildLayout();
@@ -60,10 +64,14 @@ public class ContactForm extends VerticalLayout {
      * to various Vaadin component events, like button clicks.
      */
 	public void save(Button.ClickEvent event) {
-		// Place to call business logic.
-		mainUI.save(contact);
-		Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
-				Type.TRAY_NOTIFICATION);
+        try {
+            formFieldBindings.commit();
+            // Place to call business logic.
+            mainUI.save(contact);
+            Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
+                    Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+        }
 	}
 
 	public void cancel(Button.ClickEvent event) {
@@ -75,7 +83,7 @@ public class ContactForm extends VerticalLayout {
 	public void edit(Contact contact) {
 		this.contact = contact;
 		// Bind the properties of the contact POJO to fiels in this form
-		BeanFieldGroup.bindFieldsUnbuffered(contact, this);
+		formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);
 		setVisible(true);
 		firstName.focus();
 	}

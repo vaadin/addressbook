@@ -137,11 +137,9 @@ public class AddressbookUI extends UI {
 		contactList.select(null);
 	}
 
-	/*  Simple servlet configuration.
-	 *
+	/*  Vaadin application is deployed as a Servlet
 	 *  You can specify additional servlet parameters like the URI and UI
 	 *  class name and turn on production mode when you have finished developing the application.
-	 *
 	 */
 	@WebServlet(urlPatterns = "/*")
 	@VaadinServletConfiguration(ui = AddressbookUI.class, productionMode = false)

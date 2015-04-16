@@ -4,8 +4,6 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.SelectionEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.tutorial.addressbook.backend.Contact;
@@ -26,9 +24,21 @@ public class AddressbookUI extends UI {
 	/* The built-in user interface components are in com.vaadin.ui package.
 	 * In addition, you can find over 500 add-ons at vaadin.com/directory
 	 */
-	private TextField filter = new TextField();
-	private Button newContact = new Button("New contact");
-	private Grid contactList = new Grid();
+    private Button newContact = new Button("New contact") {{
+        // Receive user interaction events and send your own events as needed.
+        addClickListener(e -> editContact(new Contact()));
+    }};
+
+    private TextField filter = new TextField() {{
+        setInputPrompt("Filter contacts...");
+        addTextChangeListener(e -> listContacts(e.getText()));
+    }};
+
+	private Grid contactList = new Grid() {{
+        setSelectionMode(Grid.SelectionMode.SINGLE);
+        addSelectionListener(e
+                -> editContact((Contact) contactList.getSelectedRow()));
+    }};
 
 	// ContactForm is an example of a custom component class
 	private ContactForm contactForm = new ContactForm(this);
@@ -45,65 +55,52 @@ public class AddressbookUI extends UI {
 	 */
 	@Override
 	protected void init(VaadinRequest request) {
+        buildLayout();
+        setupContactList();
+    }
 
-		// If you need to configure the components, the init
-		// method is a good place to do that.
-		filter.setInputPrompt("Filter contacts...");
-		contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
+    private void setupContactList() {
+        // Setup grid
+        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
+        contactList.setColumnOrder("firstName", "lastName", "email");
+        contactList.removeColumn("id");
+        contactList.removeColumn("birthDate");
+        contactList.removeColumn("phone");
 
+        // List initial content from the back-end data source
+        listContacts();
+    }
 
-		/* Event-based programming.
-		 * Receive user interaction events and send your own events as needed.
-		 * Here we attach listeners for components for click event, selection and filtering.
-		 */
-		newContact.addClickListener((Button.ClickEvent e)
-				-> editContact(new Contact()));
-		filter.addTextChangeListener((TextChangeEvent e)
-				-> listContacts(e.getText()));
-		contactList.addSelectionListener((SelectionEvent e)
-				-> editContact((Contact) contactList.getSelectedRow()));
+    /* Layouts are components that contain other components.
+     * HorizontalLayout contains TextField and Button. It is wrapped
+     * with a Grid into VerticalLayout for the left side of the screen.
+     * Allow user to resize the components with a SplitPanel.
+     *
+     * In addition to programmatically building layout in Java,
+     * you may also choose to setup layout declaratively
+     * with Vaadin Designer, CSS and HTML.
+     */
+    private void buildLayout() {
+        HorizontalLayout actions = new HorizontalLayout(filter, newContact);
+        actions.setWidth("100%");
+        filter.setWidth("100%");
+        actions.setExpandRatio(filter, 1);
 
+        VerticalLayout left = new VerticalLayout(actions, contactList);
+        left.setSizeFull();
+        contactList.setSizeFull();
+        left.setExpandRatio(contactList, 1);
 
-		/* Building the layout.
-		 * Layouts are components that contain other components.
-		 * HorizontalLayout contains TextField and Button. It is wrapped
-		 * with a Grid into VerticalLayout for the left side of the screen.
-		 * Allow user to resize the components with a SplitPanel.
-		 *
-		 * In addition to Java, you may also choose Vaadin Designer,
-		 * CSS and HTML templates or declarative format for
-		 * creating your layouts.
-		 */
-		HorizontalLayout actions = new HorizontalLayout(filter, newContact);
-		actions.setWidth("100%");
-		filter.setWidth("100%");
-		actions.setExpandRatio(filter, 1);
+        // Split and allow resizing
+        setContent(new HorizontalSplitPanel(left, contactForm));
+    }
 
-		VerticalLayout left = new VerticalLayout(actions, contactList);
-		left.setSizeFull();
-		contactList.setSizeFull();
-		left.setExpandRatio(contactList, 1);
-
-		// Split and allow resizing
-		setContent(new HorizontalSplitPanel(left, contactForm));
-
-		// Setup grid
-		contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
-		contactList.setColumnOrder("firstName", "lastName", "email");
-		contactList.removeColumn("id");
-		contactList.removeColumn("birthDate");
-		contactList.removeColumn("phone");
-
-		// List initial content from the back-end data source
-		listContacts();
-	}
-
-	/* Embrace clean code.
-	 * It is good practice to have separate data access methods that
-	 * handle the back-end access and/or the user interface updates.
-	 * Further split your code into classes to easier maintenance.
-	 *
-	 */
+    /* Embrace clean code.
+     * It is good practice to have separate data access methods that
+     * handle the back-end access and/or the user interface updates.
+     * Further split your code into classes to easier maintenance.
+     *
+     */
 	private void listContacts() {
 		listContacts(filter.getValue());
 	}

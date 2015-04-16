@@ -39,7 +39,7 @@ public class AddressbookUI extends UI {
     }};
 
 	// ContactForm is an example of a custom component class
-	private ContactForm contactForm = new ContactForm(this);
+	private ContactForm contactForm = new ContactForm();
 
 	/* ContactService is an in-memory mock for this example. For a real
 	 * application you'd typically implement service as EJB or with Spring.

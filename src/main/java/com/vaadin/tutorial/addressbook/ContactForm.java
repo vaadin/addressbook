@@ -33,14 +33,12 @@ public class ContactForm extends VerticalLayout {
 	private TextField email = new TextField("Email");
 	private DateField birthDate = new DateField("Birth date");
 
-	private final AddressbookUI mainUI;
 	private Contact contact;
 
     // Easily bind forms to beans and manage validation and buffering
     private BeanFieldGroup<Contact> formFieldBindings;
 
-    public ContactForm(AddressbookUI mainUI) {
-        this.mainUI = mainUI;
+    public ContactForm() {
         buildLayout();
         setVisible(false);
     }
@@ -64,7 +62,7 @@ public class ContactForm extends VerticalLayout {
         try {
             formFieldBindings.commit();
             // Place to call business logic.
-            mainUI.save(contact);
+            getUI().save(contact);
             Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
                     Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -74,10 +72,15 @@ public class ContactForm extends VerticalLayout {
 	public void cancel(Button.ClickEvent event) {
 		// Place to call business logic.
 		Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
-		mainUI.deselect();
+        getUI().deselect();
 	}
 
-	public void edit(Contact contact) {
+    @Override
+    public AddressbookUI getUI() {
+        return (AddressbookUI) super.getUI();
+    }
+
+    public void edit(Contact contact) {
 		this.contact = contact;
 		// Bind the properties of the contact POJO to fiels in this form
 		formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);

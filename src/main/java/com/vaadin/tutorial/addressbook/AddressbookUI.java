@@ -57,18 +57,6 @@ public class AddressbookUI extends UI {
         setupContactList();
     }
 
-    private void setupContactList() {
-        // Setup grid
-        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
-        contactList.setColumnOrder("firstName", "lastName", "email");
-        contactList.removeColumn("id");
-        contactList.removeColumn("birthDate");
-        contactList.removeColumn("phone");
-
-        // List initial content from the back-end data source
-        listContacts();
-    }
-
     /* Layouts are components that contain other components.
      * HorizontalLayout contains TextField and Button. It is wrapped
      * with a Grid into VerticalLayout for the left side of the screen.
@@ -91,6 +79,18 @@ public class AddressbookUI extends UI {
 
         // Split and allow resizing
         setContent(new HorizontalSplitPanel(left, contactForm));
+    }
+
+    /* Bind contact list to backend data-source */
+    private void setupContactList() {
+        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
+        contactList.setColumnOrder("firstName", "lastName", "email");
+        contactList.removeColumn("id");
+        contactList.removeColumn("birthDate");
+        contactList.removeColumn("phone");
+
+        // List initial content from the back-end data source
+        listContacts();
     }
 
     /* Embrace clean code.

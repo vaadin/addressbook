@@ -77,8 +77,12 @@ public class AddressbookUI extends UI {
         contactList.setSizeFull();
         left.setExpandRatio(contactList, 1);
 
+        HorizontalLayout mainLayout = new HorizontalLayout(left, contactForm);
+        mainLayout.setSizeFull();
+        mainLayout.setExpandRatio(left, 1);
+
         // Split and allow resizing
-        setContent(new HorizontalSplitPanel(left, contactForm));
+        setContent(mainLayout);
     }
 
     /* Bind contact list to backend data-source */

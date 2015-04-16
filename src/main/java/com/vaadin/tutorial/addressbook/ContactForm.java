@@ -3,6 +3,8 @@ package com.vaadin.tutorial.addressbook;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.server.SizeWithUnit;
+import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.ui.*;
@@ -15,7 +17,7 @@ import com.vaadin.ui.Notification.Type;
  * Similarly named field by naming convention or customized
  * with @PropertyId annotation.
  */
-public class ContactForm extends VerticalLayout {
+public class ContactForm extends FormLayout {
 
 	Button save = new Button("Save", this::save) {{
         /* Highlight primary actions.
@@ -44,12 +46,13 @@ public class ContactForm extends VerticalLayout {
     }
 
     private void buildLayout() {
-        final HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        setSizeUndefined();
+        setMargin(true);
+
+        HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-        addComponent(new FormLayout(actions, firstName, lastName, phone, email,
-                birthDate));
-        setMargin(new MarginInfo(false, true, false, true));
+        addComponents(firstName, lastName, phone, email, birthDate, actions);
     }
 
     /*

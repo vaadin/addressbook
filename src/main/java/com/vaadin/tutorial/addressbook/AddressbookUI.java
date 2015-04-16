@@ -97,7 +97,6 @@ public class AddressbookUI extends UI {
      * It is good practice to have separate data access methods that
      * handle the back-end access and/or the user interface updates.
      * Further split your code into classes to easier maintenance.
-     *
      */
 	private void listContacts() {
 		listContacts(filter.getValue());

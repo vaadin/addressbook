@@ -6,6 +6,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.ui.Notification.Type;
 
 /*
  * Reusable custom ui component.
@@ -58,12 +59,15 @@ public class ContactForm extends VerticalLayout {
 	 * to various Vaadin component events, like button clicks.
 	 */
 	public void saveClick(Button.ClickEvent event) {
-		// just pass the control back to the main view.
+		// Place to call business logic.
 		mainUI.save(contact);
+		Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
+				Type.TRAY_NOTIFICATION);
 	}
 
 	public void cancelClicked(Button.ClickEvent event) {
-		// just pass the control back to the main view.
+		// Place to call business logic.
+		Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
 		mainUI.deselect();
 	}
 

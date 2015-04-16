@@ -9,10 +9,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Notification.Type;
 
-/*
- * Reusable custom ui component.
- *
- * Create your own Vaadin components by inheritance and composition.
+/* Create your own Vaadin components by inheritance and composition.
  * This is a form component inherited from VerticalLayout. Use
  * Use BeanFieldGroup to bind data fields from DTO to UI fields.
  * Similarly named field by naming convention or customized

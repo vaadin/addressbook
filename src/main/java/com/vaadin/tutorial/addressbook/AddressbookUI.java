@@ -124,15 +124,16 @@ public class AddressbookUI extends UI {
 		if (contact != null) {
 			// let the ContactForm decide how contact is edited
 			contactForm.edit(contact);
-			/* Server code security.
-			 * Components hidden in server-side code do not
-			 * accept the input/updates from the browser.
-			 */
 		} else {
+			/* Server-side code security.
+			 * Components hidden in server-side code do not
+			 * accept the input/updates from browser.
+			 */
 			// Hide the form from user
 			contactForm.setVisible(false);
 		}
 	}
+
 
 	/*
 	 * The save() and deselect() methods are called by custom ContactForm when user wants to

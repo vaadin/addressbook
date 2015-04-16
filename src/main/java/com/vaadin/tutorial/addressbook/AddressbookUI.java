@@ -20,10 +20,8 @@ import javax.servlet.annotation.WebServlet;
 @Theme("valo")
 public class AddressbookUI extends UI {
 
+    // Configure components to be used in this user interface
 
-	/* The built-in user interface components are in com.vaadin.ui package.
-	 * In addition, you can find over 500 add-ons at vaadin.com/directory
-	 */
     private Button newContact = new Button("New contact") {{
         // Receive user interaction events and send your own events as needed.
         addClickListener(e -> editContact(new Contact()));

@@ -66,8 +66,10 @@ public class ContactForm extends FormLayout {
 			formFieldBindings.commit();
 			mainUI.getService().save(contact);
 			mainUI.refreshContacts();
-			Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
-				Type.TRAY_NOTIFICATION);
+			String msg = String.format("Saved '%s %s'.",
+					contact.getFirstName(),
+					contact.getLastName());
+			Notification.show(msg,Type.TRAY_NOTIFICATION);
 		} catch (FieldGroup.CommitException e) {
 			e.printStackTrace();
 		}

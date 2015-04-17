@@ -74,8 +74,10 @@ public class ContactForm extends FormLayout {
             // Save DAO to backend with direct synchronous service API
             getUI().service.save(contact);
 
-            Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
-                    Type.TRAY_NOTIFICATION);
+            String msg = String.format("Saved '%s %s'.",
+                    contact.getFirstName(),
+                    contact.getLastName());
+            Notification.show(msg,Type.TRAY_NOTIFICATION);
             getUI().refreshContacts();
         } catch (FieldGroup.CommitException e) {
             // Validation exceptions could be shown here

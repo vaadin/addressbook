@@ -8,7 +8,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
-/* Custom UI Components.
+/* Create custom UI Components.
  *
  * Create your own Vaadin components by inheritance and composition.
  * This is a form component inherited from VerticalLayout. Use
@@ -76,7 +76,7 @@ public class ContactForm extends FormLayout {
 
             Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
                     Type.TRAY_NOTIFICATION);
-            getUI().updateContactList();
+            getUI().refreshContacts();
         } catch (FieldGroup.CommitException e) {
             // Validation exceptions could be shown here
         }

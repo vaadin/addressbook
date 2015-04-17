@@ -32,7 +32,7 @@ public class AddressbookUI extends UI {
 
     TextField filter = new TextField() {{
         setInputPrompt("Filter contacts...");
-        addTextChangeListener(e -> updateContactList(e.getText()));
+        addTextChangeListener(e -> refreshContacts(e.getText()));
     }};
 
     Grid contactList = new Grid() {{
@@ -101,16 +101,18 @@ public class AddressbookUI extends UI {
         setContent(mainLayout);
     }
 
-    /* Bind contact list to backend data-source */
     private void setupContactList() {
+        // Bind contact list to backend data-source
         contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
+
+        // Setup grid columns
         contactList.setColumnOrder("firstName", "lastName", "email");
         contactList.removeColumn("id");
         contactList.removeColumn("birthDate");
         contactList.removeColumn("phone");
 
         // List initial content from the back-end data source
-        updateContactList();
+        refreshContacts();
     }
 
     /* Choose the design patterns you like.
@@ -121,11 +123,11 @@ public class AddressbookUI extends UI {
      * With Vaadin you can follow MVC, MVP or any other design pattern
      * you choose.
      */
-    void updateContactList() {
-        updateContactList(filter.getValue());
+    void refreshContacts() {
+        refreshContacts(filter.getValue());
     }
 
-    private void updateContactList(String stringFilter) {
+    private void refreshContacts(String stringFilter) {
         contactList.setContainerDataSource(new BeanItemContainer<>(
                 Contact.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);

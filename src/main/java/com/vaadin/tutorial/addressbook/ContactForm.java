@@ -8,7 +8,9 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
-/* Create your own Vaadin components by inheritance and composition.
+/* Custom UI Components.
+ *
+ * Create your own Vaadin components by inheritance and composition.
  * This is a form component inherited from VerticalLayout. Use
  * Use BeanFieldGroup to bind data fields from DTO to UI fields.
  * Similarly named field by naming convention or customized
@@ -18,6 +20,7 @@ public class ContactForm extends FormLayout {
 
 	Button save = new Button("Save", this::save) {{
         /* Highlight primary actions.
+         *
 		 * With Vaadin built-in styles you can highlight the primary save button
 		 * and give it a keyboard shortcut for a better UX.
 		 */
@@ -52,11 +55,16 @@ public class ContactForm extends FormLayout {
         addComponents(firstName, lastName, phone, email, birthDate, actions);
     }
 
-    /*
-     * Instead of using inline lambdas for event listeners like in
-     * AddressbookUI, you can also implement listener methods in your
+    /* Use any JVM language.
+     *
+     * Vaadin supports all languages supported by Java Virtual Machine 1.6+.
+     * This allows you to program user interface in Java 8, Scala, Groovy or any other
+     * language you choose.
+     * The new languages give you very powerful tools for organizing your code
+     * as you choose. For example, you can implement the listener methods in your
      * compositions or in separate controller classes and receive
-     * to various Vaadin component events, like button clicks.
+     * to various Vaadin component events, like button clicks. Or keep it simple
+     * and compact with Lambda expressions.
      */
 	public void save(Button.ClickEvent event) {
         try {

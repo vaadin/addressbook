@@ -20,9 +20,6 @@ import javax.servlet.annotation.WebServlet;
  *
  */
 
-
-// HTML title and theme for the application
-// can be specified with annotations.
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {
@@ -93,7 +90,7 @@ public class AddressbookUI extends UI {
 		// Split and allow resizing
 		setContent(new HorizontalSplitPanel(left, contactForm));
 
-		// Setup grid
+		// Setup grid columns
 		contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
 		contactList.setColumnOrder("firstName", "lastName", "email");
 		contactList.removeColumn("id");
@@ -101,7 +98,7 @@ public class AddressbookUI extends UI {
 		contactList.removeColumn("phone");
 
 		// List initial content from the back-end data source
-		listContacts();
+		refreshContacts();
 	}
 
 	/* Embrace clean code.
@@ -110,10 +107,6 @@ public class AddressbookUI extends UI {
 	 * Further split your code into classes to easier maintenance.
 	 *
 	 */
-	private void listContacts() {
-		listContacts(filter.getValue());
-	}
-
 	private void listContacts(String stringFilter) {
 		contactList.setContainerDataSource(new BeanItemContainer<>(
 				Contact.class, service.findAll(stringFilter)));
@@ -136,20 +129,22 @@ public class AddressbookUI extends UI {
 
 
 	/*
-	 * The save() and deselect() methods are called by custom ContactForm when user wants to
+	 * The refreshContacts() and deselect() methods are called by custom ContactForm when user wants to
 	 * persist or reset changes to the edited contact.
 	 */
-	public void save(Contact contact) {
-		service.save(contact);
-		listContacts();
+	public void refreshContacts() {
+		listContacts(filter.getValue());
 	}
 
 	public void deselect() {
-		listContacts();
 		contactList.select(null);
 	}
 
-	/*  Simple servlet configuration.
+	public ContactService getService() {
+		return this.service;
+	}
+
+	/*  Deploy as a Servlet or Portlet.
 	 *
 	 *  You can specify additional servlet parameters like the URI and UI
 	 *  class name and turn on production mode when you have finished developing the application.

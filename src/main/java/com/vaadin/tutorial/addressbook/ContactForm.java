@@ -1,15 +1,15 @@
 package com.vaadin.tutorial.addressbook;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.themes.ValoTheme;
 
 /*
- * Reusable custom ui component.
+ * Create custom ui components.
  *
  * Create your own Vaadin components by inheritance and composition.
  * This is a form component inherited from VerticalLayout. Use
@@ -17,10 +17,10 @@ import com.vaadin.ui.Notification.Type;
  * Similarly named field by naming convention or customized
  * with @PropertyId annotation.
  */
-public class ContactForm extends VerticalLayout {
+public class ContactForm extends FormLayout {
 
-	private Button save = new Button("Save", this::saveClick);
-	private Button cancel = new Button("Cancel", this::cancelClicked);
+	private Button save = new Button("Save", this::save);
+	private Button cancel = new Button("Cancel", this::cancel);
 
 	private TextField firstName = new TextField("First name");
 	private TextField lastName = new TextField("Last name");
@@ -30,6 +30,9 @@ public class ContactForm extends VerticalLayout {
 
 	private final AddressbookUI mainUI;
 	private Contact contact;
+
+	// Easily bind forms to beans and manage validation and buffering
+	BeanFieldGroup<Contact> formFieldBindings;
 
 	public ContactForm(AddressbookUI mainUI) {
 		this.mainUI = mainUI;
@@ -46,9 +49,9 @@ public class ContactForm extends VerticalLayout {
 		final HorizontalLayout actions = new HorizontalLayout(save, cancel);
 		actions.setSpacing(true);
 
-		addComponent(new FormLayout(actions, firstName, lastName, phone, email,
-				birthDate));
-		setMargin(new MarginInfo(false, true, false, true));
+		addComponents(firstName, lastName, phone, email,
+				birthDate, actions);
+		setMargin(true);
 
 	}
 
@@ -58,14 +61,20 @@ public class ContactForm extends VerticalLayout {
 	 * compositions or in separate controller classes and receive
 	 * to various Vaadin component events, like button clicks.
 	 */
-	public void saveClick(Button.ClickEvent event) {
-		// Place to call business logic.
-		mainUI.save(contact);
-		Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
+	public void save(Button.ClickEvent event) {
+		try {
+			// Place to call business logic.
+			formFieldBindings.commit();
+			mainUI.getService().save(contact);
+			mainUI.refreshContacts();
+			Notification.show("Saved: " + contact.getFirstName() + " " + contact.getLastName(),
 				Type.TRAY_NOTIFICATION);
+		} catch (FieldGroup.CommitException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void cancelClicked(Button.ClickEvent event) {
+	public void cancel(Button.ClickEvent event) {
 		// Place to call business logic.
 		Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
 		mainUI.deselect();
@@ -74,7 +83,7 @@ public class ContactForm extends VerticalLayout {
 	public void edit(Contact contact) {
 		this.contact = contact;
 		// Bind the properties of the contact POJO to fiels in this form
-		BeanFieldGroup.bindFieldsUnbuffered(contact, this);
+		formFieldBindings= BeanFieldGroup.bindFieldsBuffered(contact, this);
 		setVisible(true);
 		firstName.focus();
 	}

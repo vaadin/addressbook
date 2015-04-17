@@ -48,8 +48,8 @@ public class ContactForm extends FormLayout {
 		final HorizontalLayout actions = new HorizontalLayout(save, cancel);
 		actions.setSpacing(true);
 
-		addComponents(firstName, lastName, phone, email,
-				birthDate, actions);
+		addComponents(actions, firstName, lastName, phone, email,
+				birthDate);
 		setMargin(true);
 
 	}

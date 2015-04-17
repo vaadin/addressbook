@@ -23,12 +23,11 @@ import javax.servlet.annotation.WebServlet;
 @Theme("valo")
 public class AddressbookUI extends UI {
 
-    /* Hundreds of ready made components.
-     *
-     * Each user interface component is just a plain of Java object. It already
-     * knows how to render properly in all supported browsers and how to communicate
-     * user interactions to your code on the server-side. Just create an instance
-     * here for the components you want to use.
+	/* Hundreds of widgets.
+	 * Vaadin's user interface components are just Java objects that encapsulate
+	 * and handle cross-browser support and client-server communication. The
+	 * default Vaadin components are in the com.vaadin.ui package and there
+	 * are over 500 more in vaadin.com/directory.
      */
 
     TextField filter = new TextField() {{
@@ -55,8 +54,9 @@ public class AddressbookUI extends UI {
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
 
-    // ContactService is an in-memory mock for this example. For a real
-    // application you'd typically implement service as EJB or with Spring.
+    // ContactService is a in-memory mock DAO that mimics
+    // a real-world datasource. Typically implemented for
+    // example as EJB or Spring Data based service.
     ContactService service = ContactService.createDemoService();
 
 

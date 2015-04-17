@@ -14,21 +14,21 @@ import com.vaadin.ui.*;
 
 import javax.servlet.annotation.WebServlet;
 
-/* The web user interface.
- * Define the user interface by extending the UI class.  New instance of this class
- * is automatically created for every user accessing the application. This can also be a managed bean (CDI or Spring).
- *
+/* Web user interface in Java.
+ * Define the user interface by extending the UI class. A new instance of
+ * this class is automatically created for every user accessing the application.
+ * This can also be a managed bean (CDI or Spring).
  */
-
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {
 
 
 	/* Hundreds of widgets and components.
-	 * The default Vaadin components are in com.vaadin.ui package and
-	 * there is over 500 more at vaadin.com/directory.
-	 * Note that the class variables are user session scoped.
+	 * User interface components are just Java objects that encapsulate and
+	 * handle cross-browser support and client-server communication. The
+	 * default Vaadin components are in the com.vaadin.ui package and there
+	 * are over 500 more in vaadin.com/directory.
 	 */
 	private TextField filter = new TextField();
 	private Button newContact = new Button("New contact");
@@ -37,8 +37,8 @@ public class AddressbookUI extends UI {
 	// ContactForm is an example of a custom component class
 	private ContactForm contactForm = new ContactForm(this);
 
-	// ContactService mimics a real world DAO, that you'd typically implement as
-	// EJB or Spring Data based service.
+	// ContactService is a in-memory mock DAO that mimics a real-world datasource.
+	// Typically implemented for example as EJB or Spring Data based service.
 	private ContactService service = ContactService.createDemoService();
 
 
@@ -55,10 +55,12 @@ public class AddressbookUI extends UI {
 		contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
 
 
-		/* Event-based programming.
-		 * Receive user interaction events and send your own events as needed.
-		 * Here we attach listeners for components for click event, selection and filtering.
+		/* Easy event-driven programming.
+		 * Synchronously receive user interaction events on the server-side.
+		 * Vaadin automatically tracks component changes and sends them back
+		 * to the browser.
 		 */
+		// Attach listeners for click event, selection and filter text change
 		newContact.addClickListener((Button.ClickEvent e)
 				-> editContact(new Contact()));
 		filter.addTextChangeListener((TextChangeEvent e)
@@ -69,9 +71,9 @@ public class AddressbookUI extends UI {
 
 		/* Building the layout.
 		 * Layouts are components that contain other components.
-		 * HorizontalLayout contains TextField and Button. It is wrapped
-		 * with a Grid into VerticalLayout for the left side of the screen.
-		 * Allow user to resize the components with a SplitPanel.
+		 * HorizontalLayout contains TextField and Button. It is wrapped with a Grid
+		 * into VerticalLayout on the left side of the screen. Allow users to resize
+		 * the components with a SplitPanel. In addition to Java, you may also choose
 		 *
 		 * In addition to Java, you may also choose Vaadin Designer,
 		 * CSS and HTML templates or declarative format for
@@ -101,10 +103,10 @@ public class AddressbookUI extends UI {
 		refreshContacts();
 	}
 
-	/* Embrace clean code.
+	/* Use design patterns.
 	 * It is good practice to have separate data access methods that
 	 * handle the back-end access and/or the user interface updates.
-	 * Further split your code into classes to easier maintenance.
+	 * With Vaadin you can follow MVC, MVP or any design pattern you prefer.
 	 *
 	 */
 	private void listContacts(String stringFilter) {

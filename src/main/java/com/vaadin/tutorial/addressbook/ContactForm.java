@@ -12,10 +12,9 @@ import com.vaadin.ui.themes.ValoTheme;
  * Create custom ui components.
  *
  * Create your own Vaadin components by inheritance and composition.
- * This is a form component inherited from VerticalLayout. Use
- * Use BeanFieldGroup to bind data fields from DTO to UI fields.
- * Similarly named field by naming convention or customized
- * with @PropertyId annotation.
+ * This is a form component inherited from FormLayout. Use BeanFieldGroup
+ * to bind data fields from DTO to UI fields. Similarly named field by
+ * naming convention or customized with @PropertyId annotation.
  */
 public class ContactForm extends FormLayout {
 

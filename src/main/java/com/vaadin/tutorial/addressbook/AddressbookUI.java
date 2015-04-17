@@ -20,16 +20,17 @@ import javax.servlet.annotation.WebServlet;
  * This can also be a managed bean (CDI or Spring).
  */
 
-// Normally UI is (re-)created when URL is loaded. Use @PreserveOnRefresh
-// here to automatically preserve the full state also over browser reloads.
+// Normally UI is (re-)created when URL is loaded.
+// Use @PreserveOnRefresh here to automatically preserve
+// the full state also over browser reloads.
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {
 
 
-	/* Hundreds of widgets and components.
-	 * User interface components are just Java objects that encapsulate and
-	 * handle cross-browser support and client-server communication. The
+	/* Hundreds of widgets.
+	 * Vaadin's user interface components are just Java objects that encapsulate
+	 * and handle cross-browser support and client-server communication. The
 	 * default Vaadin components are in the com.vaadin.ui package and there
 	 * are over 500 more in vaadin.com/directory.
 	 */
@@ -40,8 +41,9 @@ public class AddressbookUI extends UI {
 	// ContactForm is an example of a custom component class
 	private ContactForm contactForm = new ContactForm(this);
 
-	// ContactService is a in-memory mock DAO that mimics a real-world datasource.
-	// Typically implemented for example as EJB or Spring Data based service.
+	// ContactService is a in-memory mock DAO that mimics
+	// a real-world datasource. Typically implemented for
+	// example as EJB or Spring Data based service.
 	private ContactService service = ContactService.createDemoService();
 
 

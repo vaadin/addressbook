@@ -19,6 +19,9 @@ import javax.servlet.annotation.WebServlet;
  * this class is automatically created for every user accessing the application.
  * This can also be a managed bean (CDI or Spring).
  */
+
+// Normally UI is (re-)created when URL is loaded. Use @PreserveOnRefresh
+// here to automatically preserve the full state also over browser reloads.
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {

@@ -18,24 +18,24 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class ContactForm extends FormLayout {
 
-	Button save = new Button("Save", this::save) {{
+    Button save = new Button("Save", this::save) {{
         /* Highlight primary actions.
          *
-		 * With Vaadin built-in styles you can highlight the primary save button
-		 * and give it a keyboard shortcut for a better UX.
-		 */
+         * With Vaadin built-in styles you can highlight the primary save button
+         * and give it a keyboard shortcut for a better UX.
+         */
         setStyleName(ValoTheme.BUTTON_PRIMARY);
         setClickShortcut(ShortcutAction.KeyCode.ENTER);
     }};
-	Button cancel = new Button("Cancel", this::cancel);
+    Button cancel = new Button("Cancel", this::cancel);
 
-	TextField firstName = new TextField("First name");
-	TextField lastName = new TextField("Last name");
-	TextField phone = new TextField("Phone");
-	TextField email = new TextField("Email");
-	DateField birthDate = new DateField("Birth date");
+    TextField firstName = new TextField("First name");
+    TextField lastName = new TextField("Last name");
+    TextField phone = new TextField("Phone");
+    TextField email = new TextField("Email");
+    DateField birthDate = new DateField("Birth date");
 
-	Contact contact;
+    Contact contact;
 
     // Easily bind forms to beans and manage validation and buffering
     BeanFieldGroup<Contact> formFieldBindings;
@@ -66,7 +66,7 @@ public class ContactForm extends FormLayout {
      * to various Vaadin component events, like button clicks. Or keep it simple
      * and compact with Lambda expressions.
      */
-	public void save(Button.ClickEvent event) {
+    public void save(Button.ClickEvent event) {
         try {
             // Commit the fields from UI to DAO
             formFieldBindings.commit();
@@ -80,23 +80,23 @@ public class ContactForm extends FormLayout {
         } catch (FieldGroup.CommitException e) {
             // Validation exceptions could be shown here
         }
-	}
+    }
 
-	public void cancel(Button.ClickEvent event) {
-		// Place to call business logic.
-		Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
+    public void cancel(Button.ClickEvent event) {
+        // Place to call business logic.
+        Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
         getUI().contactList.select(null);
     }
 
     void edit(Contact contact) {
-		this.contact = contact;
+        this.contact = contact;
         if(contact != null) {
             // Bind the properties of the contact POJO to fiels in this form
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);
             firstName.focus();
         }
         setVisible(contact != null);
-	}
+    }
 
     @Override
     public AddressbookUI getUI() {

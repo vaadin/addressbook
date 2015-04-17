@@ -35,7 +35,7 @@ public class AddressbookUI extends UI {
         addTextChangeListener(e -> updateContactList(e.getText()));
     }};
 
-	Grid contactList = new Grid() {{
+    Grid contactList = new Grid() {{
         setSelectionMode(Grid.SelectionMode.SINGLE);
         addSelectionListener(e
                 -> contactForm.edit((Contact) contactList.getSelectedRow()));
@@ -52,21 +52,21 @@ public class AddressbookUI extends UI {
     }};
 
     // ContactForm is an example of a custom component class
-	ContactForm contactForm = new ContactForm();
+    ContactForm contactForm = new ContactForm();
 
-	// ContactService is an in-memory mock for this example. For a real
+    // ContactService is an in-memory mock for this example. For a real
     // application you'd typically implement service as EJB or with Spring.
-	ContactService service = ContactService.createDemoService();
+    ContactService service = ContactService.createDemoService();
 
 
-	/* The "Main method".
-	 *
-	 * This is the entry point method executed to initialize and configure
-	 * the visible user interface. Executed on every browser reload because
-	 * a new instance is created for each web page loaded.
-	 */
-	@Override
-	protected void init(VaadinRequest request) {
+    /* The "Main method".
+     *
+     * This is the entry point method executed to initialize and configure
+     * the visible user interface. Executed on every browser reload because
+     * a new instance is created for each web page loaded.
+     */
+    @Override
+    protected void init(VaadinRequest request) {
         buildLayout();
         setupContactList();
     }
@@ -121,25 +121,25 @@ public class AddressbookUI extends UI {
      * With Vaadin you can follow MVC, MVP or any other design pattern
      * you choose.
      */
-	void updateContactList() {
-		updateContactList(filter.getValue());
-	}
+    void updateContactList() {
+        updateContactList(filter.getValue());
+    }
 
-	private void updateContactList(String stringFilter) {
-		contactList.setContainerDataSource(new BeanItemContainer<>(
-				Contact.class, service.findAll(stringFilter)));
-		contactForm.setVisible(false);
-	}
+    private void updateContactList(String stringFilter) {
+        contactList.setContainerDataSource(new BeanItemContainer<>(
+                Contact.class, service.findAll(stringFilter)));
+        contactForm.setVisible(false);
+    }
 
-	/*  Deployed as a Servlet or Portlet.
-	 *
-	 *  You can specify additional servlet parameters like the URI and UI
-	 *  class name and turn on production mode when you have finished developing the application.
-	 */
-	@WebServlet(urlPatterns = "/*")
-	@VaadinServletConfiguration(ui = AddressbookUI.class, productionMode = false)
-	public static class MyUIServlet extends VaadinServlet {
-	}
+    /*  Deployed as a Servlet or Portlet.
+     *
+     *  You can specify additional servlet parameters like the URI and UI
+     *  class name and turn on production mode when you have finished developing the application.
+     */
+    @WebServlet(urlPatterns = "/*")
+    @VaadinServletConfiguration(ui = AddressbookUI.class, productionMode = false)
+    public static class MyUIServlet extends VaadinServlet {
+    }
 
 
 }

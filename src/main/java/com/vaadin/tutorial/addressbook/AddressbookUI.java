@@ -36,6 +36,16 @@ public class AddressbookUI extends UI {
     }};
 
     Grid contactList = new Grid() {{
+        // Bind contact list to backend data-source
+        setContainerDataSource(new BeanItemContainer<>(Contact.class));
+
+        // Setup grid columns
+        setColumnOrder("firstName", "lastName", "email");
+        removeColumn("id");
+        removeColumn("birthDate");
+        removeColumn("phone");
+
+        // Open selected contacts in contactForm
         setSelectionMode(Grid.SelectionMode.SINGLE);
         addSelectionListener(e
                 -> contactForm.edit((Contact) contactList.getSelectedRow()));
@@ -69,7 +79,7 @@ public class AddressbookUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         buildLayout();
-        setupContactList();
+        refreshContacts();
     }
 
     /* Robust layouts.
@@ -100,20 +110,6 @@ public class AddressbookUI extends UI {
 
         // Split and allow resizing
         setContent(mainLayout);
-    }
-
-    private void setupContactList() {
-        // Bind contact list to backend data-source
-        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
-
-        // Setup grid columns
-        contactList.setColumnOrder("firstName", "lastName", "email");
-        contactList.removeColumn("id");
-        contactList.removeColumn("birthDate");
-        contactList.removeColumn("phone");
-
-        // List initial content from the back-end data source
-        refreshContacts();
     }
 
     /* Choose the design patterns you like.

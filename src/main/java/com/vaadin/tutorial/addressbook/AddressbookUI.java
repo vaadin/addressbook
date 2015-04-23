@@ -30,36 +30,9 @@ public class AddressbookUI extends UI {
 	 * are over 500 more in vaadin.com/directory.
      */
 
-    TextField filter = new TextField() {{
-        setInputPrompt("Filter contacts...");
-        addTextChangeListener(e -> refreshContacts(e.getText()));
-    }};
-
-    Grid contactList = new Grid() {{
-        // Bind contact list to backend data-source
-        setContainerDataSource(new BeanItemContainer<>(Contact.class));
-
-        // Setup grid columns
-        setColumnOrder("firstName", "lastName", "email");
-        removeColumn("id");
-        removeColumn("birthDate");
-        removeColumn("phone");
-
-        // Open selected contacts in contactForm
-        setSelectionMode(Grid.SelectionMode.SINGLE);
-        addSelectionListener(e
-                -> contactForm.edit((Contact) contactList.getSelectedRow()));
-    }};
-
-    Button newContact = new Button("New contact") {{
-        /* Synchronous event handling.
-         *
-         * Receive user interaction events on the server-side. This allows you
-         * to synchronously handle those events. Vaadin automatically sends
-         * only the needed changes to the web page without loading a new page.
-         */
-        addClickListener(e -> contactForm.edit(new Contact()));
-    }};
+    TextField filter = new TextField();
+    Grid contactList = new Grid();
+    Button newContact = new Button("New contact");
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
@@ -78,7 +51,30 @@ public class AddressbookUI extends UI {
      */
     @Override
     protected void init(VaadinRequest request) {
+        configureComponents();
         buildLayout();
+    }
+
+    private void configureComponents() {
+         /* Synchronous event handling.
+         *
+         * Receive user interaction events on the server-side. This allows you
+         * to synchronously handle those events. Vaadin automatically sends
+         * only the needed changes to the web page without loading a new page.
+         */
+        newContact.addClickListener(e -> contactForm.edit(new Contact()));
+
+        filter.setInputPrompt("Filter contacts...");
+        filter.addTextChangeListener(e -> refreshContacts(e.getText()));
+
+        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
+        contactList.setColumnOrder("firstName", "lastName", "email");
+        contactList.removeColumn("id");
+        contactList.removeColumn("birthDate");
+        contactList.removeColumn("phone");
+        contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
+        contactList.addSelectionListener(e
+                -> contactForm.edit((Contact) contactList.getSelectedRow()));
         refreshContacts();
     }
 

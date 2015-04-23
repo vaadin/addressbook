@@ -18,17 +18,8 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class ContactForm extends FormLayout {
 
-    Button save = new Button("Save", this::save) {{
-        /* Highlight primary actions.
-         *
-         * With Vaadin built-in styles you can highlight the primary save button
-         * and give it a keyboard shortcut for a better UX.
-         */
-        setStyleName(ValoTheme.BUTTON_PRIMARY);
-        setClickShortcut(ShortcutAction.KeyCode.ENTER);
-    }};
+    Button save = new Button("Save", this::save);
     Button cancel = new Button("Cancel", this::cancel);
-
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
     TextField phone = new TextField("Phone");
@@ -41,7 +32,18 @@ public class ContactForm extends FormLayout {
     BeanFieldGroup<Contact> formFieldBindings;
 
     public ContactForm() {
+        configureComponents();
         buildLayout();
+    }
+
+    private void configureComponents() {
+        /* Highlight primary actions.
+         *
+         * With Vaadin built-in styles you can highlight the primary save button
+         * and give it a keyboard shortcut for a better UX.
+         */
+        save.setStyleName(ValoTheme.BUTTON_PRIMARY);
+        save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         setVisible(false);
     }
 

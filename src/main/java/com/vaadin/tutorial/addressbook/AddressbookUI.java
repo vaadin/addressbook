@@ -18,10 +18,15 @@ import javax.servlet.annotation.WebServlet;
  * By default, a new UI instance is automatically created when the page is loaded. To reuse
  * the same instance, add @PreserveOnRefresh.
  */
-
 @Title("Addressbook")
 @Theme("valo")
 public class AddressbookUI extends UI {
+
+
+
+
+
+
 
 	/* Hundreds of widgets.
 	 * Vaadin's user interface components are just Java objects that encapsulate
@@ -29,7 +34,6 @@ public class AddressbookUI extends UI {
 	 * default Vaadin components are in the com.vaadin.ui package and there
 	 * are over 500 more in vaadin.com/directory.
      */
-
     TextField filter = new TextField();
     Grid contactList = new Grid();
     Button newContact = new Button("New contact");
@@ -54,6 +58,7 @@ public class AddressbookUI extends UI {
         configureComponents();
         buildLayout();
     }
+
 
     private void configureComponents() {
          /* Synchronous event handling.
@@ -125,6 +130,9 @@ public class AddressbookUI extends UI {
                 Contact.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);
     }
+
+
+
 
     /*  Deployed as a Servlet or Portlet.
      *

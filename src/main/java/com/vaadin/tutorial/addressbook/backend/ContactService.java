@@ -52,7 +52,7 @@ public class ContactService {
         return instance;
     }
 
-    private HashMap<Long, Contact> contacts = new HashMap<>();
+    private HashMap<Long, Contact> contacts = new HashMap<Long, Contact>();
     private long nextId = 0;
 
     public synchronized List<Contact> findAll(String stringFilter) {

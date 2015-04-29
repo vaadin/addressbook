@@ -4,11 +4,17 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.tutorial.addressbook.backend.ContactService;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -67,19 +73,37 @@ public class AddressbookUI extends UI {
          * to synchronously handle those events. Vaadin automatically sends
          * only the needed changes to the web page without loading a new page.
          */
-        newContact.addClickListener(e -> contactForm.edit(new Contact()));
-
+        newContact.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				contactForm.edit(new Contact());
+			}
+		});
+        
         filter.setInputPrompt("Filter contacts...");
-        filter.addTextChangeListener(e -> refreshContacts(e.getText()));
+        filter.addTextChangeListener(new TextChangeListener() {
+			
+			@Override
+			public void textChange(TextChangeEvent event) {
+				refreshContacts(event.getText());
+			}
+		});
+        
 
-        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
+        contactList.setContainerDataSource(new BeanItemContainer<Contact>(Contact.class));
         contactList.setColumnOrder("firstName", "lastName", "email");
         contactList.removeColumn("id");
         contactList.removeColumn("birthDate");
         contactList.removeColumn("phone");
         contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
-        contactList.addSelectionListener(e
-                -> contactForm.edit((Contact) contactList.getSelectedRow()));
+        contactList.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void select(SelectionEvent event) {
+				contactForm.edit((Contact) contactList.getSelectedRow());
+			}
+		});
         refreshContacts();
     }
 
@@ -126,7 +150,7 @@ public class AddressbookUI extends UI {
     }
 
     private void refreshContacts(String stringFilter) {
-        contactList.setContainerDataSource(new BeanItemContainer<>(
+        contactList.setContainerDataSource(new BeanItemContainer<Contact>(
                 Contact.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);
     }

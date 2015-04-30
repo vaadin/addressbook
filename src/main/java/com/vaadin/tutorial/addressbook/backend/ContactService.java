@@ -6,10 +6,10 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** Separate Java service class.
- * Backend implementation for the address book application, with "detached entities"
- * simulating real world DAO. Typically these something that the Java EE
- * or Spring backend services provide.
+/**
+ * Separate Java service class. Backend implementation for the address book
+ * application, with "detached entities" simulating real world DAO. Typically
+ * these something that the Java EE or Spring backend services provide.
  */
 // Backend service class. This is just a typical Java backend implementation
 // class and nothing Vaadin specific.
@@ -41,8 +41,7 @@ public class ContactService {
                 contact.setEmail(contact.getFirstName().toLowerCase() + "@"
                         + contact.getLastName().toLowerCase() + ".com");
                 contact.setPhone("+ 358 555 " + (100 + r.nextInt(900)));
-                cal.set(1930 + r.nextInt(70),
-                        r.nextInt(11), r.nextInt(28));
+                cal.set(1930 + r.nextInt(70), r.nextInt(11), r.nextInt(28));
                 contact.setBirthDate(cal.getTime());
                 contactService.save(contact);
             }
@@ -52,14 +51,15 @@ public class ContactService {
         return instance;
     }
 
-    private HashMap<Long, Contact> contacts = new HashMap<>();
+    private HashMap<Long, Contact> contacts = new HashMap<Long, Contact>();
     private long nextId = 0;
 
     public synchronized List<Contact> findAll(String stringFilter) {
         ArrayList arrayList = new ArrayList();
         for (Contact contact : contacts.values()) {
             try {
-                boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
+                boolean passesFilter = (stringFilter == null || stringFilter
+                        .isEmpty())
                         || contact.toString().toLowerCase()
                                 .contains(stringFilter.toLowerCase());
                 if (passesFilter) {

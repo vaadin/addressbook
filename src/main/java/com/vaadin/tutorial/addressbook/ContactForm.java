@@ -18,9 +18,9 @@ import com.vaadin.ui.themes.ValoTheme;
  * Similarly named field by naming convention or customized
  * with @PropertyId annotation.
  */
-public class ContactForm extends FormLayout implements ClickListener{
+public class ContactForm extends FormLayout implements ClickListener {
 
-    Button save = new Button("Save",this);
+    Button save = new Button("Save", this);
     Button cancel = new Button("Cancel", this);
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
@@ -39,8 +39,9 @@ public class ContactForm extends FormLayout implements ClickListener{
     }
 
     private void configureComponents() {
-        /* Highlight primary actions.
-         *
+        /*
+         * Highlight primary actions.
+         * 
          * With Vaadin built-in styles you can highlight the primary save button
          * and give it a keyboard shortcut for a better UX.
          */
@@ -56,14 +57,15 @@ public class ContactForm extends FormLayout implements ClickListener{
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-		addComponents(actions, firstName, lastName, phone, email, birthDate);
+        addComponents(actions, firstName, lastName, phone, email, birthDate);
     }
 
     void edit(Contact contact) {
         this.contact = contact;
-        if(contact != null) {
+        if (contact != null) {
             // Bind the properties of the contact POJO to fiels in this form
-            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);
+            formFieldBindings = BeanFieldGroup
+                    .bindFieldsBuffered(contact, this);
             firstName.focus();
         }
         setVisible(contact != null);
@@ -74,31 +76,29 @@ public class ContactForm extends FormLayout implements ClickListener{
         return (AddressbookUI) super.getUI();
     }
 
-	@Override
-	public void buttonClick(ClickEvent event) {
-		if(event.getButton() == save){
-	        try {
-	            // Commit the fields from UI to DAO
-	            formFieldBindings.commit();
+    @Override
+    public void buttonClick(ClickEvent event) {
+        if (event.getButton() == save) {
+            try {
+                // Commit the fields from UI to DAO
+                formFieldBindings.commit();
 
-	            // Save DAO to backend with direct synchronous service API
-	            getUI().service.save(contact);
+                // Save DAO to backend with direct synchronous service API
+                getUI().service.save(contact);
 
-	            String msg = String.format("Saved '%s %s'.",
-	                    contact.getFirstName(),
-	                    contact.getLastName());
-	            Notification.show(msg,Type.TRAY_NOTIFICATION);
-	            getUI().refreshContacts();
-	        } catch (FieldGroup.CommitException e) {
-	            // Validation exceptions could be shown here
-	        }
-		}
-		else if (event.getButton() == cancel){
-			// Place to call business logic.
-	        Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
-	        getUI().contactList.select(null);
-		}
-		
-	}
+                String msg = String.format("Saved '%s %s'.",
+                        contact.getFirstName(), contact.getLastName());
+                Notification.show(msg, Type.TRAY_NOTIFICATION);
+                getUI().refreshContacts();
+            } catch (FieldGroup.CommitException e) {
+                // Validation exceptions could be shown here
+            }
+        } else if (event.getButton() == cancel) {
+            // Place to call business logic.
+            Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
+            getUI().contactList.select(null);
+        }
+
+    }
 
 }

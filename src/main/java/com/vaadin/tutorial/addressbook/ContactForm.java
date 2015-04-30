@@ -76,7 +76,7 @@ public class ContactForm extends FormLayout implements ClickListener{
 
 	@Override
 	public void buttonClick(ClickEvent event) {
-		if(event.getButton().getCaption() == "Save"){
+		if(event.getButton() == save){
 	        try {
 	            // Commit the fields from UI to DAO
 	            formFieldBindings.commit();
@@ -93,7 +93,7 @@ public class ContactForm extends FormLayout implements ClickListener{
 	            // Validation exceptions could be shown here
 	        }
 		}
-		else if (event.getButton().getCaption() == "Cancel"){
+		else if (event.getButton() == cancel){
 			// Place to call business logic.
 	        Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
 	        getUI().contactList.select(null);

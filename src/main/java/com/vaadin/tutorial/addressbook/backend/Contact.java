@@ -1,15 +1,15 @@
 package com.vaadin.tutorial.addressbook.backend;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 /**
  * A simple DTO for the address book example.
  *
- * Serializable and cloneable Java Object that are typically persisted
- * in the database and can also be easily converted to different formats like JSON.
+ * Serializable and cloneable Java Object that are typically persisted in the
+ * database and can also be easily converted to different formats like JSON.
  */
 // Backend DTO class. This is just a typical Java backend implementation
 // class and nothing Vaadin specific.

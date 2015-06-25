@@ -56,28 +56,22 @@ public class ContactService {
     private long nextId = 0;
 
     public synchronized List<Contact> findAll(String stringFilter) {
-        ArrayList arrayList = new ArrayList();
+        List<Contact> list = new ArrayList<>();
         for (Contact contact : contacts.values()) {
             try {
                 boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
                         || contact.toString().toLowerCase()
                                 .contains(stringFilter.toLowerCase());
                 if (passesFilter) {
-                    arrayList.add(contact.clone());
+                    list.add(contact.clone());
                 }
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(ContactService.class.getName()).log(
                         Level.SEVERE, null, ex);
             }
         }
-        Collections.sort(arrayList, new Comparator<Contact>() {
-
-            @Override
-            public int compare(Contact o1, Contact o2) {
-                return (int) (o2.getId() - o1.getId());
-            }
-        });
-        return arrayList;
+        list.sort((o1, o2) -> Long.compare(o2.getId(), o1.getId()));
+        return list;
     }
 
     public synchronized long count() {

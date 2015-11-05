@@ -1,10 +1,15 @@
 package com.vaadin.tutorial.addressbook.backend;
 
+import java.util.Calendar;
 import org.apache.commons.beanutils.BeanUtils;
 
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.util.Comparator.comparing;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /** Separate Java service class.
  * Backend implementation for the address book application, with "detached entities"
@@ -52,32 +57,14 @@ public class ContactService {
         return instance;
     }
 
-    private HashMap<Long, Contact> contacts = new HashMap<>();
+    private final Map<Long, Contact> contacts = new HashMap<>();
     private long nextId = 0;
 
     public synchronized List<Contact> findAll(String stringFilter) {
-        ArrayList arrayList = new ArrayList();
-        for (Contact contact : contacts.values()) {
-            try {
-                boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
-                        || contact.toString().toLowerCase()
-                                .contains(stringFilter.toLowerCase());
-                if (passesFilter) {
-                    arrayList.add(contact.clone());
-                }
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(ContactService.class.getName()).log(
-                        Level.SEVERE, null, ex);
-            }
-        }
-        Collections.sort(arrayList, new Comparator<Contact>() {
-
-            @Override
-            public int compare(Contact o1, Contact o2) {
-                return (int) (o2.getId() - o1.getId());
-            }
-        });
-        return arrayList;
+        Predicate<Contact> passesFilter = contact -> (stringFilter == null || stringFilter.isEmpty())
+                || contact.toString().toLowerCase()
+                .contains(stringFilter.toLowerCase());
+        return contacts.values().stream().filter(passesFilter).sorted(comparing(Contact::getId)).collect(Collectors.toList());
     }
 
     public synchronized long count() {

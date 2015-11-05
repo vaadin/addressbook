@@ -80,6 +80,14 @@ public class Contact implements Serializable, Cloneable {
         }
     }
 
+    public Contact safeClone() {
+        try {
+            return this.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public String toString() {
         return "Contact{" + "id=" + id + ", firstName=" + firstName

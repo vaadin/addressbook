@@ -61,10 +61,15 @@ public class ContactService {
     private long nextId = 0;
 
     public synchronized List<Contact> findAll(String stringFilter) {
-        Predicate<Contact> passesFilter = contact -> (stringFilter == null || stringFilter.isEmpty())
-                || contact.toString().toLowerCase()
-                .contains(stringFilter.toLowerCase());
-        return contacts.values().stream().filter(passesFilter).sorted(comparing(Contact::getId)).collect(Collectors.toList());
+        Predicate<Contact> passesFilter = contact -> (
+                stringFilter == null ||
+                stringFilter.isEmpty()) ||
+                contact.toString().toLowerCase().contains(stringFilter.toLowerCase());
+        return contacts.values().stream()
+                .filter(passesFilter)
+                .sorted(comparing(Contact::getId))
+                .map(Contact::safeClone)
+                .collect(Collectors.toList());
     }
 
     public synchronized long count() {

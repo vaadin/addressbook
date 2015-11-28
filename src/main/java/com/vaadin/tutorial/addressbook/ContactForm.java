@@ -54,7 +54,7 @@ public class ContactForm extends FormLayout {
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-		addComponents(actions, firstName, lastName, phone, email, birthDate);
+		addComponents(firstName, lastName, phone, email, birthDate, actions);
     }
 
     /* Use any JVM language.

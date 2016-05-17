@@ -16,6 +16,11 @@ $ mvn jetty:run
 
 Open [http://localhost:8080/](http://localhost:8080/)
 
+Running the example on Codenvy
+---------------------------------
+
+[![Contribute](http://beta.codenvy.com/factory/resources/codenvy-contribute.svg)](http://beta.codenvy.com/f?id=ej6koycnt4maubns)
+
 
 Importing in IntelliJ IDEA 14
 --------------------

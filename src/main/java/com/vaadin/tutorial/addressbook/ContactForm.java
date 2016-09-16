@@ -1,12 +1,17 @@
 package com.vaadin.tutorial.addressbook;
 
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.tutorial.addressbook.backend.Contact;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.v7.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.v7.data.fieldgroup.FieldGroup;
+import com.vaadin.v7.ui.DateField;
+import com.vaadin.v7.ui.TextField;
 
 /* Create custom UI Components.
  *
@@ -37,7 +42,8 @@ public class ContactForm extends FormLayout {
     }
 
     private void configureComponents() {
-        /* Highlight primary actions.
+        /*
+         * Highlight primary actions.
          *
          * With Vaadin built-in styles you can highlight the primary save button
          * and give it a keyboard shortcut for a better UX.
@@ -54,19 +60,19 @@ public class ContactForm extends FormLayout {
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-		addComponents(actions, firstName, lastName, phone, email, birthDate);
+        addComponents(actions, firstName, lastName, phone, email, birthDate);
     }
 
-    /* Use any JVM language.
+    /*
+     * Use any JVM language.
      *
      * Vaadin supports all languages supported by Java Virtual Machine 1.6+.
-     * This allows you to program user interface in Java 8, Scala, Groovy or any other
-     * language you choose.
-     * The new languages give you very powerful tools for organizing your code
-     * as you choose. For example, you can implement the listener methods in your
-     * compositions or in separate controller classes and receive
-     * to various Vaadin component events, like button clicks. Or keep it simple
-     * and compact with Lambda expressions.
+     * This allows you to program user interface in Java 8, Scala, Groovy or any
+     * other language you choose. The new languages give you very powerful tools
+     * for organizing your code as you choose. For example, you can implement
+     * the listener methods in your compositions or in separate controller
+     * classes and receive to various Vaadin component events, like button
+     * clicks. Or keep it simple and compact with Lambda expressions.
      */
     public void save(Button.ClickEvent event) {
         try {
@@ -76,10 +82,9 @@ public class ContactForm extends FormLayout {
             // Save DAO to backend with direct synchronous service API
             getUI().service.save(contact);
 
-            String msg = String.format("Saved '%s %s'.",
-                    contact.getFirstName(),
+            String msg = String.format("Saved '%s %s'.", contact.getFirstName(),
                     contact.getLastName());
-            Notification.show(msg,Type.TRAY_NOTIFICATION);
+            Notification.show(msg, Type.TRAY_NOTIFICATION);
             getUI().refreshContacts();
         } catch (FieldGroup.CommitException e) {
             // Validation exceptions could be shown here
@@ -94,9 +99,10 @@ public class ContactForm extends FormLayout {
 
     void edit(Contact contact) {
         this.contact = contact;
-        if(contact != null) {
+        if (contact != null) {
             // Bind the properties of the contact POJO to fiels in this form
-            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact, this);
+            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact,
+                    this);
             firstName.focus();
         }
         setVisible(contact != null);

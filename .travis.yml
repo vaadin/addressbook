@@ -3,3 +3,11 @@ install:
 - mvn install
 jdk:
 - oraclejdk8
+deploy:
+  provider: heroku
+  api_key:
+    secure: '078sxhXYK/JgVF/LlxJNDD1+Pa3hIwHOuYHxDkoKA4BwbusYleZ3cHgrPxiGmNHdRwamJ9iA7J/cpMKb9Lqw43Qvdt58uqL3BYEmOAG0kPN2kvmv6zs5pT/qiLhHm5T1X0GAAv88nemBGVOkvUx9P16pHnTGyva/v5hWlQdpzungMe6zyhCZf/aXtcG0KaH3oEowzhUyJxrN9jn6lmvBwfT99AP8IvK+mdTsxxgfFiKU8iiLyQPWDqw9yjlrZkgk22j+TGQSjv7w2ofRFSWxGvFGH3XyLmsyvBmYptciEt6SABkzpUGGMc8AUSMJQ62bAzx36IDYKFOQymcB1F0mFzB7Hk9ADMYsvxP/1lL+YFXJT0Y8qR92jEGvV8mM4DvNgQPLycIIQ6k0zcsj/r8m8zIwpeLrPNb8vOcVzW/y+KlDz1kuAVb32aisCLCKGWdaVhhiCwoju5E3c4wCKwJRF6ilM4WAzp1u9QVHgWuIMPh9vksNp7xmPoqsQ2R1H6BUtu+IrdEcpt5QW4Wko+unPROwqsF0XXRn/np2rI2SHDRSgPYpSxiw7om5dJW1BxHoByuopuXAV0i4tF6vrcmABU/yPaYg3iO4tS6GI31Glu2Ld0KvhEsv5PjHL48v1GfNYbqQ9K1egoZ6+G/CmqxYV4Dv9cVbXagjjxmo5uS+i2Q='
+  app: todolist3130
+  on:
+    repo: rytheo/addressbook
+    branch: todo_tasks

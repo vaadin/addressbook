@@ -27,11 +27,11 @@ public class TaskForm extends FormLayout {
     Button cancel = new Button("Cancel", this::cancel);
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
-    TextField taskname = new TextField("Task");
+    TextField Task = new TextField("Task"); //This doesnt work if this variable is named with a lower case t
     DateField start = new DateField("Start date");
     DateField end = new DateField("End date");
 
-    Task task;
+    Task taski;
 
     // Easily bind forms to beans and manage validation and buffering
     BeanFieldGroup<Task> formFieldBindings;
@@ -60,7 +60,7 @@ public class TaskForm extends FormLayout {
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-        addComponents(actions, firstName, lastName, taskname, start, end);
+        addComponents(actions, firstName, lastName, Task, start, end);
     }
 
     /*
@@ -80,10 +80,10 @@ public class TaskForm extends FormLayout {
             formFieldBindings.commit();
 
             // Save DAO to backend with direct synchronous service API
-            getUI().service.save(task);
+            getUI().service.save(taski);
 
-            String msg = String.format("Saved '%s %s''s task", task.getFirstName(),
-                    task.getLastName());
+            String msg = String.format("Saved '%s %s''s task", taski.getFirstName(),
+                    taski.getLastName());
             Notification.show(msg, Type.TRAY_NOTIFICATION);
             getUI().refreshContacts();
         } catch (FieldGroup.CommitException e) {
@@ -98,7 +98,8 @@ public class TaskForm extends FormLayout {
     }
 
     void edit(Task task) {
-        this.task = task;
+        taski = task;
+        System.out.print(task);
         if (task != null) {
             // Bind the properties of the contact POJO to fiels in this form
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(task,

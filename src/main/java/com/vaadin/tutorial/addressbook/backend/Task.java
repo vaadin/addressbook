@@ -87,4 +87,7 @@ public class Task implements Serializable, Cloneable {
                 + start + ", endDate=" + end + '}';
     }
 
+	
+
+	
 }

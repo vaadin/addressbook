@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 // Backend service class. This is just a typical Java backend implementation
 // class and nothing Vaadin specific.
-public class ContactService {
+public class TaskService {
 
     // Create dummy data by randomly combining first and last names 
 	//Also added dumby data for generating random tasks
@@ -30,12 +30,12 @@ public class ContactService {
             "Push Changes to branch" };
     
 
-    private static ContactService instance;
+    private static TaskService instance;
 
-    public static ContactService createDemoService() {
+    public static TaskService createDemoService() {
         if (instance == null) {
 
-            final ContactService contactService = new ContactService();
+            final TaskService contactService = new TaskService();
 
             Random r = new Random(0);
             Calendar cal = Calendar.getInstance();
@@ -72,7 +72,7 @@ public class ContactService {
                     arrayList.add(taski.clone());
                 }
             } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(ContactService.class.getName()).log(
+                Logger.getLogger(TaskService.class.getName()).log(
                         Level.SEVERE, null, ex);
             }
         }
@@ -103,6 +103,7 @@ public class ContactService {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+       
         tasks.put(entry.getId(), entry);
     }
 

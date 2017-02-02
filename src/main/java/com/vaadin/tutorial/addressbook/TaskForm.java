@@ -99,7 +99,6 @@ public class TaskForm extends FormLayout {
 
     void edit(Task task) {
         taski = task;
-        System.out.print(task);
         if (task != null) {
             // Bind the properties of the contact POJO to fiels in this form
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(task,

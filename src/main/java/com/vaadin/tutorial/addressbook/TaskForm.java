@@ -1,7 +1,7 @@
 package com.vaadin.tutorial.addressbook;
 
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.tutorial.addressbook.backend.Contact;
+import com.vaadin.tutorial.addressbook.backend.Task;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -21,22 +21,22 @@ import com.vaadin.v7.ui.TextField;
  * Similarly named field by naming convention or customized
  * with @PropertyId annotation.
  */
-public class ContactForm extends FormLayout {
+public class TaskForm extends FormLayout {
 
     Button save = new Button("Save", this::save);
     Button cancel = new Button("Cancel", this::cancel);
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
-    TextField phone = new TextField("Phone");
-    TextField email = new TextField("Email");
-    DateField birthDate = new DateField("Birth date");
+    TextField Task = new TextField("Task"); //This doesnt work if this variable is named with a lower case t
+    DateField start = new DateField("Start date");
+    DateField end = new DateField("Expected End date");
 
-    Contact contact;
+    Task taski;
 
     // Easily bind forms to beans and manage validation and buffering
-    BeanFieldGroup<Contact> formFieldBindings;
+    BeanFieldGroup<Task> formFieldBindings;
 
-    public ContactForm() {
+    public TaskForm() {
         configureComponents();
         buildLayout();
     }
@@ -60,7 +60,7 @@ public class ContactForm extends FormLayout {
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-        addComponents(actions, firstName, lastName, phone, email, birthDate);
+        addComponents(actions, firstName, lastName, Task, start, end);
     }
 
     /*
@@ -80,10 +80,10 @@ public class ContactForm extends FormLayout {
             formFieldBindings.commit();
 
             // Save DAO to backend with direct synchronous service API
-            getUI().service.save(contact);
+            getUI().service.save(taski);
 
-            String msg = String.format("Saved '%s %s'.", contact.getFirstName(),
-                    contact.getLastName());
+            String msg = String.format("Saved '%s %s''s task", taski.getFirstName(),
+                    taski.getLastName());
             Notification.show(msg, Type.TRAY_NOTIFICATION);
             getUI().refreshContacts();
         } catch (FieldGroup.CommitException e) {
@@ -94,18 +94,18 @@ public class ContactForm extends FormLayout {
     public void cancel(Button.ClickEvent event) {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
-        getUI().contactList.select(null);
+        getUI().taskList.select(null);
     }
 
-    void edit(Contact contact) {
-        this.contact = contact;
-        if (contact != null) {
+    void edit(Task task) {
+        taski = task;
+        if (task != null) {
             // Bind the properties of the contact POJO to fiels in this form
-            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact,
+            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(task,
                     this);
             firstName.focus();
         }
-        setVisible(contact != null);
+        setVisible(task != null);
     }
 
     @Override

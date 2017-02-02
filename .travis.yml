@@ -1,0 +1,13 @@
+language: java
+install:
+- mvn install
+jdk:
+- oraclejdk8
+deploy:
+  provider: heroku
+  api_key:
+    secure: pk0DlFqEuw1sqM9bSdrp+e10E0c+YQ6HmspNHLJkbwrwispqw35II/xTyalwTwJ0816Gg8x8r99vkW70yjzhSe6XXxzKamwkQVx4rJ5n3/A3OB2ulv3g/pE5ZO0tUzbyDYUXFJzbKndRtIeckH4YHkohQjw1j4ENn44gVh/C+zgQrizEan9P1amDAqv1LeRz4XtfzmObwUORilM+glQGkgUIYTu2yzLf0qStWjLNlYHtWJm6LxaJJ2Sn+rpRCO3mzj3tDYNOV7mkpl3Vs0Mm6BJYtN0JLHREwfKIiWXRrUbOm2H6ud7I/4p4lG48nxAipiYYeBME3MZNGURO5DmmatS2q3+Lf3VMJytKrKpO4w1Fr21vWUT/iBv9i+HHPmRovoFUxwLlZyLAtTIBjoUXaNj9CGpYOVCuOHR+OC+7pVIDT9zkqVH7k0UnPzbKlHG2SW6TTerZ52ygoClV7uAppw0apo0BXf7wJKCLC6pCugCldkXZcTcPMkeiESbY/wMRMqVlqe9ff5Yi6DLvLkIhXPXI6yWJ4w7l1y4gW0TYF3LSKnDlLA5Lra179OvxMFVpZBRUHMDbayCbCzWZzcW1Su/MKfwFi0IZOSP5bimVFRUqZKG2Mhz3PEnT7Q2r2Je5HM/vfyvxG4auLFfoE+iwpn5T9MjoX27EQ59w3P6XHeE=
+  app: tlundy-tasks
+  on:
+    repo: taylor832/addressbook
+    branch: todo_tasks

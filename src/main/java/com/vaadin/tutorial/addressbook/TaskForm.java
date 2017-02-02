@@ -29,7 +29,7 @@ public class TaskForm extends FormLayout {
     TextField lastName = new TextField("Last name");
     TextField Task = new TextField("Task"); //This doesnt work if this variable is named with a lower case t
     DateField start = new DateField("Start date");
-    DateField end = new DateField("End date");
+    DateField end = new DateField("Expected End date");
 
     Task taski;
 

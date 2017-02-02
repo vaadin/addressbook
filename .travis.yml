@@ -3,3 +3,11 @@ install:
 - mvn install
 jdk:
 - oraclejdk8
+deploy:
+  provider: heroku
+  api_key:
+    secure: b/iJmH6hTiNLTD7vp5nhjTiekODGlfU+eYRPHhIWWba9VSd7Ca74bENUNOes7fekowzGTGAnIFf4SAi4L1OkyvIRijEH/h5/+QSwuYN02vl4d+bky9GpT6CmIKGt7V5HVQ1qg0orTZ0g+CEamczvPRU6R/1Dg/GmXgcK4jWYQa6N6dZ+tYEjiRuZgbppR8HRqlUyAcLs+dQ6w1cuHPI1egyfcV1n0uJ9JYFogP/9VaQyWc3O74dY8IMG/1q9t+xJ2pjmFspmkmB4OmtU+f4VyGRm72cWTbzem6fIkQU5A9Pe8SBzZQkoCmIbEEO41+J7cug/XKkaff3RROeyX+iNe18JpajuDLJQ6UENgKwjxFaY1spskf6vRenlyOog6VA6zBdV6iVcPe4XB0CJb2DPfmttRefV8p2MoO/xFzje+gVYWGqFWVuyyPp6Vb/y4mzJDwfF3PgdyXoGkGw0bkOt4VZwdGY+mX/lTfwQa7JNiDJW2TnN8CCezm1MPoKF2LKSUE4+gKru9G6iDD9z7En+lr8TwWoiOzNg/2hntkSrQG+JNYmJrUFlTgv+FnJJtf9kmb6jU3duI5AfdrXDU/6wknXXMWvLMzT7h2kwMS/BGPYFT8U9DMfEY+mrCUPQ3wB/i9H/VZW+fxywvu9JRFt5HbhMQJ1IzOUxsjeG6dENvjU=
+  app: ajsteadly-addressbook
+  on:
+    repo: ajsteadly/addressbook
+    branch: todo_tasks

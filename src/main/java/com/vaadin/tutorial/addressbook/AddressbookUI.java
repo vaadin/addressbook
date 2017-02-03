@@ -29,7 +29,7 @@ import com.vaadin.v7.ui.TextField;
 @Title("Addressbook")
 @Theme("valo")
 @Widgetset("com.vaadin.v7.Vaadin7WidgetSet")
-public class ToDoListUI extends UI {
+public class AddressbookUI extends UI {
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java

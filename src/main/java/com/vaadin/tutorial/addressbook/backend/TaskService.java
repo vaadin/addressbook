@@ -20,10 +20,21 @@ public class TaskService {
             "Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene", "Lisa",
             "Linda", "Timothy", "Daniel", "Brian", "George", "Scott",
             "Jennifer" };
+    
     static String[] lnames = { "Smith", "Johnson", "Williams", "Jones",
             "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor",
             "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin",
             "Thompson", "Young", "King", "Robinson" };
+    
+    static String[] tnames = { "Reticulate splines", "Remove cows", "Add cows",
+    		"Encrypt employee passwords", "Increase gravity", "Improve shader quality",
+    		"Refill water tank", "Add microtransactions", "Overhaul UI", "Replace customers",
+    		"Decrease gravity", "Turn on lights", "Redesign address book",
+    		"Grow binary trees", "Analyze design requirements", "Create customers",
+    		"Trim binary trees", "Decrease entropy", "Replace fuses", "Replace data structures",
+    		"Alter election outcomes", "Integrate hidden cameras", "Turn off lights",
+    		"Rewrite in assembly", "Purify zerglings", "Exponentiate moisture",
+    		"Remove Herobrine", "Improve health bars", "Solidify hydrogen"};
 
     private static TaskService instance;
 
@@ -38,7 +49,7 @@ public class TaskService {
                 Task task = new Task();
                 task.setFirstName(fnames[r.nextInt(fnames.length)]);
                 task.setLastName(lnames[r.nextInt(fnames.length)]);
-                task.setTaskName("Reticulate splines");
+                task.setTaskName(tnames[r.nextInt(tnames.length)]);
                 task.setStartDate(cal.getTime());
                 task.setEndDate(cal.getTime());
                 taskService.save(task);

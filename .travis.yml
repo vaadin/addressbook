@@ -1,4 +1,5 @@
 language: java
-install: cd wxapi && mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=tru
+install:
+  - mvn install
 jdk:
   - oraclejdk8

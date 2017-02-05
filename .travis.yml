@@ -1,3 +1,6 @@
 language: java
+mvn install:install-file -Dfile=C:\Users\spring-context-support-3.1.0.RELEASE.jar -DgroupId=org.springframework -DartifactId=spring-context-support -Dversion=3.1.0.RELEASE -Dpackaging=jar
+install:
+  - mvn install
 jdk:
-- oraclejdk8
+  - oraclejdk8

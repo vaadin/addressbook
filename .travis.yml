@@ -1,5 +1,5 @@
 language: java
 mvn install:install-file -Dfile=C:\Users\spring-context-support-4.3.6.RELEASE.jar -DgroupId=org.springframework -DartifactId=spring-context-support -Dversion=4.3.6.RELEASE -Dpackaging=jar
-install: 
+install: cd wxapi && mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=tru
 jdk:
   - oraclejdk8

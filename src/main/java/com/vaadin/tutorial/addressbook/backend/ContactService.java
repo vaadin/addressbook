@@ -24,7 +24,8 @@ public class ContactService {
             "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor",
             "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin",
             "Thompson", "Young", "King", "Robinson" };
-
+    
+    static String[] tasks={"UI design","database design","testing","Implementing","Review"};
     private static ContactService instance;
 
     public static ContactService createDemoService() {
@@ -38,12 +39,9 @@ public class ContactService {
                 Contact contact = new Contact();
                 contact.setFirstName(fnames[r.nextInt(fnames.length)]);
                 contact.setLastName(lnames[r.nextInt(fnames.length)]);
-                contact.setEmail(contact.getFirstName().toLowerCase() + "@"
-                        + contact.getLastName().toLowerCase() + ".com");
-                contact.setPhone("+ 358 555 " + (100 + r.nextInt(900)));
-                cal.set(1930 + r.nextInt(70),
-                        r.nextInt(11), r.nextInt(28));
-                contact.setBirthDate(cal.getTime());
+                contact.setTask(tasks[r.nextInt(tasks.length)]);
+                contact.setStartDate(cal.getTime());
+                contact.setExpectedEndDate(cal.getTime());
                 contactService.save(contact);
             }
             instance = contactService;

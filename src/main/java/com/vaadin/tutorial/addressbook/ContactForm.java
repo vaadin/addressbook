@@ -10,6 +10,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.v7.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.v7.data.fieldgroup.FieldGroup;
+import com.vaadin.v7.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.v7.ui.DateField;
 import com.vaadin.v7.ui.TextField;
 
@@ -25,11 +26,13 @@ public class ContactForm extends FormLayout {
 
     Button save = new Button("Save", this::save);
     Button cancel = new Button("Cancel", this::cancel);
+    Button remove = new Button("Remove",this::remove);
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
-    TextField phone = new TextField("Phone");
-    TextField email = new TextField("Email");
-    DateField birthDate = new DateField("Birth date");
+    TextField task = new TextField("task");
+    
+    DateField startDate = new DateField("Start Date");
+    DateField expectedEndDate = new DateField("Expected End Date");
 
     Contact contact;
 
@@ -57,10 +60,10 @@ public class ContactForm extends FormLayout {
         setSizeUndefined();
         setMargin(true);
 
-        HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        HorizontalLayout actions = new HorizontalLayout(save, cancel,remove);
         actions.setSpacing(true);
 
-        addComponents(actions, firstName, lastName, phone, email, birthDate);
+        addComponents(actions, firstName, lastName,task,startDate,expectedEndDate);
     }
 
     /*
@@ -95,6 +98,15 @@ public class ContactForm extends FormLayout {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
         getUI().contactList.select(null);
+    }
+    
+    public void remove(Button.ClickEvent event){
+
+    	getUI().service.delete(contact);
+    	Notification.show("Removed",Type.TRAY_NOTIFICATION);
+    	
+    	getUI().refreshContacts();
+    	
     }
 
     void edit(Contact contact) {

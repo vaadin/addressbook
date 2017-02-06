@@ -19,59 +19,85 @@ public class Contact implements Serializable, Cloneable {
 
     private String firstName = "";
     private String lastName = "";
-    private String phone = "";
-    private String email = "";
-    private Date birthDate;
+    private String task = "";
+    private Date startDate;
+    private Date expectedEndDate;
+    
+   
 
     public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getFirstName() {
-        return firstName;
-    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
-    public String getPhone() {
-        return phone;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
 
-    @Override
+	public String getLastName() {
+		return lastName;
+	}
+
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+
+	public String getTask() {
+		return task;
+	}
+
+
+
+	public void setTask(String task) {
+		this.task = task;
+	}
+
+
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+
+
+	public Date getExpectedEndDate() {
+		return expectedEndDate;
+	}
+
+
+
+	public void setExpectedEndDate(Date expectedEndDate) {
+		this.expectedEndDate = expectedEndDate;
+	}
+
+
+
+	@Override
     public Contact clone() throws CloneNotSupportedException {
         try {
             return (Contact) BeanUtils.cloneBean(this);
@@ -80,11 +106,5 @@ public class Contact implements Serializable, Cloneable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Contact{" + "id=" + id + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", phone=" + phone + ", email="
-                + email + ", birthDate=" + birthDate + '}';
-    }
 
 }

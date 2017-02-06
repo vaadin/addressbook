@@ -1,3 +1,5 @@
+//Changed functions and added delete function. Left numbers because we can add tasks but
+// didn't care to edit given slides.
 package com.vaadin.tutorial.addressbook;
 
 import com.vaadin.event.ShortcutAction;
@@ -10,6 +12,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.v7.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.v7.data.fieldgroup.FieldGroup;
+import com.vaadin.v7.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.v7.ui.DateField;
 import com.vaadin.v7.ui.TextField;
 
@@ -25,12 +28,13 @@ public class ContactForm extends FormLayout {
 
     Button save = new Button("Save", this::save);
     Button cancel = new Button("Cancel", this::cancel);
-    TextField firstName = new TextField("First name");
-    TextField lastName = new TextField("Last name");
-    TextField phone = new TextField("Phone");
-    TextField email = new TextField("Email");
-    DateField birthDate = new DateField("Birth date");
-
+    Button delete = new Button("Delete", this::delete);
+    TextField firstName = new TextField("First Name");
+    TextField lastName = new TextField("Last Name");
+    TextField task = new TextField("Task");
+    DateField startDate = new DateField("Start Date");
+    DateField endDate = new DateField("End Date");
+    
     Contact contact;
 
     // Easily bind forms to beans and manage validation and buffering
@@ -57,10 +61,10 @@ public class ContactForm extends FormLayout {
         setSizeUndefined();
         setMargin(true);
 
-        HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
         actions.setSpacing(true);
 
-        addComponents(actions, firstName, lastName, phone, email, birthDate);
+        addComponents(actions, firstName, lastName, task, startDate, endDate);
     }
 
     /*
@@ -95,6 +99,7 @@ public class ContactForm extends FormLayout {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
         getUI().contactList.select(null);
+        getUI().refreshContacts();
     }
 
     void edit(Contact contact) {
@@ -112,5 +117,17 @@ public class ContactForm extends FormLayout {
     public AddressbookUI getUI() {
         return (AddressbookUI) super.getUI();
     }
-
+    
+    //Delete Command. 
+    public void delete(Button.ClickEvent event) {
+        Notification.show("Deleted", Type.TRAY_NOTIFICATION);
+        try {
+			formFieldBindings.commit();
+		} catch (FieldGroup.CommitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        getUI().service.delete(contact);
+    }
+    
 }

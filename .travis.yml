@@ -1,0 +1,10 @@
+language: java
+install:
+  - mvn install
+jdk:
+  - oraclejdk8
+deploy:
+  provider: heroku
+  api_key:
+    secure: "6017bab8-bbe8-4d5b-a1ae-d4c17a66b611"
+  app: acg-addressbook

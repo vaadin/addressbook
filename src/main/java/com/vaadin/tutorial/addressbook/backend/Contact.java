@@ -9,7 +9,7 @@ import java.util.Date;
  * A simple DTO for the address book example.
  *
  * Serializable and cloneable Java Object that are typically persisted
- * in the database and can also be easily converted to different formats like JSON.
+ * in the database and can also be easily converted to different formats like JSON. 
  */
 // Backend DTO class. This is just a typical Java backend implementation
 // class and nothing Vaadin specific.
@@ -19,7 +19,7 @@ public class Contact implements Serializable, Cloneable {
 
     private String firstName = "";
     private String lastName = "";
-    private String phone = "";
+    private Date phone;
     private String email = "";
     private Date birthDate;
 
@@ -47,11 +47,11 @@ public class Contact implements Serializable, Cloneable {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
+    public Date getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Date phone) {
         this.phone = phone;
     }
 

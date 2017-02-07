@@ -38,11 +38,10 @@ public class ContactService {
                 Contact contact = new Contact();
                 contact.setFirstName(fnames[r.nextInt(fnames.length)]);
                 contact.setLastName(lnames[r.nextInt(fnames.length)]);
-                contact.setEmail(contact.getFirstName().toLowerCase() + "@"
-                        + contact.getLastName().toLowerCase() + ".com");
-                contact.setPhone("+ 358 555 " + (100 + r.nextInt(900)));
+                contact.setEmail("Complete task for " + contact.getFirstName());
                 cal.set(1930 + r.nextInt(70),
                         r.nextInt(11), r.nextInt(28));
+                contact.setPhone(cal.getTime());
                 contact.setBirthDate(cal.getTime());
                 contactService.save(contact);
             }

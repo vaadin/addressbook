@@ -38,7 +38,7 @@ public class AddressbookUI extends UI {
      */
     TextField filter = new TextField();
     Grid contactList = new Grid();
-    Button newContact = new Button("New contact");
+    Button newContact = new Button("New to-do task");
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
@@ -71,15 +71,18 @@ public class AddressbookUI extends UI {
          */
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
 
-        filter.setInputPrompt("Filter contacts...");
+        filter.setInputPrompt("Filter to-do tasks...");
         filter.addTextChangeListener(e -> refreshContacts(e.getText()));
 
         contactList
                 .setContainerDataSource(new BeanItemContainer<>(Contact.class));
-        contactList.setColumnOrder("firstName", "lastName", "email");
+        contactList.getColumn("email").setHeaderCaption("Task");
+        contactList.getColumn("birthDate").setHeaderCaption("Expected End Date");
+        contactList.getColumn("phone").setHeaderCaption("Start Date");
+        contactList.setColumnOrder("firstName", "lastName", "email", "phone", "birthDate");
         contactList.removeColumn("id");
-        contactList.removeColumn("birthDate");
-        contactList.removeColumn("phone");
+        //contactList.removeColumn("birthDate");
+        //contactList.removeColumn("phone");
         contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
         contactList.addSelectionListener(
                 e -> contactForm.edit((Contact) contactList.getSelectedRow()));

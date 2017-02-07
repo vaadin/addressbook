@@ -6,5 +6,5 @@ jdk:
 deploy:
   provider: heroku
   api_key:
-    secure: "heroku-api-key"
-  app: heroku-appname
+    secure: "6017bab8-bbe8-4d5b-a1ae-d4c17a66b611"
+  app: acg-addressbook

@@ -1,0 +1,13 @@
+language: java
+install:
+- mvn install
+jdk:
+- oraclejdk8
+deploy:
+  provider: heroku
+  api_key:
+    secure: ct0mPZup0xND/vnqH5Edm4y2yHmc70QVHyjAA1c4M+drwVNVXyxqhNq6S49Ei5fnUuj+p1lZwdFFV7doGoqAkB4WRkIX0ADDp4BpQ7+HGpXNR6ZhGasKKuIvmNvtD8p96mpRqdfdztlNLIMX+uGUp8M9mOphaGvgjTgk7hpXcn8XaQzk7PX05GiK/X5+1w1WKbkIGCbg2NeRmWJNER3YbzlE3rPBbtU/C/Z6I9B8kehu/QaO6Kisx+YRPUTVU1aG2GKhTTbkurfWQ7vh8SMroKIFNiKSmqqmXWczeffXuxmDmWX3Kg0dC82wIjYOxnoI6uIdcBrfLmATuC9GfJjQLeisrJ0D69JTgG0f6mQTiOpDPUpPn4OQtsULFvt4Uh3VeJt07hpCiAgxkBb5lJXIXPt12cwzHQXK9prs5veMkGmxJ9KK2146y/0xhmML2sqyH/8GM3JaETpZHTZZufxnbF3ABFDzkPTPLiJjP+Ol+4fPSEDFWHtJLQKCEM8/Nrn4cxhBB5jadm627c3Nn0iCJNspO6VtQDpFBnJQVhTtCRLbe9KrMvbQ1D7nUSvPqHhX7Q7UZrD/3VMd4hI0RdptryCkWY1xZJDhlH57wSF343RpWcgtlhnwT9iR6WmKS1cN+h8rKHk74EhDv1YZK0sWbvRQM4WFxQ2W7A/bM+5bfLg=
+  app: greydesk-todo
+  on:
+    repo: Greydesk/addressbook
+    branch: todo_tasks

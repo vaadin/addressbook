@@ -24,6 +24,10 @@ import com.vaadin.v7.ui.TextField;
  * By default, a new UI instance is automatically created when the page is loaded. To reuse
  * the same instance, add @PreserveOnRefresh.
  */
+
+//CHANGES 1
+
+
 @Title("Addressbook")
 @Theme("valo")
 @Widgetset("com.vaadin.v7.Vaadin7WidgetSet")
@@ -38,7 +42,7 @@ public class AddressbookUI extends UI {
      */
     TextField filter = new TextField();
     Grid contactList = new Grid();
-    Button newContact = new Button("New contact");
+    Button newContact = new Button("New Editor");
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
@@ -71,15 +75,14 @@ public class AddressbookUI extends UI {
          */
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
 
-        filter.setInputPrompt("Filter contacts...");
+        filter.setInputPrompt("Filter Editors...");
         filter.addTextChangeListener(e -> refreshContacts(e.getText()));
 
         contactList
                 .setContainerDataSource(new BeanItemContainer<>(Contact.class));
         contactList.setColumnOrder("firstName", "lastName", "email");
         contactList.removeColumn("id");
-        contactList.removeColumn("birthDate");
-        contactList.removeColumn("phone");
+        contactList.removeColumn("email");
         contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
         contactList.addSelectionListener(
                 e -> contactForm.edit((Contact) contactList.getSelectedRow()));
@@ -97,6 +100,7 @@ public class AddressbookUI extends UI {
      * In addition to programmatically building layout in Java, you may also
      * choose to setup layout declaratively with Vaadin Designer, CSS and HTML.
      */
+
     private void buildLayout() {
         HorizontalLayout actions = new HorizontalLayout(filter, newContact);
         actions.setWidth("100%");

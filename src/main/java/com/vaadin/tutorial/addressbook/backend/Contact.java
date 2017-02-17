@@ -13,15 +13,20 @@ import java.util.Date;
  */
 // Backend DTO class. This is just a typical Java backend implementation
 // class and nothing Vaadin specific.
+
+//CHANGES 1
+
+
 public class Contact implements Serializable, Cloneable {
 
     private Long id;
 
     private String firstName = "";
     private String lastName = "";
-    private String phone = "";
+    private String task = "";
     private String email = "";
-    private Date birthDate;
+    private Date startDate;
+    private Date expectedEndDate;
 
     public Long getId() {
         return id;
@@ -47,12 +52,12 @@ public class Contact implements Serializable, Cloneable {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTask() {
+        return task;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTask(String phone) {
+        this.task = phone;
     }
 
     public String getEmail() {
@@ -63,13 +68,21 @@ public class Contact implements Serializable, Cloneable {
         this.email = email;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
+    public Date getExpectedEndDate() {
+        return expectedEndDate;
+    }
+
+    public void setExpectedEndDate(Date expectedEndDate) {
+        this.expectedEndDate = expectedEndDate;
+    }
+    
 
     @Override
     public Contact clone() throws CloneNotSupportedException {
@@ -83,8 +96,8 @@ public class Contact implements Serializable, Cloneable {
     @Override
     public String toString() {
         return "Contact{" + "id=" + id + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", phone=" + phone + ", email="
-                + email + ", birthDate=" + birthDate + '}';
+                + ", lastName=" + lastName + ", task=" + task + ", email="
+                + email + ", startDate=" + startDate + ", expectedEndDate=" + expectedEndDate + '}';
     }
 
 }

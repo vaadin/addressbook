@@ -1,0 +1,13 @@
+language: java
+install:
+- mvn install
+jdk:
+- oraclejdk8
+deploy:
+  provider: heroku
+  api_key:
+    secure: NBb76E6tbvKZ607MeoLgVoRqZrccpjasBExW6oO5TfhRryiv8ISww1ENKpSBF95qIucxva/SAia9CPKhuTNe7ZbPrWwr0Mspq8xi7OZORtds4TKid2221JCCxuuOxz86zd32SOkbSag0FAcL1TD/RkyaM/FULw7y+cDIhWT6G0sAxz3O87yHGWPQGAWSz8x2CFfN4M4NZ6rR0hwJr90JBR69lS94acsoVkIhhfWwNbDdZU3HlFOxx4JKfHOUXowMkbpjjKhMZYcYT8V82aq0j7Uk9gmr0nhMu9La8D7t2rHKhc+h67oH8pJW8XSwWs9DJX+3miZ9skMySNKru3BzTQbtBdwj9HJ0qqVQGZp3reQdrU/+mERKCTmP0bacX29FMGoUAIAIZBbxs0HdSkPe/sVw8mAuQS1o4oO8x7B1asBDNNH9nACO6bFsM45x5hRgLTizFhWM4KHe3U3Er+yaaOsofv4pRt8efXaoe2oJmHlZjm/FzaPHsoAWfCPA/28n7YnuRwrxu6Rq8LaJh7RxXNBucxKIjIk+e43mUlJbTYRMmqyq/lyY10nmXgWG5N7IyrXw6Hu2MwdmZqyI+kUTJ8WXwZ0BTtgu3vsfwWf+wnklBpabsRp8ag/x+MpMysRPGYO+WMFMLHKSwm+PHPT2ZJuiEviF+S669ccUa90tl2Y=
+  app: auklin-addressbook
+  on:
+    repo: Auklin/addressbook
+    branch: todo_tasks

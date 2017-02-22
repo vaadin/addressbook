@@ -1,7 +1,7 @@
 EVENTSTAGRAM
 ====================
 
-CSCI 2132 Project Repository.
+CSCI 3130 Project Repository.
 
 Members:
 Brendon

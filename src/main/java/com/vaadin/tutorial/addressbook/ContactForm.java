@@ -103,7 +103,7 @@ public class ContactForm extends FormLayout {
     void edit(Contact contact) {
         this.contact = contact;
         if (contact != null) {
-            // Bind the properties of the contact POJO to fiels in this form
+            // Bind the properties of the contact POJO to fields in this form
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact,
                     this);
             firstName.focus();

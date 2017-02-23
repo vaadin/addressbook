@@ -147,6 +147,7 @@ public class AddressbookUI extends UI {
         contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);
         profilePageUI.setVisible(false);
+        loginForm.setVisible(false);
         
     }
     

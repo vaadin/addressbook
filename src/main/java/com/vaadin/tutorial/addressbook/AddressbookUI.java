@@ -163,7 +163,7 @@ public class AddressbookUI extends UI {
     {
     	showingLoginForm = !showingLoginForm;
     	
-    	LoginForm.setVisible(showingLoginForm);
+    	loginForm.setVisible(showingLoginForm);
     }
 
     /*

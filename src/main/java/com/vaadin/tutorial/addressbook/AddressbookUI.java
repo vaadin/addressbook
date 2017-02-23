@@ -29,10 +29,12 @@ import com.vaadin.v7.ui.TextField;
 //CHANGES 1
 
 
-@Title("Addressbook")
+@Title("Eventstagram")
 @Theme("valo")
 @Widgetset("com.vaadin.v7.Vaadin7WidgetSet")
 public class AddressbookUI extends UI {
+	
+	private boolean showingProfilePage = false;
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java
@@ -149,7 +151,9 @@ public class AddressbookUI extends UI {
      */
     private void openProfilePage()
     {
-    	profilePageUI.setVisible(true);
+    	showingProfilePage = !showingProfilePage;
+    	
+    	profilePageUI.setVisible(showingProfilePage);
     }
 
     /*

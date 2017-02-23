@@ -12,6 +12,7 @@ import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.tutorial.addressbook.backend.ContactService;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.v7.data.util.BeanItemContainer;
@@ -28,10 +29,12 @@ import com.vaadin.v7.ui.TextField;
 //CHANGES 1
 
 
-@Title("Addressbook")
+@Title("Eventstagram")
 @Theme("valo")
 @Widgetset("com.vaadin.v7.Vaadin7WidgetSet")
 public class AddressbookUI extends UI {
+	
+	private boolean showingProfilePage = false;
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java
@@ -43,9 +46,13 @@ public class AddressbookUI extends UI {
     TextField filter = new TextField();
     Grid contactList = new Grid();
     Button newContact = new Button("New Editor");
+    
+    Button profilePageButton = new Button("Profile Page");
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
+    
+    ProfilePageUI profilePageUI = new ProfilePageUI();
 
     // ContactService is a in-memory mock DAO that mimics
     // a real-world datasource. Typically implemented for
@@ -74,18 +81,18 @@ public class AddressbookUI extends UI {
          * the needed changes to the web page without loading a new page.
          */
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
+        
+        profilePageButton.addClickListener(e -> openProfilePage());
 
         filter.setInputPrompt("Filter Editors...");
         filter.addTextChangeListener(e -> refreshContacts(e.getText()));
 
-        contactList
-                .setContainerDataSource(new BeanItemContainer<>(Contact.class));
+        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
         contactList.setColumnOrder("firstName", "lastName", "email");
         contactList.removeColumn("id");
         contactList.removeColumn("email");
         contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
-        contactList.addSelectionListener(
-                e -> contactForm.edit((Contact) contactList.getSelectedRow()));
+        contactList.addSelectionListener(e -> contactForm.edit((Contact) contactList.getSelectedRow()));
         refreshContacts();
     }
 
@@ -100,9 +107,9 @@ public class AddressbookUI extends UI {
      * In addition to programmatically building layout in Java, you may also
      * choose to setup layout declaratively with Vaadin Designer, CSS and HTML.
      */
-
     private void buildLayout() {
-        HorizontalLayout actions = new HorizontalLayout(filter, newContact);
+        HorizontalLayout actions = new HorizontalLayout(filter, newContact, profilePageButton);
+        
         actions.setWidth("100%");
         filter.setWidth("100%");
         actions.setExpandRatio(filter, 1);
@@ -112,7 +119,7 @@ public class AddressbookUI extends UI {
         contactList.setSizeFull();
         left.setExpandRatio(contactList, 1);
 
-        HorizontalLayout mainLayout = new HorizontalLayout(left, contactForm);
+        HorizontalLayout mainLayout = new HorizontalLayout(left, contactForm, profilePageUI);
         mainLayout.setSizeFull();
         mainLayout.setExpandRatio(left, 1);
 
@@ -133,9 +140,20 @@ public class AddressbookUI extends UI {
     }
 
     private void refreshContacts(String stringFilter) {
-        contactList.setContainerDataSource(new BeanItemContainer<>(
-                Contact.class, service.findAll(stringFilter)));
+        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);
+        profilePageUI.setVisible(false);
+        
+    }
+    
+    /**!
+     * @brief openProfilePage
+     */
+    private void openProfilePage()
+    {
+    	showingProfilePage = !showingProfilePage;
+    	
+    	profilePageUI.setVisible(showingProfilePage);
     }
 
     /*

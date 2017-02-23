@@ -4,7 +4,7 @@ EVENTSTAGRAM
 CSCI 3130 Project Repository.
 
 Members:
-Brendon
+Brendan
 Catherine
 James
 Jen

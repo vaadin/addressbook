@@ -28,11 +28,7 @@ public class ContactForm extends FormLayout {
 
     Button save = new Button("Save", this::save);
     Button cancel = new Button("Cancel", this::cancel);
-    TextField firstName = new TextField("First name");
-    TextField lastName = new TextField("Last name");
-    TextField task = new TextField("Task");
-    DateField startDate = new DateField("Start date");
-    DateField expectedEndDate = new DateField("Expected end date");
+    TextField event = new TextField("Event");
 
     Contact contact;
 
@@ -63,7 +59,7 @@ public class ContactForm extends FormLayout {
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-        addComponents(actions, firstName, lastName, task, startDate, expectedEndDate);
+        addComponents(actions, event);
     }
 
     /*
@@ -85,8 +81,7 @@ public class ContactForm extends FormLayout {
             // Save DAO to backend with direct synchronous service API
             getUI().service.save(contact);
 
-            String msg = String.format("Saved '%s %s'.", contact.getFirstName(),
-                    contact.getLastName());
+            String msg = String.format("Saved '%s'.", contact.getEvent());
             Notification.show(msg, Type.TRAY_NOTIFICATION);
             getUI().refreshContacts();
         } catch (FieldGroup.CommitException e) {
@@ -106,7 +101,7 @@ public class ContactForm extends FormLayout {
             // Bind the properties of the contact POJO to fields in this form
             formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact,
                     this);
-            firstName.focus();
+            event.focus();
         }
         setVisible(contact != null);
     }

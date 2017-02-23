@@ -36,7 +36,7 @@ public class LoginForm extends FormLayout {
 
     // Easily bind forms to beans and manage validation and buffering
     BeanFieldGroup<User> formFieldBindings;
-
+    
     public LoginForm() {
         configureComponents();
         buildLayout();
@@ -51,7 +51,8 @@ public class LoginForm extends FormLayout {
          */
         //save.setStyleName(ValoTheme.BUTTON_PRIMARY);
         //save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-        setVisible(false);
+    	
+        setVisible(true);
     }
 
     private void buildLayout() {

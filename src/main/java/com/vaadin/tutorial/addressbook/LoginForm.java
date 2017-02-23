@@ -2,6 +2,7 @@ package com.vaadin.tutorial.addressbook;
 
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.tutorial.addressbook.backend.Contact;
+import com.vaadin.tutorial.addressbook.backend.User;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -26,15 +27,15 @@ import com.vaadin.v7.ui.TextField;
 
 public class LoginForm extends FormLayout {
 
-    Button save = new Button("Login", this::save);
+    //Button save = new Button("Login", this::save);
     Button cancel = new Button("Cancel", this::cancel);
     TextField username = new TextField("Username");
     TextField password = new TextField("Password");
 
-    Contact contact;
+    User user;
 
     // Easily bind forms to beans and manage validation and buffering
-    BeanFieldGroup<Contact> formFieldBindings;
+    BeanFieldGroup<User> formFieldBindings;
 
     public LoginForm() {
         configureComponents();
@@ -48,8 +49,8 @@ public class LoginForm extends FormLayout {
          * With Vaadin built-in styles you can highlight the primary save button
          * and give it a keyboard shortcut for a better UX.
          */
-        save.setStyleName(ValoTheme.BUTTON_PRIMARY);
-        save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        //save.setStyleName(ValoTheme.BUTTON_PRIMARY);
+        //save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         setVisible(false);
     }
 
@@ -57,7 +58,8 @@ public class LoginForm extends FormLayout {
         setSizeUndefined();
         setMargin(true);
 
-        HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        //*add login
+        HorizontalLayout actions = new HorizontalLayout(cancel);
         actions.setSpacing(true);
 
         addComponents(actions, username);
@@ -74,37 +76,37 @@ public class LoginForm extends FormLayout {
      * classes and receive to various Vaadin component events, like button
      * clicks. Or keep it simple and compact with Lambda expressions.
      */
-    public void save(Button.ClickEvent event) {
+  /*  
+    public void save(Button.ClickEvent ) {
         try {
             // Commit the fields from UI to DAO
             formFieldBindings.commit();
 
             // Save DAO to backend with direct synchronous service API
-            getUI().service.save(contact);
+            getUI().service.save(user);
 
-            String msg = String.format("Saved '%s'.", contact.getEvent());
+            String msg = String.format("Saved '%s'.", user.getUsername());
             Notification.show(msg, Type.TRAY_NOTIFICATION);
             getUI().refreshContacts();
         } catch (FieldGroup.CommitException e) {
             // Validation exceptions could be shown here
         }
     }
-
+*/
     public void cancel(Button.ClickEvent event) {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
         getUI().contactList.select(null);
     }
 
-    void edit(Contact contact) {
-        this.contact = contact;
-        if (contact != null) {
+    void edit(User user) {
+        this.user = user;
+        if (user != null) {
             // Bind the properties of the contact POJO to fields in this form
-            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(contact,
-                    this);
+            formFieldBindings = BeanFieldGroup.bindFieldsBuffered(user,this);
             username.focus();
         }
-        setVisible(contact != null);
+        setVisible(user != null);
     }
 
     @Override

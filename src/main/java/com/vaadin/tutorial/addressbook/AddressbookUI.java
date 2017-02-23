@@ -123,7 +123,7 @@ public class AddressbookUI extends UI {
         contactList.setSizeFull();
         left.setExpandRatio(contactList, 1);
 
-        HorizontalLayout mainLayout = new HorizontalLayout(left, contactForm, profilePageUI);
+        HorizontalLayout mainLayout = new HorizontalLayout(left, contactForm, profilePageUI, loginForm);
         mainLayout.setSizeFull();
         mainLayout.setExpandRatio(left, 1);
 

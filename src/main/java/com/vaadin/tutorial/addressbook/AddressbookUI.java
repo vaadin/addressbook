@@ -48,6 +48,7 @@ public class AddressbookUI extends UI {
     Button newContact = new Button("New Editor");
     
     Button profilePageButton = new Button("Profile Page");
+    Button loginButton = new Button("Login");
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
@@ -107,7 +108,7 @@ public class AddressbookUI extends UI {
      * choose to setup layout declaratively with Vaadin Designer, CSS and HTML.
      */
     private void buildLayout() {
-        HorizontalLayout actions = new HorizontalLayout(filter, newContact, profilePageButton);
+        HorizontalLayout actions = new HorizontalLayout(filter, newContact, profilePageButton,loginButton);
         
         actions.setWidth("100%");
         filter.setWidth("100%");

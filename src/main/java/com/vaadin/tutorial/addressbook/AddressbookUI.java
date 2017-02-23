@@ -52,6 +52,7 @@ public class AddressbookUI extends UI {
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
+    LoginForm loginForm = new LoginForm();
     
     ProfilePageUI profilePageUI = new ProfilePageUI();
 
@@ -82,6 +83,7 @@ public class AddressbookUI extends UI {
          * the needed changes to the web page without loading a new page.
          */
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
+        loginButton.addClickListener(e -> loginForm.edit(new Contact()));
         
         profilePageButton.addClickListener(e -> openProfilePage());
 

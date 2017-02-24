@@ -37,7 +37,7 @@ import com.vaadin.v7.ui.TextField;
 public class AddressbookUI extends UI {
 	
 	private boolean showingProfilePage = false;
-	private boolean showingLoginForm = false;
+	private boolean showingLoginForm = true;
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java
@@ -149,7 +149,7 @@ public class AddressbookUI extends UI {
         contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);
         profilePageUI.setVisible(false);
-        loginForm.setVisible(false);
+        loginForm.setVisible(showingLoginForm);
         
     }
     

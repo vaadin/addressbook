@@ -38,6 +38,7 @@ public class AddressbookUI extends UI {
 	
 	protected boolean showingProfilePage = false;
 	protected boolean showingLoginForm = false;
+	protected boolean showingLoginButton = true;
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java
@@ -52,6 +53,7 @@ public class AddressbookUI extends UI {
     
     Button profilePageButton = new Button("Profile Page");
     Button loginButton = new Button("Login");
+    Button logoutButton = new Button("Logout");
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
@@ -88,6 +90,7 @@ public class AddressbookUI extends UI {
          */
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
         loginButton.addClickListener(e -> openLoginPage());
+        logoutButton.setVisible(!showingLoginButton);
         
         profilePageButton.addClickListener(e -> openProfilePage());
 
@@ -114,7 +117,7 @@ public class AddressbookUI extends UI {
      * choose to setup layout declaratively with Vaadin Designer, CSS and HTML.
      */
     private void buildLayout() {
-        HorizontalLayout actions = new HorizontalLayout(filter, newContact, profilePageButton,loginButton);
+        HorizontalLayout actions = new HorizontalLayout(filter, newContact, profilePageButton,loginButton, logoutButton);
         
         actions.setWidth("100%");
         filter.setWidth("100%");

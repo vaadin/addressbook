@@ -87,7 +87,7 @@ public class AddressbookUI extends UI {
          * the needed changes to the web page without loading a new page.
          */
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
-//        loginButton.addClickListener(e -> openLoginPage());
+        loginButton.addClickListener(e -> openLoginPage());
         
         profilePageButton.addClickListener(e -> openProfilePage());
 

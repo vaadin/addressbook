@@ -1,5 +1,7 @@
 package com.vaadin.tutorial.addressbook;
 
+import java.util.ArrayList;
+
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.tutorial.addressbook.backend.User;
@@ -82,14 +84,46 @@ public class LoginForm extends FormLayout {
     public void submit(Button.ClickEvent event){
         try {
             // Commit the fields from UI to DAO
+        	String msg = "";
             formFieldBindings.commit();
 
             // Save DAO to backend with direct synchronous service API
-            getUI().userService.save(user);
-
-            String msg = String.format("Saved '%s'.", user.getUsername());
+            
+            if (username.getValue()!=null){
+            	msg="Please enter a proper username.";
+            	clearLoginForm();
+            }
+            //assuming username is presented
+            else{
+            	ArrayList <User> usernamelist = getUI().userService.findAll(username.getValue());
+            	int size = usernamelist.size();
+            	if(size==0){
+            		msg = "Invalid username or password.";
+            	}
+            	//assuming username exists
+            	else {
+            		//password matches database user password
+            		if (usernamelist.get(0).getPassword()==password.getValue())
+            			msg = "Hello "+username.getValue()+".";
+            		else{
+            			msg = "Invalid username or password.";
+            			clearLoginForm();
+            		}
+            	}
+            }
+            
             Notification.show(msg, Type.TRAY_NOTIFICATION);
             getUI().refreshContacts();
+            
+            /*
+            //USE FOR CREATE ACCOUNT
+            getUI().userService.save(user);
+            
+            String msg = String.format("Saved '%s'.", user.getUsername());
+            Notification.show(msg, Type.TRAY_NOTIFICATION);
+            getUI().refreshContacts();*/
+            
+            
         } catch (FieldGroup.CommitException e) {
             // Validation exceptions could be shown here
         }
@@ -97,7 +131,6 @@ public class LoginForm extends FormLayout {
     public void cancel(Button.ClickEvent event) {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
-        //getUI().contactList.select(null);
         clearLoginForm();
         getUI().setVisible(false);
     }

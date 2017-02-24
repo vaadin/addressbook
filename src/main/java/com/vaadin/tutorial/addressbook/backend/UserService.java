@@ -33,11 +33,12 @@ public class UserService {
 
             final UserService userService = new UserService();
 
-            Random r = new Random(0);
+            //Random r = new Random(0);
             Calendar cal = Calendar.getInstance();
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 20; i++) {
                 User user = new User();
-                user.setUsername(usernames[r.nextInt(usernames.length)]);
+                user.setUsername(usernames[i]);
+                user.setPassword(passwords[i]);
                 userService.save(user);
             }
             instance = userService;
@@ -49,7 +50,8 @@ public class UserService {
     private HashMap<Long, User> users = new HashMap<>();
     private long nextId = 0;
 
-    public synchronized List<User> findAll(String stringFilter) {
+    //old header = public synchronized List<User> findAll(String stringFilter) {
+    public synchronized ArrayList<User> findAll(String stringFilter) {
         ArrayList arrayList = new ArrayList();
         for (User contact : users.values()) {
             try {

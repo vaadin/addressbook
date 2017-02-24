@@ -39,6 +39,7 @@ public class AddressbookUI extends UI {
 	protected boolean showingProfilePage = false;
 	protected boolean showingLoginForm = false;
 	protected boolean showingLoginButton = true;
+	protected String userNameValue = "";
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java

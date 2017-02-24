@@ -30,6 +30,7 @@ import com.vaadin.v7.ui.TextField;
 public class ProfilePageUI extends FormLayout 
 {	
 	Label userNameLabel = new Label("your username");
+	Label userNameContent = new Label("");
 	Label userInterestsLabel = new Label("your interests");
 	Label locationLabel = new Label("your are here");
 	
@@ -87,14 +88,14 @@ public class ProfilePageUI extends FormLayout
         setMargin(true);
 
         if (extraPieces == 0)
-        	addComponents(userNameLabel, userInterestsLabel, locationLabel, 
+        	addComponents(userNameLabel, userNameContent, userInterestsLabel, locationLabel, 
         			  	  changeInterestButton, changePasswordButton);
         if (extraPieces == 1)
-        	addComponents(userNameLabel, userInterestsLabel, locationLabel, 
+        	addComponents(userNameLabel, userNameContent, userInterestsLabel, locationLabel, 
         			  	  changeInterestButton, changePasswordButton, changeInterestButton,
         			  	  interestsTextField, submitNewInterestsButton);
         else if (extraPieces == 2)
-        	addComponents(userNameLabel, userInterestsLabel, locationLabel, 
+        	addComponents(userNameLabel, userNameContent, userInterestsLabel, locationLabel, 
   			  	  		  changeInterestButton, changePasswordButton, oldPasswordTextField,
   			  	  		  newPasswordTextField, confirmNewPasswordTextField, submitNewPasswordButton);
 	}

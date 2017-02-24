@@ -97,7 +97,14 @@ public class LoginForm extends FormLayout {
     public void cancel(Button.ClickEvent event) {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
-        getUI().contactList.select(null);
+        //getUI().contactList.select(null);
+        clearLoginForm();
+        getUI().setVisible(false);
+    }
+    
+    void clearLoginForm() {
+    	username.setValue("");
+    	password.setValue("");
     }
 
     void edit(User user) {

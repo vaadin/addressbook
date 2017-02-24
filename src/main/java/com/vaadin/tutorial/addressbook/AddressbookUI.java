@@ -39,7 +39,6 @@ public class AddressbookUI extends UI {
 	protected boolean showingProfilePage = false;
 	protected boolean showingLoginForm = false;
 	protected boolean showingLoginButton = true;
-	protected String userNameValue = "";
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java
@@ -92,6 +91,7 @@ public class AddressbookUI extends UI {
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
         loginButton.addClickListener(e -> openLoginPage());
         logoutButton.setVisible(!showingLoginButton);       //Set the visibility of the logout button opposite of the login button
+        logoutButton.addClickListener(e -> logout()); 		//Add the action to the logout button
         profilePageButton.setVisible(!showingLoginButton);  //Set the visibility of the profile button opposite of the login button
         
         profilePageButton.addClickListener(e -> openProfilePage());
@@ -155,7 +155,6 @@ public class AddressbookUI extends UI {
         contactForm.setVisible(false);
         profilePageUI.setVisible(false);
         loginForm.setVisible(showingLoginForm);
-        
     }
     
     /**!
@@ -172,6 +171,14 @@ public class AddressbookUI extends UI {
     	showingLoginForm = !showingLoginForm;
     	
     	loginForm.setVisible(showingLoginForm);
+    }
+    private void logout(){
+    	showingLoginButton=true;							//Change login button state
+    	loginButton.setVisible(showingLoginButton);			//Show login button
+    	logoutButton.setVisible(!showingLoginButton);		//Hide logout button
+    	profilePageButton.setVisible(!showingLoginButton);	//Hide profile button
+        profilePageUI.userNameContent.setValue("");			//Clear the username from the form
+
     }
 
     /*

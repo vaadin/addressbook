@@ -84,65 +84,64 @@ public class LoginForm extends FormLayout {
 
     public void submit(Button.ClickEvent event){
     	//System.out.println("Submit Pressed");
-    	try {
-            // Commit the fields from UI to DAO
-        	String msg = "";
-            formFieldBindings.commit();
+		
+		String msg = "";
 
-            // Save DAO to backend with direct synchronous service API
-            
-            if (username.getValue()!=null){
-            	msg="Please enter a proper username.";
-            	clearLoginForm();
-            }
-            //assuming username is presented
-            else{
-            	ArrayList <User> usernamelist = getUI().userService.findAll(username.getValue());
-            	int size = usernamelist.size();
-            	if(size==0){
-            		msg = "Invalid username or password.";
-            	}
-            	//assuming username exists
-            	else {
-            		//password matches database user password
-            		if (usernamelist.get(0).getPassword()==password.getValue())
-            			msg = "Hello "+username.getValue()+".";
-            		else{
-            			msg = "Invalid username or password.";
-            			clearLoginForm();
-            		}
-            	}
-            }
-            
-            Notification.show(msg, Type.TRAY_NOTIFICATION);
-            getUI().refreshContacts();
-            
-            /*
-            //USE FOR CREATE ACCOUNT
-            getUI().userService.save(user);
-            
-            String msg = String.format("Saved '%s'.", user.getUsername());
-            Notification.show(msg, Type.TRAY_NOTIFICATION);
-            getUI().refreshContacts();*/
-            
-            
-        } catch (FieldGroup.CommitException e) {
-            // Validation exceptions could be shown here
+        // Save DAO to backend with direct synchronous service API
+        
+        if (username.getValue()==""){
+        	msg="Please enter a proper username.";
+        	clearLoginForm();
         }
+        //assuming username is presented
+        else{
+        	ArrayList <User> usernamelist = getUI().userService.findAll(username.getValue());
+        	int size = usernamelist.size();
+        	if(size==0){
+        		msg = "Invalid username or password.";
+        	}
+        	//assuming username exists
+        	else {
+        		//password matches database user password
+        		if (usernamelist.get(0).getPassword().equals(password.getValue())){
+        			msg = "Hello "+username.getValue()+".";
+        		}
+        		//username and password do not match
+        		else{
+        			msg = "Invalid username or password.";
+        			////////////////////////////////////////
+        			System.out.println("DBPass = "+usernamelist.get(0).getPassword()+"\nEntered Pass = "+password.getValue());
+					///////////////////////////////////////
+        		}
+        	}
+        }
+        
+        Notification.show(msg, Type.TRAY_NOTIFICATION);
+        getUI().refreshContacts();
+        
+        /*
+        //USE FOR CREATE ACCOUNT
+        getUI().userService.save(user);
+        
+        String msg = String.format("Saved '%s'.", user.getUsername());
+        Notification.show(msg, Type.TRAY_NOTIFICATION);
+        getUI().refreshContacts();*///your will need to create this in AddressbookUI
+            
     }
     public void cancel(Button.ClickEvent event) {
     	System.out.println("Cancel Pressed");
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
-        clearLoginForm();
-        cancel.getParent().getParent().setVisible(false);
-        getUI().showingLoginForm=false;
+        closeLoginForm();
     }
-    
+    void closeLoginForm() {
+    	clearLoginForm();
+    	this.setVisible(false);
+    	getUI().showingLoginForm=false;
+    }
     void clearLoginForm() {
     	username.setValue("");
     	password.setValue("");
-    	
     }
 
     void edit(User user) {

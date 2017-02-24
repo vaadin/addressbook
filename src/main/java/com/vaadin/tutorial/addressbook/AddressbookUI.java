@@ -37,7 +37,7 @@ import com.vaadin.v7.ui.TextField;
 public class AddressbookUI extends UI {
 	
 	private boolean showingProfilePage = false;
-	private boolean showingLoginForm = true;
+	private boolean showingLoginForm = false;
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java

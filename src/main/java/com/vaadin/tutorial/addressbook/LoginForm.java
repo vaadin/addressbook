@@ -10,6 +10,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.v7.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.v7.data.fieldgroup.FieldGroup;
@@ -32,11 +33,11 @@ public class LoginForm extends FormLayout {
     //Button save = new Button("Login", this::save);
     Button cancel = new Button("Cancel", this::cancel);
     TextField username = new TextField("Username");
-    TextField password = new TextField("Password");
+    PasswordField password = new PasswordField("Password");
     Button submit = new Button("Submit", this::submit);
 
     User user;
-
+    
     // Easily bind forms to beans and manage validation and buffering
     BeanFieldGroup<User> formFieldBindings;
     
@@ -82,7 +83,8 @@ public class LoginForm extends FormLayout {
      */  
 
     public void submit(Button.ClickEvent event){
-        try {
+    	//System.out.println("Submit Pressed");
+    	try {
             // Commit the fields from UI to DAO
         	String msg = "";
             formFieldBindings.commit();
@@ -129,15 +131,16 @@ public class LoginForm extends FormLayout {
         }
     }
     public void cancel(Button.ClickEvent event) {
+    	System.out.println("Cancel Pressed");
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
         clearLoginForm();
-        getUI().setVisible(false);
     }
     
     void clearLoginForm() {
     	username.setValue("");
     	password.setValue("");
+    	
     }
 
     void edit(User user) {

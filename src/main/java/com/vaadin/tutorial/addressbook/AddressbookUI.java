@@ -11,6 +11,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.tutorial.addressbook.backend.ContactService;
 import com.vaadin.tutorial.addressbook.backend.User;
+import com.vaadin.tutorial.addressbook.backend.UserService;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
@@ -62,6 +63,7 @@ public class AddressbookUI extends UI {
     // a real-world datasource. Typically implemented for
     // example as EJB or Spring Data based service.
     ContactService service = ContactService.createDemoService();
+    UserService userService = UserService.createDemoService();
 
     /*
      * The "Main method".

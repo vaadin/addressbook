@@ -31,6 +31,7 @@ public class LoginForm extends FormLayout {
     Button cancel = new Button("Cancel", this::cancel);
     TextField username = new TextField("Username");
     TextField password = new TextField("Password");
+    Button submit = new Button("Submit", this::submit);
 
     User user;
 
@@ -49,8 +50,8 @@ public class LoginForm extends FormLayout {
          * With Vaadin built-in styles you can highlight the primary save button
          * and give it a keyboard shortcut for a better UX.
          */
-        //save.setStyleName(ValoTheme.BUTTON_PRIMARY);
-        //save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        submit.setStyleName(ValoTheme.BUTTON_PRIMARY);
+        submit.setClickShortcut(ShortcutAction.KeyCode.ENTER);
     	
         setVisible(true);
     }
@@ -63,7 +64,7 @@ public class LoginForm extends FormLayout {
         HorizontalLayout actions = new HorizontalLayout(cancel);
         actions.setSpacing(true);
 
-        addComponents(actions, username);
+        addComponents(actions, username, password, submit);
     }
 
     /*
@@ -76,15 +77,15 @@ public class LoginForm extends FormLayout {
      * the listener methods in your compositions or in separate controller
      * classes and receive to various Vaadin component events, like button
      * clicks. Or keep it simple and compact with Lambda expressions.
-     */
-  /*  
-    public void save(Button.ClickEvent ) {
+     */  
+
+    public void submit(Button.ClickEvent event){
         try {
             // Commit the fields from UI to DAO
             formFieldBindings.commit();
 
             // Save DAO to backend with direct synchronous service API
-            getUI().service.save(user);
+            getUI().userService.save(user);
 
             String msg = String.format("Saved '%s'.", user.getUsername());
             Notification.show(msg, Type.TRAY_NOTIFICATION);
@@ -93,7 +94,6 @@ public class LoginForm extends FormLayout {
             // Validation exceptions could be shown here
         }
     }
-*/
     public void cancel(Button.ClickEvent event) {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);

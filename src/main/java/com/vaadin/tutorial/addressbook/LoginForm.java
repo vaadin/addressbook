@@ -135,6 +135,8 @@ public class LoginForm extends FormLayout {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
         clearLoginForm();
+        cancel.getParent().getParent().setVisible(false);
+        getUI().showingLoginForm=false;
     }
     
     void clearLoginForm() {

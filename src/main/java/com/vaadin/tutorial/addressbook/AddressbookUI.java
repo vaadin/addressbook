@@ -90,7 +90,8 @@ public class AddressbookUI extends UI {
          */
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
         loginButton.addClickListener(e -> openLoginPage());
-        logoutButton.setVisible(!showingLoginButton);
+        logoutButton.setVisible(!showingLoginButton);       //Set the visibility of the logout button opposite of the login button
+        profilePageButton.setVisible(!showingLoginButton);  //Set the visibility of the profile button opposite of the login button
         
         profilePageButton.addClickListener(e -> openProfilePage());
 

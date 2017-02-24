@@ -105,8 +105,12 @@ public class LoginForm extends FormLayout {
         		//password matches database user password
         		if (usernamelist.get(0).getPassword().equals(password.getValue())){
         			msg = "Hello "+username.getValue()+".";
-        			getUI().loginButton.setVisible(!getUI().showingLoginButton);
-        			getUI().logoutButton.setVisible(getUI().showingLoginButton);
+        			getUI().showingLoginButton=!getUI().showingLoginButton;            //Swap the showing login button value
+        			getUI().loginButton.setVisible(getUI().showingLoginButton);        //Hide the login button
+        			getUI().logoutButton.setVisible(!getUI().showingLoginButton);      //Show the logout button
+        			getUI().profilePageButton.setVisible(!getUI().showingLoginButton); //Show the profile button
+        			getUI().showingLoginForm=!getUI().showingLoginForm;                //Swap the login form value
+        			getUI().loginForm.setVisible(getUI().showingLoginForm);            //Hide the login form
         		}
         		//username and password do not match
         		else{

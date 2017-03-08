@@ -10,8 +10,11 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.tutorial.addressbook.backend.ContactService;
+import com.vaadin.tutorial.addressbook.backend.User;
+import com.vaadin.tutorial.addressbook.backend.UserService;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.v7.data.util.BeanItemContainer;
@@ -24,10 +27,18 @@ import com.vaadin.v7.ui.TextField;
  * By default, a new UI instance is automatically created when the page is loaded. To reuse
  * the same instance, add @PreserveOnRefresh.
  */
-@Title("Addressbook")
+
+//CHANGES 1
+
+
+@Title("Eventstagram")
 @Theme("valo")
 @Widgetset("com.vaadin.v7.Vaadin7WidgetSet")
 public class AddressbookUI extends UI {
+	
+	protected boolean showingProfilePage = false;
+	protected boolean showingLoginForm = false;
+	protected boolean showingLoginButton = true;
 
     /*
      * Hundreds of widgets. Vaadin's user interface components are just Java
@@ -38,15 +49,23 @@ public class AddressbookUI extends UI {
      */
     TextField filter = new TextField();
     Grid contactList = new Grid();
-    Button newContact = new Button("New contact");
+    Button newContact = new Button("New Editor");
+    
+    Button profilePageButton = new Button("Profile Page");
+    Button loginButton = new Button("Login");
+    Button logoutButton = new Button("Logout");
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
+    LoginForm loginForm = new LoginForm();
+    
+    ProfilePageUI profilePageUI = new ProfilePageUI();
 
     // ContactService is a in-memory mock DAO that mimics
     // a real-world datasource. Typically implemented for
     // example as EJB or Spring Data based service.
     ContactService service = ContactService.createDemoService();
+    UserService userService = UserService.createDemoService();
 
     /*
      * The "Main method".
@@ -70,19 +89,21 @@ public class AddressbookUI extends UI {
          * the needed changes to the web page without loading a new page.
          */
         newContact.addClickListener(e -> contactForm.edit(new Contact()));
+        loginButton.addClickListener(e -> openLoginPage());
+        logoutButton.setVisible(!showingLoginButton);       //Set the visibility of the logout button opposite of the login button
+        logoutButton.addClickListener(e -> logout()); 		//Add the action to the logout button
+        profilePageButton.setVisible(!showingLoginButton);  //Set the visibility of the profile button opposite of the login button
+        
+        profilePageButton.addClickListener(e -> openProfilePage());
 
-        filter.setInputPrompt("Filter contacts...");
+        filter.setInputPrompt("Filter Editors...");
         filter.addTextChangeListener(e -> refreshContacts(e.getText()));
 
-        contactList
-                .setContainerDataSource(new BeanItemContainer<>(Contact.class));
-        contactList.setColumnOrder("firstName", "lastName", "email");
+        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class));
+        contactList.setColumnOrder("event");
         contactList.removeColumn("id");
-        contactList.removeColumn("birthDate");
-        contactList.removeColumn("phone");
         contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
-        contactList.addSelectionListener(
-                e -> contactForm.edit((Contact) contactList.getSelectedRow()));
+        contactList.addSelectionListener(e -> contactForm.edit((Contact) contactList.getSelectedRow()));
         refreshContacts();
     }
 
@@ -98,7 +119,8 @@ public class AddressbookUI extends UI {
      * choose to setup layout declaratively with Vaadin Designer, CSS and HTML.
      */
     private void buildLayout() {
-        HorizontalLayout actions = new HorizontalLayout(filter, newContact);
+        HorizontalLayout actions = new HorizontalLayout(filter, newContact, profilePageButton,loginButton, logoutButton);
+        
         actions.setWidth("100%");
         filter.setWidth("100%");
         actions.setExpandRatio(filter, 1);
@@ -108,7 +130,7 @@ public class AddressbookUI extends UI {
         contactList.setSizeFull();
         left.setExpandRatio(contactList, 1);
 
-        HorizontalLayout mainLayout = new HorizontalLayout(left, contactForm);
+        HorizontalLayout mainLayout = new HorizontalLayout(left, contactForm, profilePageUI, loginForm);
         mainLayout.setSizeFull();
         mainLayout.setExpandRatio(left, 1);
 
@@ -129,9 +151,35 @@ public class AddressbookUI extends UI {
     }
 
     private void refreshContacts(String stringFilter) {
-        contactList.setContainerDataSource(new BeanItemContainer<>(
-                Contact.class, service.findAll(stringFilter)));
+        contactList.setContainerDataSource(new BeanItemContainer<>(Contact.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);
+        profilePageUI.setVisible(false);
+        loginForm.setVisible(showingLoginForm);
+    }
+    
+    /**!
+     * @brief openProfilePage
+     */
+    private void openProfilePage()
+    {
+    	showingProfilePage = !showingProfilePage;
+    	
+    	profilePageUI.setVisible(showingProfilePage);
+    }
+    private void openLoginPage()
+    {
+    	showingLoginForm = !showingLoginForm;
+    	
+    	loginForm.setVisible(showingLoginForm);
+    }
+    private void logout(){
+    	showingLoginButton=true;							//Change login button state
+    	loginButton.setVisible(showingLoginButton);			//Show login button
+    	logoutButton.setVisible(!showingLoginButton);		//Hide logout button
+    	profilePageButton.setVisible(!showingLoginButton);	//Hide profile button
+        profilePageUI.userNameContent.setValue("");			//Clear the username from the form
+        profilePageUI.setVisible(!showingLoginButton); 		//Hide the profile page if showing.
+
     }
 
     /*

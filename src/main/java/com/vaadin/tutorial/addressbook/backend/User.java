@@ -14,13 +14,12 @@ import java.util.Date;
 // Backend DTO class. This is just a typical Java backend implementation
 // class and nothing Vaadin specific.
 
-//CHANGES 1
 
-
-public class Contact implements Serializable, Cloneable {
+public class User implements Serializable, Cloneable {
 
     private Long id;
-    private String event = "";
+    private String username = "";
+    private String password = "";
 
     public Long getId()
     {
@@ -32,20 +31,30 @@ public class Contact implements Serializable, Cloneable {
         this.id = id;
     }
 
-    public String getEvent()
+    public String getUsername()
     {
-        return event;
+        return username;
     }
 
-    public void setEvent(String event)
+    public void setUsername(String username)
     {
-        this.event = event;
+        this.username = username;
+    }
+    
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 
     @Override
-    public Contact clone() throws CloneNotSupportedException {
+    public User clone() throws CloneNotSupportedException {
         try {
-            return (Contact) BeanUtils.cloneBean(this);
+            return (User) BeanUtils.cloneBean(this);
         } catch (Exception ex) {
             throw new CloneNotSupportedException();
         }
@@ -54,7 +63,7 @@ public class Contact implements Serializable, Cloneable {
     @Override
     public String toString()
     {
-        return "Contact{" + "id=" + id + ", event = " + event + '}';
+        return "Contact{" + "id=" + id + ", User = " + username + '}';
     }
 
 }

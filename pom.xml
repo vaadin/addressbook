@@ -15,6 +15,14 @@
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 	</properties>
 	<repositories>
+		<!-- Main Maven repository -->
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 		<!-- Essential Vaadin artifacts are in maven central, but maven.vaadin.com 
 			contains a huge set of additional libraries. See vaadin.com/directory -->
 		<repository>
@@ -22,6 +30,12 @@
 			<url>https://maven.vaadin.com/vaadin-addons</url>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2/</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>com.vaadin</groupId>

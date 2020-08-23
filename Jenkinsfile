@@ -16,7 +16,7 @@ stages {
 }
     stage ('This to demo second stage') {
         steps{
-        echo "step 1"
+        echo "step demo"
     }
     }
 }

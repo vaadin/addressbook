@@ -4,6 +4,7 @@ pipeline {
          label 'master'
      }
  }
+ 
  tools {
 
      maven 'maven3.6'
@@ -18,7 +19,7 @@ stages {
       }
     }
 
-    stage ('User goal ${ goal } '){
+    stage ('User goal $goal '){
         steps{
             sh """
             mvn ${ goal }

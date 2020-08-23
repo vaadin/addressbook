@@ -19,7 +19,7 @@ stages {
     }
     stage ('Cleaning'){
         steps{
-            bat """
+            sh """
             mvn clean
             """
         }
@@ -28,7 +28,7 @@ stages {
 
     stage ('Code Compile'){
         steps{
-            bat """
+            sh """
             mvn compile
             """
         }
@@ -36,7 +36,7 @@ stages {
     }
     stage ('packaging '){
         steps{
-            bat """
+            sh """
             mvn package
             """
         }

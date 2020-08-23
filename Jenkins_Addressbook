@@ -21,7 +21,7 @@ stages {
     stage ('Code Compile'){
         steps{
             bat """
-            mvn Compile
+            mvn compile
             """
         }
 

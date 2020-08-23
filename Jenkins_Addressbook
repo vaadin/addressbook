@@ -17,11 +17,27 @@ stages {
 
       }
     }
+    stage ('Cleaning'){
+        steps{
+            bat """
+            mvn clean
+            """
+        }
+
+    }
 
     stage ('Code Compile'){
         steps{
             bat """
             mvn compile
+            """
+        }
+
+    }
+    stage ('packaging '){
+        steps{
+            bat """
+            mvn package
             """
         }
 

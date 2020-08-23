@@ -18,4 +18,15 @@ stages {
       }
     }
 }
+stages {
+    stage ('Code Compile'){
+        steps{
+            bat """
+            mvn Compile
+            """
+        }
+
+    }
+
+}
 }

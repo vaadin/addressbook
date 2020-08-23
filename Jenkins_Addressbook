@@ -1,0 +1,21 @@
+pipeline {
+ agent {
+     node {
+         label 'Win_NET'
+     }
+ }
+ tools {
+
+     maven 'maven3.6'
+     jdk 'java'
+ }
+stages {
+    stage ('checkout code from SCM'){
+     steps{   
+
+         git branch: 'master', url: 'https://github.com/devopstrainers1/addressbook.git'
+
+      }
+    }
+}
+}

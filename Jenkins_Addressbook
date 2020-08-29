@@ -13,7 +13,7 @@ stages {
     stage ('checkout code from SCM'){
      steps{   
 
-         git branch: 'master', url: 'https://github.com/devopstrainers1/addressbook.git'
+         git branch: 'master', url: 'https://github.com/spring-projects/spring-petclinic.git'
 
       }
     }
@@ -30,6 +30,15 @@ stages {
         steps{
             sh """
             mvn compile
+            """
+        }
+
+    }
+    
+     stage ('Run unit test'){
+        steps{
+            sh """
+            mvn test
             """
         }
 

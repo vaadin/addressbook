@@ -1,0 +1,34 @@
+# Goal: This demo pipeline  code
+//Authore - Ajay
+pipeline{
+agent{
+ node {
+     label 'master'
+ }
+
+}
+
+stages {
+
+    stage('THis is stage 1'){
+     
+     steps{
+
+         echo "step 1"
+
+     }
+
+    }
+
+    stage("This is stage 2'){
+
+        steps{
+            sh """
+            df -h
+            cat /etc/passwd
+            """
+        }
+    }
+}
+
+}

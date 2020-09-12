@@ -20,7 +20,7 @@ stages {
 
     }
 
-    stage("This is stage 2'){
+    stage('This is stage 2'){
 
         steps{
             sh """

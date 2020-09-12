@@ -1,4 +1,4 @@
-# Goal: This demo pipeline  code
+//Goal: This demo pipeline  code
 //Authore - Ajay
 pipeline{
 agent{

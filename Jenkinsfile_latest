@@ -13,6 +13,12 @@ pipeline {
 
      label 'master'
  }
+ 
+ tools {
+
+     maven 'mymaven'
+     jdk 'java11'
+ }
 
  stages {
 

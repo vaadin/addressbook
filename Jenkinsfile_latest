@@ -26,8 +26,10 @@ pipeline {
      steps {
 
          script{
-
+			
+			sh """
              mvn validate
+			 """
          }
      }
      }
@@ -36,8 +38,10 @@ pipeline {
      steps {
 
          script{
-
+			
+			sh """
              mvn compile
+			 """
          }
      }
      }

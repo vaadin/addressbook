@@ -1,0 +1,40 @@
+#!groovy
+/*
+=======================================
+Author: DevOps
+Date: 05/12/2020
+Purpose: To build frontend java project
+=======================================
+*/
+
+pipeline {
+ 
+ agent {
+
+     label 'master'
+ }
+
+ stages {
+
+     stage('Validate Project') {
+     steps {
+
+         script{
+
+             mvn validate
+         }
+     }
+     }
+
+     stage('Code Compile') {
+     steps {
+
+         script{
+
+             mvn compile
+         }
+     }
+     }
+ }
+
+}

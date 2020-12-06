@@ -22,9 +22,10 @@ pipeline {
 
  stages {
  
-	stage ('Code Checkout')
+	stage ('Code Checkout'){
 	steps {
 	git credentialsId: 'devops_git', url: 'https://github.com/devopstrainers1/addressbook.git'
+	}
 	}
 
      stage('Validate Project') {

@@ -1,0 +1,11 @@
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/service/EntityUtils.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/PetclinicIntegrationTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/vet/VetTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java
+/var/lib/jenkins/workspace/pipeline_demo/src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java

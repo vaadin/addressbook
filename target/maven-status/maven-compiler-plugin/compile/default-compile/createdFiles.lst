@@ -1,0 +1,6 @@
+com/vaadin/tutorial/addressbook/ContactForm.class
+com/vaadin/tutorial/addressbook/backend/ContactService.class
+com/vaadin/tutorial/addressbook/backend/ContactService$1.class
+com/vaadin/tutorial/addressbook/backend/Contact.class
+com/vaadin/tutorial/addressbook/AddressbookUI$MyUIServlet.class
+com/vaadin/tutorial/addressbook/AddressbookUI.class

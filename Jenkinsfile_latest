@@ -21,6 +21,11 @@ pipeline {
  }
 
  stages {
+ 
+	stage ('Code Checkout')
+	steps {
+	git credentialsId: 'devops_git', url: 'https://github.com/devopstrainers1/addressbook.git'
+	}
 
      stage('Validate Project') {
      steps {
@@ -29,6 +34,7 @@ pipeline {
 			
 			sh """
              mvn validate
+			 
 			 """
          }
      }

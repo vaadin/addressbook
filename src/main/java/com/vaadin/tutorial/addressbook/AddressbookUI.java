@@ -16,7 +16,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.v7.data.util.BeanItemContainer;
 import com.vaadin.v7.ui.Grid;
-import com.vaadin.v7.ui.TextField
+import com.vaadin.v7.ui.TextField;
 
 /* User Interface written in Java.
  *

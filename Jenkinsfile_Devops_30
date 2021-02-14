@@ -7,8 +7,17 @@ pipeline {
               jdk 'java1.8'
 
           }
+          parameters{
+                 name: 'INPUT',
+                 choice: [ 'TRUE', 'FALSE']
+
+          }
           stages {
-            stage ('Code Checkout') {     
+
+            stage ('Code Checkout') {  
+                when{
+                    expression{ "${INPUT}" == 'TRUE' }
+              }   
               steps{
                   git credentialsId: 'devopstrainers1', branch: 'master', url: 'https://github.com/devopstrainers1/addressbook.git'
 

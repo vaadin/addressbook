@@ -8,34 +8,36 @@ pipeline {
 
           }
           stages {
-           
             stage ('Code Checkout') {     
               steps{
                   git credentialsId: 'devopstrainers1', branch: 'master', url: 'https://github.com/devopstrainers1/addressbook.git'
 
               }
             }  
-            
-            stage('Code Validate') {
-                steps {
-                    script {
-                        sh """
-                        mvn validate
-                        """       
-                         }
-                }
+            stage ('Parallel'){
+             parallel {
+                    stage('Code Validate') {
+                        steps {
+                            script {
+                                sh """
+                                mvn validate
+                                """       
+                                }
+                        }
 
-}
-             stage('Code Compile') {
-                steps {
-                    script {
-                        sh """
-                        mvn compile
-                        """       
-                         }
-                }
-                
-}
+        }
+                    stage('Code Compile') {
+                        steps {
+                            script {
+                                sh """
+                                mvn compile
+                                """       
+                                }
+                        }
+                        
+        }
+            }
+            }
             stage('Code Test') {
                 steps {
                     catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {

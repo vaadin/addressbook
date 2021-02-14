@@ -40,7 +40,7 @@ pipeline {
                 steps {
                     script {
                         sh """
-                        mvn tes
+                        mvn test
                         """       
                          }
                 }

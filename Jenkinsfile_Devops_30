@@ -1,6 +1,6 @@
 pipeline {
           agent {         
-             label 'slave1'
+             label 'master'
           }
           tools {
               maven 'mvn3'
@@ -8,14 +8,14 @@ pipeline {
 
           }
           stages {
-           /*
+           
             stage ('Code Checkout') {     
               steps{
                   git credentialsId: 'devopstrainers1', branch: 'master', url: 'https://github.com/devopstrainers1/addressbook.git'
 
               }
             }  
-            */
+            
             stage('Code Validate') {
                 steps {
                     script {
@@ -38,11 +38,15 @@ pipeline {
 }
             stage('Code Test') {
                 steps {
+                    catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script {
                         sh """
                         mvn test
                         """       
                          }
+                    }
+                   
+                  
                 }
                 
 }

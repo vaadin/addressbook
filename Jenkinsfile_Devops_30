@@ -11,7 +11,7 @@ pipeline {
           stages {
             stage ('Parallel'){
              parallel {
-                    stage('Code Validate') {
+                    stage('Validate the code') {
                         steps {
                             script {
                                 sh """

@@ -65,7 +65,7 @@ pipeline {
                         git rev-parse --short HEAD
                     ''')
 
-                    branch_name = "${env.BRANCH_NAME}"
+                    branch_name = "${env.GIT_LOCAL_BRANCH}"
                     final_version = "${env.BUILD_NUMBER}.$git_version"
                     echo "git version is $git_version"
                     echo "branch_name is $branch_name"
@@ -80,7 +80,7 @@ pipeline {
                 steps{
                     script {
                         sh """
-                        zip addressbook.zip target/addressbook-2.0.war
+                        zip target/addressbook.zip target/addressbook-2.0.war
                         """
 
                     }
@@ -92,7 +92,7 @@ pipeline {
             stage('Nexus Upload'){
                 steps{
                     script {
-                        nexusArtifactUploader artifacts: [[artifactId: 'target\\', classifier: '', file: 'addressbook', type: 'zip']], credentialsId: 'nexus_cred', groupId: '${branch_name}', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops30', version: '${final_version}'
+                        nexusArtifactUploader artifacts: [[artifactId: 'target\\', classifier: '', file: 'addressbook.zip', type: 'zip']], credentialsId: 'nexus_cred', groupId: '${branch_name}', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops30', version: '${final_version}'
                     }
                 }
             }

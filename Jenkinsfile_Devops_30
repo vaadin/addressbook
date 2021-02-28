@@ -79,9 +79,9 @@ pipeline {
             stage('zip package'){
                 steps{
                     script {
-                        sh "
+                        sh """
                         zip ${final_version}.zip target/Addressbook.war
-                        "
+                        """
 
                     }
 

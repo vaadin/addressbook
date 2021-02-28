@@ -66,7 +66,7 @@ pipeline {
                     ''')
 
                     branch_name = "${env.BRANCH_NAME}"
-                    final_version = "${env.BUILD_NAME}.$git_version"
+                    final_version = "${env.BUILD_NUMBER}.$git_version"
                     echo "git version is $git_version"
                     echo "branch_name is $branch_name"
                     echo  "final_version is $final_version"
@@ -80,7 +80,7 @@ pipeline {
                 steps{
                     script {
                         sh """
-                        zip ${final_version}.zip target/Addressbook.war
+                        zip addressbook.zip target/addressbook-2.0.war
                         """
 
                     }
@@ -89,5 +89,12 @@ pipeline {
 
             }
 
+            stage('zip package'){
+                steps{
+                    script {
+                        nexusArtifactUploader artifacts: [[artifactId: 'target\\', classifier: '', file: 'addressbook', type: 'zip']], credentialsId: 'nexus_cred', groupId: '${branch_name}', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops30', version: '${final_version}'
+                    }
+                }
+            }
 }
 }

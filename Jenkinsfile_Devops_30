@@ -66,7 +66,7 @@ pipeline {
                     ''')
 
                     branch_name = "${env.BRANCH_NAME}"
-                    final_version = ${env.BUILD_NAME}.$git_version
+                    final_version = "${env.BUILD_NAME}.$git_version"
                     echo "git version is $git_version"
                     echo "branch_name is $branch_name"
                     echo  "final_version is $final_version"
@@ -79,9 +79,9 @@ pipeline {
             stage('zip package'){
                 steps{
                     script {
-                        sh """
+                        sh "
                         zip ${final_version}.zip target/Addressbook.war
-                        """
+                        "
 
                     }
 

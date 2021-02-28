@@ -3,7 +3,7 @@ pipeline {
              label 'master'
           }
           tools {
-              maven 'mvn3'
+              maven 'maven3'
               jdk 'java1.8'
 
           }
@@ -71,5 +71,37 @@ pipeline {
                 }
                 
 }
-          }
+
+            stage('Git Version'){
+            steps{
+                script{
+                    git_version = sh (returnStdout: true, script:""""
+                        git rev-parse --short HEAD
+                    """").trim()
+
+                    branch_name = "{env.BRANCH_NAME}"
+                    final_version = ${env.BUILD_NAME}.$git_version
+                    echo "git version is $git_version"
+                    echo "branch_name is $branch_name"
+                    echo  "final_version is $final_version"
+
+                }
+
+            }
+
+            }
+            stage('zip package'){
+                steps{
+                    script {
+                        sh "
+                        zip ${final_version}.zip target/Addressbook.war
+                        "
+
+                    }
+
+                }
+
+            }
+
+}
 }

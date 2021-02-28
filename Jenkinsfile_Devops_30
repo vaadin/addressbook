@@ -61,8 +61,9 @@ pipeline {
             stage('Git Version'){
             steps{
                 script{
-                    git_version = `git rev-parse --short HEAD`
-                    
+                    git_version = sh (returnStdout: true, script: '''
+                        git rev-parse --short HEAD
+                    ''')
 
                     branch_name = "${env.BRANCH_NAME}"
                     final_version = ${env.BUILD_NAME}.$git_version

@@ -79,7 +79,7 @@ pipeline {
                         git rev-parse --short HEAD
                     """").trim()
 
-                    branch_name = "{env.BRANCH_NAME}"
+                    branch_name = "${env.BRANCH_NAME}"
                     final_version = ${env.BUILD_NAME}.$git_version
                     echo "git version is $git_version"
                     echo "branch_name is $branch_name"

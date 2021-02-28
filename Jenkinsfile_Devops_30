@@ -89,7 +89,7 @@ pipeline {
 
             }
 
-            stage('zip package'){
+            stage('Nexus Upload'){
                 steps{
                     script {
                         nexusArtifactUploader artifacts: [[artifactId: 'target\\', classifier: '', file: 'addressbook', type: 'zip']], credentialsId: 'nexus_cred', groupId: '${branch_name}', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops30', version: '${final_version}'

@@ -101,7 +101,7 @@ pipeline {
                             repository: "devops30",
                             version: "${final_version}",
                             artifacts: 
-                            [[artifactId: 'target\\', classifier: '', file: 'addressbook.zip', type: 'zip']]
+                            [[artifactId: 'Web', classifier: '', file: 'target\\addressbook.zip', type: 'zip']]
                         );                     }
                 }
             }

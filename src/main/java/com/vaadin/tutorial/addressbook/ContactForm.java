@@ -4,7 +4,7 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;

@@ -1,6 +1,6 @@
 package com.vaadin.tutorial.addressbook;
 
-import com.vaadin.event.ShortcutAction
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.tutorial.addressbook.backend.Contact;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;

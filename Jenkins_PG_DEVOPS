@@ -22,6 +22,15 @@ pipeline {
             }
             }
         }
+        
+        stage ('test errorcatch') {
+            steps {
+                sh """
+                echo "demo
+                """
+
+            }
+            }
 
         stage ('Packaging') {
             steps {

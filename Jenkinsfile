@@ -1,33 +1,66 @@
 pipeline {
- agent {
-     node {
-         label 'master'
-     }
- }
-stages {
-    stage ('This demo stage'){
-     steps{    
-         parallel(
-          job1: {   
-                 sh """
-                df -h
-                cd /tmp
-                touch demo.txt 
-                """
-     },
-        job2: {
-             sh """
-             cat /etc/passwd
-             """
-
+        agent {
+            label 'master'
         }
-         )
-}
-    }
-    stage ('This to demo second stage') {
-        steps{
-        echo "step 1"
-    }
-    }
-}
+        tools {
+            maven 'mymaven'
+            jdk 'myjava'
+        }
+    stages {
+
+        stage ('Checkout the code') {
+            steps{
+                git branch: 'main', url: 'https://github.com/devopstrainers1/spring-petclinic.git'
+            }
+        }
+
+      stage ('Parallel block') {
+       Parallel {   
+        stage ('Code Validate') {
+            steps{
+                sh """
+                mvn validate
+                """
+            
+        }
+        }
+
+        stage ('Code Compile') {
+            steps{
+               
+                sh """
+                mvn compile
+                """
+            
+        }
+        }
+       }
+      }
+
+        stage ('JUNIT Test') {
+            steps{
+                sh """
+                mvn test
+                """
+            }
+        }
+
+        stage ('Packaging') {
+            steps {
+                sh """
+                mvn package
+                """
+
+            }
+        }
+
+
+      }
+      post {
+
+          always{
+              junit 'target/surefire-reports/**/*.xml'
+          }
+      }   
+
 }

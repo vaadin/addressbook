@@ -15,7 +15,7 @@ pipeline {
         }
 
       stage ('Parallel block') {
-       Parallel {   
+       parallel {   
         stage ('Code Validate') {
             steps{
                 sh """

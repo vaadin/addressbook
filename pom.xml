@@ -82,5 +82,14 @@
                 <version>9.2.3.v20140905</version>
             </plugin>
         </plugins>
+        <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.0.0-M1</version>
+        </plugin>
+        ...
+      </plugins>
+    </pluginManagement>
     </build>
 </project>

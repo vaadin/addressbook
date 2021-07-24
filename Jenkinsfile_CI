@@ -2,7 +2,7 @@ pipeline {
 
     agent{
 
-            label 'master'
+            label 'linux_agent'
 
     }
 

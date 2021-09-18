@@ -10,6 +10,8 @@ pipeline {
 
     }
 
+    stages {
+
 
         stage('Code Compile') { 
 
@@ -46,3 +48,4 @@ pipeline {
     }
 
 }
+

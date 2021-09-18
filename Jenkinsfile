@@ -10,17 +10,6 @@ pipeline {
 
     }
 
-    stages {
-
-        stage('Checkout the code') { 
-
-            steps {
-
-               git branch: 'develop', url: 'https://github.com/devopstrainers1/addressbook.git'
-
-            }
-
-        }
 
         stage('Code Compile') { 
 

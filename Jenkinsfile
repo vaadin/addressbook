@@ -14,7 +14,7 @@ pipeline {
         }
         stage ('finalize') {
             steps {
-                sh 'echo hello there. this  is finalization'
+                sh 'hello there. this  is finalization'
             }
         }
         stage ('send mail') {

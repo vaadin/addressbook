@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage ('compilation') {
             steps {
-                git 'https://github.com/skeeto/sample-java-project.git'
                 sh 'mvn -B compile'
             }
         }

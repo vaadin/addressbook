@@ -3,23 +3,23 @@ pipeline {
     stages {
         stage ('compilation') {
             steps {
-                sh 'echo hello there. this  is compilation'
-                sh 'echo hello world'
+                sh 'mvn -B compile'
             }
         }
-        stage ('deployment') {
+        stage ('static code analysis') {
             steps {
-                sh 'echo hello there. this  is deployment'
+//                sh 'echo hello there. this  is deployment'
+                sh '/home/ubuntu/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner'
             }
         }
-        stage ('finalize') {
+        stage ('package') {
             steps {
-                sh 'hello there. this  is finalization'
+                sh 'mvn -B package'
             }
         }
-        stage ('send mail') {
+        stage ('deploy to tomcat') {
             steps {
-                mail bcc: '', body: 'the build is finished', cc: '', from: '', replyTo: '', subject: 'This is the build emai', to: 'usntechnologies@gmail.com'
+                sh 'cp ./target/addressbook-2.0.war /var/lib/tomcat9/webapps/addressbook.war'
             }
         }
     }

@@ -25,13 +25,13 @@ pipeline {
     }
     post {
         failure {
-            sh 'the build failed'
+            sh 'echo the build failed'
         }
         success {
-            sh 'the build is SUCCESSFULL'
+            sh 'echo the build is SUCCESSFULL'
         }
         always {
-            sh 'the build as completed'
+            sh 'echo the build as completed'
         }
     }
 }

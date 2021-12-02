@@ -23,4 +23,15 @@ pipeline {
             }
         }
     }
+    post {
+        failure {
+            sh 'the build failed'
+        }
+        success {
+            sh 'the build is SUCCESSFULL'
+        }
+        always {
+            sh 'the build as completed'
+        }
+    }
 }

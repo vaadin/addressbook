@@ -17,11 +17,12 @@ pipeline {
                 sh 'mvn -B package'
             }
         }
-//        stage ('deploy to tomcat') {
-//            steps {
-//                sh 'cp ./target/addressbook-2.0.war /var/lib/tomcat9/webapps/addressbook.war'
-//            }
-//        }
+        stage ('build and publish to dockerhub') {
+            steps {
+                sh 'sudo docker build -t devopsxprts/ab:latest'
+                sh 'sudo docker push devopsxprts/ab:latest'
+            }
+        }
     }
     post {
         failure {

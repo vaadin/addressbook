@@ -24,9 +24,10 @@ pipeline {
             }
         }
         stage ('deploy on kubernetes') {
-            agent { label "kubernetes" }
+//            agent { label "kubernetes" }
             steps {
-                sh 'kubectl apply -f https://raw.githubusercontent.com/upshiftnow/addressbook/master/deployment.yaml'
+//                sh 'kubectl apply -f https://raw.githubusercontent.com/upshiftnow/addressbook/master/deployment.yaml'
+                kubernetesDeploy configs: 'deployment.yaml', kubeconfigId: 'kube-config'
             }
         }
     }

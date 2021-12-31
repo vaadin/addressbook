@@ -14,6 +14,9 @@ spec:
      image: devopsxprts/ab:latest
      ports:
      - containerPort: 8080
+     env: 
+     - name: ALLOW_EMPTY_PASSWORD
+       value: "yes"
  selector:
   matchLabels:
    app: ab

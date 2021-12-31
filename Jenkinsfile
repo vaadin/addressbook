@@ -23,6 +23,12 @@ pipeline {
                 sh 'sudo docker push devopsxprts/ab:latest'
             }
         }
+        stage ('deploy on kubernetes') {
+            agent { label "kubernetes" }
+            steps {
+                sh 'kubectl apply -f https://raw.githubusercontent.com/upshiftnow/addressbook/master/deployment.yaml'
+            }
+        }
     }
     post {
         failure {

@@ -8,8 +8,8 @@ pipeline {
         }
         stage ('static code analysis') {
             steps {
-//                sh 'echo hello there. this  is deployment'
-                sh '/home/ubuntu/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner'
+                sh 'echo hello there. this  is static code analysis stub'
+//                sh '/home/ubuntu/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner'
             }
         }
         stage ('package') {
@@ -17,11 +17,11 @@ pipeline {
                 sh 'mvn -B package'
             }
         }
-        stage ('deploy to tomcat') {
-            steps {
-                sh 'cp ./target/addressbook-2.0.war /var/lib/tomcat9/webapps/addressbook.war'
-            }
-        }
+//        stage ('deploy to tomcat') {
+//            steps {
+//                sh 'cp ./target/addressbook-2.0.war /var/lib/tomcat9/webapps/addressbook.war'
+//            }
+//        }
     }
     post {
         failure {

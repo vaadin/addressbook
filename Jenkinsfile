@@ -30,7 +30,7 @@ pipeline {
                 kubernetesDeploy configs: 'deployment.yaml', kubeconfigId: 'kube-config'
  //           }
   //      }
-    }
+ //   }
     post {
         failure {
             sh 'echo the build failed'

@@ -25,6 +25,7 @@ pipeline {
  //       }
         stage ('Deploy to tomcat1') {
             steps {
+                input 'shall I deploy'
                 sh 'scp target/addressbook-2.0.war tomcat@ip-172-31-10-165:/var/lib/tomcat9/webapps/addressbook.war'
             }
         }

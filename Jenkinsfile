@@ -11,7 +11,7 @@ pipeline {
 //                sh 'echo hello there. this  is static code analysis stub'
 //                sh '/home/ubuntu/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner'
 //            }
-        }
+//        }
         stage ('package') {
             steps {
                 sh 'mvn -B package'
@@ -27,10 +27,10 @@ pipeline {
 //            agent { label "kubernetes" }
  //           steps {
 //                sh 'kubectl apply -f https://raw.githubusercontent.com/upshiftnow/addressbook/master/deployment.yaml'
-                kubernetesDeploy configs: 'deployment.yaml', kubeconfigId: 'kube-config'
+//                kubernetesDeploy configs: 'deployment.yaml', kubeconfigId: 'kube-config'
  //           }
   //      }
- //   }
+   }
     post {
         failure {
             sh 'echo the build failed'

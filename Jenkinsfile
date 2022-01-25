@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage ('compilation') {
             steps {
+                echo "Hell There"
                 sh 'mvn -B compile'
             }
         }

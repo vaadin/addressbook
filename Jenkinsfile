@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage ('compilation') {
             steps {
-                echo "Hell There"
                 sh 'mvn -B compile'
             }
         }
@@ -24,6 +23,13 @@ pipeline {
  //               sh 'sudo docker push devopsxprts/ab:latest'
  //           }
  //       }
+        stage ('Deploy to tomcat1') {
+            steps {
+                sh 'scp target/addressbook-2.0.war tomcat@ip-172-31-10-165:/var/lib/tomcat9/webapps/addressbook.war
+            }
+        }
+
+
  //       stage ('deploy on kubernetes') {
 //            agent { label "kubernetes" }
  //           steps {

@@ -25,11 +25,14 @@ pipeline {
  //       }
         stage ('Deploy to tomcat1') {
             steps {
-                input 'shall I deploy'
                 sh 'scp target/addressbook-2.0.war tomcat@ip-172-31-10-165:/var/lib/tomcat9/webapps/addressbook.war'
             }
         }
-
+        stage ('Deploy to tomcat 2') {
+            steps {
+                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.127.37.205:8080/')], contextPath: null, war: 'target/addressbook-2.0.war'
+            }
+        }
 
  //       stage ('deploy on kubernetes') {
 //            agent { label "kubernetes" }

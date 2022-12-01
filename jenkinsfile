@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    parameters{
+      string(name:'env',defaultValue:'test',description:'verssion to build')
+      booleanParam(name:'executetest',defaultValue: true, description:'decide to run it')
+      choice(name:'appversion',choices:['1.1','1.2','1.3'])
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script{
+                    echo "Build the code"
+                }
+            }
+        }
+        stage('Test') {
+          when{
+            expression{
+              params.executetest == true
+            }
+          }
+            steps {
+                script{
+                    echo "testing the code"
+                }
+            }
+        }
+         stage('deploy') {
+            steps {
+                script{
+                    echo "deploy the app env: ${params.env}"
+                    echo"app version: ${params.appversion}"
+                }
+            }
+        }
+    }
+}

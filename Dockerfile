@@ -16,7 +16,7 @@ RUN mvn clean install
 FROM tomcat:9.0-alpine
 
 # Copy the built WAR file from the build stage to the Tomcat webapps directory
-COPY --from=build /app/target/addressbook.war /usr/local/tomcat/webapps/
+COPY --from=build /app/target/addressbook-2.0.war /usr/local/tomcat/webapps/
 
 # Expose the default Tomcat port
 EXPOSE 8080

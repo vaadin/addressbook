@@ -18,7 +18,7 @@ FROM tomcat:9.0-alpine
 # Copy the built WAR file from the build stage to the Tomcat webapps directory
 COPY --from=build /app/target/addressbook-2.0.war /usr/local/tomcat/webapps/
 
-# Expose the default Tomcat port
+# Expose the default Tomcat port for
 EXPOSE 8080
 
 # Start Tomcat and run the deployed application
